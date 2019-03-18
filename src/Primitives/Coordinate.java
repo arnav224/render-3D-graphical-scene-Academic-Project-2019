@@ -48,6 +48,15 @@ public final class Coordinate implements Comparable<Coordinate> {
     }
 
     /*************** Admin *****************/
+
+    /*************************************************
+     * FUNCTION
+     * equals
+     * PARAMETERS
+     * Object - Coordinate
+     * RETURN VALUE
+     * boolean - The result of equality.
+     **************************************************/
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -62,18 +71,67 @@ public final class Coordinate implements Comparable<Coordinate> {
     }
 
     /************** Operations ***************/
+
+    /*************************************************
+     * FUNCTION
+     * subtract
+     * PARAMETERS
+     * Coordinate
+     * RETURN VALUE
+     * Coordinate - new Coordinate as the result.
+     * MEANING
+     * The subtraction result calculates two coordinates.
+     * SEE ALSO
+     * subtract method in Unil class.
+     **************************************************/
     public Coordinate subtract(Coordinate other) {
         return new Coordinate(usubtract(_coord, other._coord));
     }
 
+    /*************************************************
+     * FUNCTION
+     * add
+     * PARAMETERS
+     * Coordinate
+     * RETURN VALUE
+     * Coordinate - new Coordinate as the result.
+     * MEANING
+     * The addition result calculates two coordinates.
+     * SEE ALSO
+     * uadd method in Unil class.
+     **************************************************/
     public Coordinate add(Coordinate other) {
         return new Coordinate(uadd(_coord, other._coord));
     }
 
+    /*************************************************
+     * FUNCTION
+     * scale
+     * PARAMETERS
+     * double - scalar.
+     * RETURN VALUE
+     * Coordinate - new Coordinate as the result.
+     * MEANING
+     * Multiplication in scalar.
+     * SEE ALSO
+     * uscale method in Unil class.
+     **************************************************/
     public Coordinate scale(double num) {
         return new Coordinate(uscale(_coord, num));
     }
 
+    /*************************************************
+     * FUNCTION
+     * multiply
+     * PARAMETERS
+     * Coordinate
+     * RETURN VALUE
+     * Coordinate - new Coordinate as the result.
+     * MEANING
+     * The multiply result calculates two coordinates.
+     * SEE ALSO
+     * uscale method in Unil class.
+     **************************************************/
     public Coordinate multiply(Coordinate other) {
         return new Coordinate(uscale(_coord, other._coord));
     }
