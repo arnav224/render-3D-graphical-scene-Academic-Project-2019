@@ -2,7 +2,7 @@ package Primitives;
 
 import java.util.Objects;
 
-import static primitives.Util.isZero;
+import static Primitives.Util.isZero;
 
 public class Point3D extends Point2D {
     private Coordinate _z;
@@ -15,12 +15,12 @@ public class Point3D extends Point2D {
 
     public Point3D(Coordinate _x, Coordinate _y, Coordinate _z) {
         super(_x, _y);
-        this._z = _z;
+        this._z = new Coordinate(_z);
     }
 
     public Point3D(double _x, double _y, double _z) {
         super(_x, _y);
-        this._z.set_coord(_z);
+        this._z = new Coordinate(_z);
     }
 
     public Point3D(Point3D point3D) {

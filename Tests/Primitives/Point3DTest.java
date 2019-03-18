@@ -1,40 +1,34 @@
 package Primitives;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.testng.Assert;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class Point3DTest {
 
     @Test
-    void get_x() throws Exception{
-        Point3D point = new Point3D(1.23, 2.34, 3.45);
-        Coordinate result = point.get_x();
-        Assert.assertEquals(1,1);
-
+    void get_z() {
+        Point3D point3D = new Point3D(1.23, 2.34, 3.45);
+        Coordinate result = point3D.get_z();
+        Assertions.assertEquals(result.get_coord(), 3.45);
     }
 
     @Test
-    void set_x() {
+    void set_z() {
     }
 
-    @Test
-    void get_y() {
-    }
-
-    @Test
-    void set_y() {
-    }
-
-    @Test
-    void compareTo() {
-    }
+    //@Test
+    //void toString() {
+    //}
 
     @Test
     void equals() {
     }
 
+   // @Test
+    //void hashCode() {
+    //}
 
     @Test
     void distance() {
@@ -42,5 +36,13 @@ class Point3DTest {
 
     @Test
     void distance1() {
+    }
+
+    @Test
+    void add() {
+    }
+
+    @Test
+    void subtract() {
     }
 }

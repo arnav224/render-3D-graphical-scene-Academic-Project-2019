@@ -1,5 +1,5 @@
 package Primitives;
-import static primitives.Util.*;
+import static Primitives.Util.*;
 
 public class Vector implements Comparable<Vector>{
     private Point3D _head;
@@ -65,7 +65,7 @@ public class Vector implements Comparable<Vector>{
         return this._head.distance();
     }
     public void normalize() {
-        if (primitives.Util.isZero(this.length()))
+        if (Primitives.Util.isZero(this.length()))
             throw new IllegalArgumentException();
         this.scale(1 / this.length());
     }

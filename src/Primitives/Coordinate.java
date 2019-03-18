@@ -2,7 +2,7 @@ package Primitives;
 
 import java.util.Objects;
 
-import static primitives.Util.*;
+import static Primitives.Util.*;
 
 public final class Coordinate implements Comparable<Coordinate> {
     protected double _coord;
@@ -11,7 +11,7 @@ public final class Coordinate implements Comparable<Coordinate> {
 
     /********** Constructors ***********/
     public Coordinate() {
-        _coord = 0;
+        _coord = 0.0;
     }
 
     public Coordinate(double coord) {

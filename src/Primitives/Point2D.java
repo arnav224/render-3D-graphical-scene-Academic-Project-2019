@@ -1,6 +1,10 @@
 package Primitives;
+import groovy.json.internal.Exceptions;
+import sun.misc.ExtensionInstallationException;
+
+import java.security.cert.Extension;
 import java.util.Objects;
-import static primitives.Util.*;
+import static Primitives.Util.*;
 
 public class Point2D implements Comparable<Point2D>{
     protected Coordinate _x;
@@ -13,13 +17,13 @@ public class Point2D implements Comparable<Point2D>{
     }
 
     public Point2D(Coordinate _x, Coordinate _y) {
-        this._x = _x;
-        this._y = _y;
+        this._x = new Coordinate(_x);
+        this._y = new Coordinate(_y);
     }
 
     public Point2D(double _x, double _y) {
-        this._x.set_coord(_x);
-        this._y.set_coord(_y);
+        this._x = new Coordinate(_x);
+        this._y = new Coordinate(_y);
     }
 
     public Point2D(Point2D _point2D) {
@@ -33,7 +37,7 @@ public class Point2D implements Comparable<Point2D>{
     }
 
     public void set_x(Coordinate _x) {
-        this._x = _x;
+        this._x = new Coordinate(_x);
     }
 
     public Coordinate get_y() {
@@ -41,7 +45,7 @@ public class Point2D implements Comparable<Point2D>{
     }
 
     public void set_y(Coordinate _y) {
-        this._y = _y;
+        this._y = new Coordinate(_y);
     }
 
     // ***************** Administration ******************** //

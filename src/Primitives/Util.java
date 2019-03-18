@@ -1,4 +1,4 @@
-package primitives;
+package Primitives;
 public abstract class Util {
     // It is binary, equivalent to ~1/1,000,000,000,000 in decimal (12 digits)
     private static final int ACCURACY = -40;
