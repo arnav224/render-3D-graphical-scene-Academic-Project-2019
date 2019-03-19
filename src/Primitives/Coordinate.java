@@ -80,7 +80,7 @@ public final class Coordinate implements Comparable<Coordinate> {
      * RETURN VALUE
      * Coordinate - new Coordinate as the result.
      * MEANING
-     * The subtraction result calculates two coordinates.
+     * Result of subtraction of two coordinates.
      * SEE ALSO
      * subtract method in Unil class.
      **************************************************/
@@ -96,7 +96,7 @@ public final class Coordinate implements Comparable<Coordinate> {
      * RETURN VALUE
      * Coordinate - new Coordinate as the result.
      * MEANING
-     * The addition result calculates two coordinates.
+     * Calculates the result of adding a coordinate to the coordinate.
      * SEE ALSO
      * uadd method in Unil class.
      **************************************************/

@@ -38,6 +38,7 @@ public class Point3D extends Point2D {
     }
 
     // ***************** Administration ******************** //
+
     @Override
     public String toString() {
         return String.format("(%f.2, %f.2, %f.2", _x, _y, _z);
@@ -57,23 +58,60 @@ public class Point3D extends Point2D {
     }
 
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     * distance
+     * PARAMETERS
+     * Point3D - other point.
+     * RETURN VALUE
+     * double - The distance between two points.
+     **************************************************/
     public double distance(Point3D point3D) {
         return Math.sqrt(Math.pow(super.get_x().subtract(point3D.get_x()).get_coord(), 2)
                 + Math.pow(super.get_y().subtract(point3D.get_y()).get_coord(), 2) + Math.pow(this._z.subtract(point3D._z).get_coord(), 2));
     }
-
+    /*************************************************
+     * FUNCTION
+     * distance
+     * RETURN VALUE
+     * double - The distance.
+     * MEANING
+     * The distance between the point and the zero point
+     **************************************************/
     @Override
     public double distance() {
         return Math.sqrt(Math.pow(super.get_x().get_coord(), 2) + Math.pow(super.get_y().get_coord(), 2) + Math.pow(this._z.get_coord(), 2));
     }
-
+    /*************************************************
+     * FUNCTION
+     * add
+     * PARAMETERS
+     * Vector
+     * RETURN VALUE
+     * Point3D - new Point3D as the result.
+     * MEANING
+     * Calculates the result of adding a vector to the Point.
+     * SEE ALSO
+     * add method in Coordinate class.
+     **************************************************/
     public Point3D add(Vector vector){
         return  new Point3D(
                 this.get_x().add(vector.get_head().get_x()),
                 this.get_y().add(vector.get_head().get_y()),
                 this.get_z().add(vector.get_head().get_z()));
     }
-
+    /*************************************************
+     * FUNCTION
+     * subtract
+     * PARAMETERS
+     * Vector
+     * RETURN VALUE
+     * Point3D - new Point3D as the result.
+     * MEANING
+     * Calculates the result of vector reduction from the Point.
+     * SEE ALSO
+     * subtract method in Coordinate class.
+     **************************************************/
     public Point3D subtract(Vector vector){
         return  new Point3D(
                 this.get_x().subtract(vector.get_head().get_x()),
@@ -81,14 +119,18 @@ public class Point3D extends Point2D {
                 this.get_z().subtract(vector.get_head().get_z()));
     }
 
-    /**********************************
+    /*************************************************
      * FUNCTION
-     *
+     * subtract
      * PARAMETERS
-     *
+     * Point3D
      * RETURN VALUE
-     * Vector -
-     ***********************************/
+     * Vector - new Vector as the result.
+     * MEANING
+     * Creates a new vector from the result of subtracting a point from the point.
+     * SEE ALSO
+     * subtract method in Coordinate class.
+     **************************************************/
     public Vector subtract(Point3D rhs){
         return  new Vector(new Point3D(this._x.subtract(rhs._x),
                 this._y.subtract(rhs._y),
