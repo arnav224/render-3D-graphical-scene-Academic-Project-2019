@@ -29,7 +29,7 @@ public class Vector implements Comparable<Vector>{
         return new Point3D(_head);
     }
     public void set_head(Point3D _head) {
-        this._head = _head;
+        this._head = new Point3D(_head);
     }
 
 
@@ -69,9 +69,9 @@ public class Vector implements Comparable<Vector>{
      * add method in Point3D class.
      **************************************************/
 
-    public void add (Vector vector ){
+    public void add (Vector vector ) {
         this._head = this._head.add(vector);
-
+    }
     //public Vector add (Vector vector ){
     //    return new Vector(this._head.add(vector));
     //}
