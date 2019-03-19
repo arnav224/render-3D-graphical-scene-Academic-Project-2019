@@ -23,7 +23,7 @@ public class Ray {
     }
 
     public void set_POO(Point3D _POO) {
-        this._POO = _POO;
+        this._POO = new Point3D(_POO);
     }
 
     public Vector get_direction() {
@@ -31,6 +31,6 @@ public class Ray {
     }
 
     public void set_direction(Vector _direction) {
-        this._direction = _direction;
+        this._direction = new Vector(_direction);
     }
 }
