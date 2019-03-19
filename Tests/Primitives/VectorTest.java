@@ -27,9 +27,7 @@ class VectorTest {
     void add() {
         Vector vector = new Vector(1, 2, 3);
         Vector vector1 = new Vector(1, 2, 3);
-        vector.add(vector1);
-        Assertions.assertEquals((new Vector(2.0,4.0,6.0)).get_head(), (vector).get_head());
-       // Assertions.assertEquals(1,1);
+        Assertions.assertEquals(6.0, vector.add(vector1).get_head().get_z().get_coord());
     }
 
     @Test
@@ -42,6 +40,8 @@ class VectorTest {
 
     @Test
     void crossProduct() {
+        //Vector vector1 = vec
+
     }
 
     @Test
