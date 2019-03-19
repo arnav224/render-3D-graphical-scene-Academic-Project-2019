@@ -28,12 +28,14 @@ class VectorTest {
     void add() {
         Vector vector = new Vector(1, 2, 3);
         Vector vector1 = new Vector(1, 2, 3);
+
         vector.add(vector1);
         Assertions.assertEquals(new Vector(2.00,4.00,6.00), vector);
         Vector vector2 = new Vector(1, 2, 3);
         Vector vector3 = new Vector(0, 0, 0);
         vector2.add(vector3);
         Assertions.assertEquals(new Vector(1.00,2.00,3.00), vector2);
+
     }
 
     @Test
@@ -61,10 +63,12 @@ class VectorTest {
 
     @Test
     void crossProduct() {
+
         Vector vector = new Vector(1, 2, 3);
         Vector vector1 = new Vector(-1, 2, -3);
         Vector result = vector.crossProduct(vector1);
         Assertions.assertEquals(new Vector(-12,0,4), result);
+
     }
 
     @Test
