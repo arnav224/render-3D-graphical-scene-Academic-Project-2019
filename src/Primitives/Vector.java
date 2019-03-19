@@ -68,9 +68,12 @@ public class Vector implements Comparable<Vector>{
      * SEE ALSO
      * add method in Point3D class.
      **************************************************/
-    public void add (Vector vector ){
-        this._head.add(vector);
+    public Vector add (Vector vector ){
+        return new Vector(this._head.add(vector));
     }
+//    public void add (Vector vector ){
+//        this._head = this._head.add(vector);
+//    }
     /*************************************************
      * FUNCTION
      * subtract
