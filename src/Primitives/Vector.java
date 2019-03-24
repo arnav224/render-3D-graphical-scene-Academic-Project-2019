@@ -1,5 +1,4 @@
 package Primitives;
-import static Primitives.Util.*;
 
 public class Vector implements Comparable<Vector>{
     private Point3D _head;
@@ -19,9 +18,9 @@ public class Vector implements Comparable<Vector>{
         this._head = new Point3D(xHead, yHead, zHead);
     }
     public Vector(Point3D p1, Point3D p2){
-        this._head = new Point3D(p1.get_x().subtract(p2.get_x()),
-                p1.get_y().subtract(p2.get_y()),
-                p1.get_z().subtract(p2.get_z()));
+        this._head = new Point3D(p1.getX().subtract(p2.getX()),
+                p1.getY().subtract(p2.getY()),
+                p1.getZ().subtract(p2.getZ()));
     }
 
     // ***************** Getters/Setters ********************** //
@@ -100,9 +99,9 @@ public class Vector implements Comparable<Vector>{
      * scale method in Coordinate class.
      **************************************************/
     public void scale(double scalingFactor){
-        this._head = new Point3D(_head.get_x().scale(scalingFactor),
-                _head.get_y().scale(scalingFactor),
-                _head.get_z().scale(scalingFactor));
+        this._head = new Point3D(_head.getX().scale(scalingFactor),
+                _head.getY().scale(scalingFactor),
+                _head.getZ().scale(scalingFactor));
     }
     /*************************************************
      * FUNCTION
@@ -117,9 +116,9 @@ public class Vector implements Comparable<Vector>{
      * multiply method in Coordinate class.
      **************************************************/
     public Vector crossProduct(Vector vector){
-        return new Vector(this._head.get_y().multiply(vector._head.get_z()).subtract(this._head.get_z().multiply(vector._head.get_y())).get_coord(),
-                this._head.get_z().multiply(vector._head.get_x()).subtract(this._head.get_x().multiply(vector._head.get_z())).get_coord(),
-                this._head.get_x().multiply(vector._head.get_y()).subtract(this._head.get_y().multiply(vector._head.get_x())).get_coord());
+        return new Vector(this._head.getY().multiply(vector._head.getZ()).subtract(this._head.getZ().multiply(vector._head.getY())).getCoordinate(),
+                this._head.getZ().multiply(vector._head.getX()).subtract(this._head.getX().multiply(vector._head.getZ())).getCoordinate(),
+                this._head.getX().multiply(vector._head.getY()).subtract(this._head.getY().multiply(vector._head.getX())).getCoordinate());
     }
     /*************************************************
      * FUNCTION
@@ -156,8 +155,8 @@ public class Vector implements Comparable<Vector>{
      * multiply method in Coordinate class.
      **************************************************/
     public double dotProduct(Vector o){
-        return this._head.get_x().multiply(o._head.get_x()).get_coord() +
-                this._head.get_y().multiply(o._head.get_y()).get_coord() +
-                this._head.get_z().multiply(o._head.get_z()).get_coord();
+        return this._head.getX().multiply(o._head.getX()).getCoordinate() +
+                this._head.getY().multiply(o._head.getY()).getCoordinate() +
+                this._head.getZ().multiply(o._head.getZ()).getCoordinate();
     }
 }

@@ -1,7 +1,5 @@
 package Primitives;
 
-import java.util.Objects;
-
 import static Primitives.Util.*;
 
 public final class Coordinate implements Comparable<Coordinate> {
@@ -24,8 +22,12 @@ public final class Coordinate implements Comparable<Coordinate> {
     }
 
     /************** Getters/Setters *******/
-    public double get_coord() {
+    public double getCoordinate() {
         return _coord;
+    }
+
+    public void setCoordinate(double _coord) {
+        this._coord = alignZero(_coord);
     }
 
     /**********************************
@@ -43,12 +45,7 @@ public final class Coordinate implements Comparable<Coordinate> {
         return (this._coord > o._coord) ? 1 : -1;
     }
 
-    public void set_coord(double _coord) {
-        this._coord = alignZero(_coord);
-    }
-
     /*************** Admin *****************/
-
     /*************************************************
      * FUNCTION
      * equals
@@ -67,7 +64,7 @@ public final class Coordinate implements Comparable<Coordinate> {
 
     @Override
     public String toString() {
-        return "" + _coord;
+        return String.format("%.2f", _coord);
     }
 
     /************** Operations ***************/
@@ -88,7 +85,7 @@ public final class Coordinate implements Comparable<Coordinate> {
         return new Coordinate(usubtract(_coord, other._coord));
     }
 
-    /*************************************************
+    /*todo ************************************************
      * FUNCTION
      * add
      * PARAMETERS
@@ -100,11 +97,15 @@ public final class Coordinate implements Comparable<Coordinate> {
      * SEE ALSO
      * uadd method in Unil class.
      **************************************************/
+/*todo
     public Coordinate add(Coordinate other) {
         return new Coordinate(uadd(_coord, other._coord));
     }
-
-    /*************************************************
+*/
+    public void add(Coordinate other) {
+        this._coord = (uadd(_coord, other._coord));
+    }
+    /*todo ************************************************
      * FUNCTION
      * scale
      * PARAMETERS
@@ -116,11 +117,16 @@ public final class Coordinate implements Comparable<Coordinate> {
      * SEE ALSO
      * uscale method in Unil class.
      **************************************************/
+/*todo
     public Coordinate scale(double num) {
         return new Coordinate(uscale(_coord, num));
     }
+*/
+    public void scale(double num) {
+        this._coord = uscale(_coord, num);
+    }
 
-    /*************************************************
+    /*todo ************************************************
      * FUNCTION
      * multiply
      * PARAMETERS
@@ -132,8 +138,14 @@ public final class Coordinate implements Comparable<Coordinate> {
      * SEE ALSO
      * uscale method in Unil class.
      **************************************************/
+/*todo
     public Coordinate multiply(Coordinate other) {
         return new Coordinate(uscale(_coord, other._coord));
     }
+*/
+    public void multiply(Coordinate other) {
+        this._coord = uscale(_coord, other._coord);
+    }
+
 
 }
