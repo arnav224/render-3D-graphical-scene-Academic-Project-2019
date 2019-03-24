@@ -1,8 +1,5 @@
 package Primitives;
-import groovy.json.internal.Exceptions;
-import sun.misc.ExtensionInstallationException;
 
-import java.security.cert.Extension;
 import java.util.Objects;
 import static Primitives.Util.*;
 
@@ -32,24 +29,24 @@ public class Point2D implements Comparable<Point2D>{
     }
 
     // ***************** Getters/Setters ********************** //
-    public Coordinate get_x() {
+    public Coordinate getX() {
         return new Coordinate(_x);
     }
 
-    public void set_x(Coordinate _x) {
+    public void setX(Coordinate _x) {
         this._x = new Coordinate(_x);
     }
 
-    public Coordinate get_y() {
+    public Coordinate getY() {
         return new Coordinate(_y);
     }
 
-    public void set_y(Coordinate _y) {
+    public void setY(Coordinate _y) {
         this._y = new Coordinate(_y);
     }
 
     // ***************** Administration ******************** //
-    /**********************************
+    /*todo*********************************
      * FUNCTION
      * compareTo, Compare the distance from the zero point.
      * PARAMETERS
@@ -57,14 +54,34 @@ public class Point2D implements Comparable<Point2D>{
      * RETURN VALUE
      * int. 0 if equal. 1 if this grater. -1 if this smaller.
      ***********************************/
-    //todo - what is the purpose?
+
+    /**********************************
+     * FUNCTION
+     * equals - Checks whether the points are equal.
+     * PARAMETERS
+     * Point2D - the other point
+     * RETURN VALUE
+     * int - 0 if equal, 1 if not equal.
+     ***********************************/
     @Override
     public int compareTo(Point2D o) {
+        return this.equals(o) ? 0 : 1;
+
+/* todo Remember to ask: Does it exceed the habit of compareTo?
         if (this.equals(o) || isZero(this.distance() - o.distance()))
             return 0;
         return (this.distance() - o.distance() > 0) ? 1 : -1;
+*/
     }
 
+    /**********************************
+     * FUNCTION
+     * equals - Checks whether the points are equal.
+     * PARAMETERS
+     * Point2D - the other point
+     * RETURN VALUE
+     * boolean - whether the points are equal.
+     ***********************************/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,7 +105,7 @@ public class Point2D implements Comparable<Point2D>{
      *  double - the distance  between the tow points.
      ***********************************/
     public double distance(Point2D point2D){
-        return Math.sqrt(Math.pow(this._x.subtract(point2D._x).get_coord(), 2) + Math.pow(this._y.subtract(point2D._y).get_coord(), 2));
+        return Math.sqrt(Math.pow(this._x.subtract(point2D._x).getCoordinate(), 2) + Math.pow(this._y.subtract(point2D._y).getCoordinate(), 2));
     }
 
     /**********************************
@@ -100,6 +117,6 @@ public class Point2D implements Comparable<Point2D>{
      *  double - the distance from the zero point.
      ***********************************/
     public double distance(){
-        return Math.sqrt(Math.pow(this._x.get_coord(), 2) + Math.pow(this._y.get_coord(), 2));
+        return Math.sqrt(Math.pow(this._x.getCoordinate(), 2) + Math.pow(this._y.getCoordinate(), 2));
     }
 }

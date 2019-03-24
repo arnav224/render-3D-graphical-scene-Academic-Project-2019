@@ -2,8 +2,6 @@ package Primitives;
 
 import java.util.Objects;
 
-import static Primitives.Util.isZero;
-
 public class Point3D extends Point2D {
     private Coordinate _z;
 
@@ -24,24 +22,35 @@ public class Point3D extends Point2D {
     }
 
     public Point3D(Point3D point3D) {
-        super(point3D.get_x(), point3D.get_y());
+        super(point3D.getX(), point3D.getY());
         this._z = new Coordinate(point3D._z);
     }
 
     // ***************** Getters/Setters ********************** //
-    public Coordinate get_z() {
+    public Coordinate getZ() {
         return new Coordinate(_z);
     }
 
-    public void set_z(Coordinate _z) {
+    public void setZ(Coordinate _z) {
         this._z = new Coordinate(_z);
     }
 
     // ***************** Administration ******************** //
+    /**********************************
+     * FUNCTION
+     * equals - Checks whether the points are equal.
+     * PARAMETERS
+     * Point2D - the other point
+     * RETURN VALUE
+     * int - 0 if equal, 1 if not equal.
+     ***********************************/
+    public int compareTo(Point3D o) {
+        return (super.compareTo(o) == 0 && this.getZ().equals(o.getZ()) ? 0 : 1);
+    }
 
     @Override
     public String toString() {
-        return String.format("(%.2f, %.2f, %.2f)", _x.get_coord(), _y.get_coord(), _z.get_coord());
+        return String.format("(%.2f, %.2f, %.2f)", _x.getCoordinate(), _y.getCoordinate(), _z.getCoordinate());
     }
 
     @Override
@@ -54,7 +63,7 @@ public class Point3D extends Point2D {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.get_x(), super.get_y(), _z);
+        return Objects.hash(super.getX(), super.getY(), _z);
     }
 
     // ***************** Operations ******************** //
@@ -67,8 +76,8 @@ public class Point3D extends Point2D {
      * double - The distance between two points.
      **************************************************/
     public double distance(Point3D point3D) {
-        return Math.sqrt(Math.pow(super.get_x().subtract(point3D.get_x()).get_coord(), 2)
-                + Math.pow(super.get_y().subtract(point3D.get_y()).get_coord(), 2) + Math.pow(this._z.subtract(point3D._z).get_coord(), 2));
+        return Math.sqrt(Math.pow(super.getX().subtract(point3D.getX()).getCoordinate(), 2)
+                + Math.pow(super.getY().subtract(point3D.getY()).getCoordinate(), 2) + Math.pow(this._z.subtract(point3D._z).getCoordinate(), 2));
     }
     /*************************************************
      * FUNCTION
@@ -80,7 +89,7 @@ public class Point3D extends Point2D {
      **************************************************/
     @Override
     public double distance() {
-        return Math.sqrt(Math.pow(super.get_x().get_coord(), 2) + Math.pow(super.get_y().get_coord(), 2) + Math.pow(this._z.get_coord(), 2));
+        return Math.sqrt(Math.pow(super.getX().getCoordinate(), 2) + Math.pow(super.getY().getCoordinate(), 2) + Math.pow(this._z.getCoordinate(), 2));
     }
     /*************************************************
      * FUNCTION
@@ -96,9 +105,9 @@ public class Point3D extends Point2D {
      **************************************************/
     public Point3D add(Vector vector){
         return  new Point3D(
-                this.get_x().add(vector.get_head().get_x()),
-                this.get_y().add(vector.get_head().get_y()),
-                this.get_z().add(vector.get_head().get_z()));
+                this.getX().add(vector.get_head().getX()),
+                this.getY().add(vector.get_head().getY()),
+                this.getZ().add(vector.get_head().getZ()));
     }
     /*************************************************
      * FUNCTION
@@ -114,9 +123,9 @@ public class Point3D extends Point2D {
      **************************************************/
     public Point3D subtract(Vector vector){
         return  new Point3D(
-                this.get_x().subtract(vector.get_head().get_x()),
-                this.get_y().subtract(vector.get_head().get_y()),
-                this.get_z().subtract(vector.get_head().get_z()));
+                this.getX().subtract(vector.get_head().getX()),
+                this.getY().subtract(vector.get_head().getY()),
+                this.getZ().subtract(vector.get_head().getZ()));
     }
 
     /*************************************************
@@ -131,9 +140,17 @@ public class Point3D extends Point2D {
      * SEE ALSO
      * subtract method in Coordinate class.
      **************************************************/
+/*
     public Vector subtract(Point3D rhs){
         return  new Vector(new Point3D(this._x.subtract(rhs._x),
                 this._y.subtract(rhs._y),
                 this._z.subtract(rhs._z)));
     }
+*/
+    public void subtract(Point3D rhs){
+        this._x..subtract(rhs._x),
+                this._y.subtract(rhs._y),
+                this._z.subtract(rhs._z)));
+    }
+
 }
