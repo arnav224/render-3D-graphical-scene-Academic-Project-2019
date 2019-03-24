@@ -91,7 +91,25 @@ public class Point3D extends Point2D {
     public double distance() {
         return Math.sqrt(Math.pow(super.getX().getCoordinate(), 2) + Math.pow(super.getY().getCoordinate(), 2) + Math.pow(this._z.getCoordinate(), 2));
     }
-    /*************************************************
+    //public void add(Vector vector);
+    //public void subtract(Vector vector);
+    /************************************************
+         * FUNCTION
+         * add
+         * PARAMETERS
+         * Vector
+         * MEANING
+         * Adds a vector to the current point.
+         * SEE ALSO
+         * add method in Coordinate class.
+    **************************************************/
+     public void add(Vector vector) {
+         this._x.add(vector.get_head().getX());
+         this._y.add(vector.get_head().getY());
+         this._z.add(vector.get_head().getZ());
+     }
+
+    /*todo************************************************
      * FUNCTION
      * add
      * PARAMETERS
@@ -103,13 +121,28 @@ public class Point3D extends Point2D {
      * SEE ALSO
      * add method in Coordinate class.
      **************************************************/
-    public Point3D add(Vector vector){
+    /*todo public Point3D add(Vector vector){
         return  new Point3D(
                 this.getX().add(vector.get_head().getX()),
                 this.getY().add(vector.get_head().getY()),
                 this.getZ().add(vector.get_head().getZ()));
-    }
+    }*/
     /*************************************************
+     * FUNCTION
+     * subtract
+     * PARAMETERS
+     * Vector to subtract the point.
+     * MEANING
+     * subtracts a vector to the current point.
+     * SEE ALSO
+     * subtract method in Coordinate class.
+     **************************************************/
+    public void subtract(Vector vector){
+        this._x.subtract(vector.get_head().getX());
+        this._y.subtract(vector.get_head().getY());
+        this._z.subtract(vector.get_head().getZ());
+    }
+    /*todo************************************************
      * FUNCTION
      * subtract
      * PARAMETERS
@@ -121,14 +154,14 @@ public class Point3D extends Point2D {
      * SEE ALSO
      * subtract method in Coordinate class.
      **************************************************/
-    public Point3D subtract(Vector vector){
+    /*todo public Point3D subtract(Vector vector){
         return  new Point3D(
                 this.getX().subtract(vector.get_head().getX()),
                 this.getY().subtract(vector.get_head().getY()),
                 this.getZ().subtract(vector.get_head().getZ()));
-    }
+    }*/
 
-    /*************************************************
+    /*todo************************************************
      * FUNCTION
      * subtract
      * PARAMETERS
@@ -140,17 +173,13 @@ public class Point3D extends Point2D {
      * SEE ALSO
      * subtract method in Coordinate class.
      **************************************************/
-/*
+/*todo
     public Vector subtract(Point3D rhs){
         return  new Vector(new Point3D(this._x.subtract(rhs._x),
                 this._y.subtract(rhs._y),
                 this._z.subtract(rhs._z)));
     }
 */
-    public void subtract(Point3D rhs){
-        this._x..subtract(rhs._x),
-                this._y.subtract(rhs._y),
-                this._z.subtract(rhs._z)));
-    }
+
 
 }

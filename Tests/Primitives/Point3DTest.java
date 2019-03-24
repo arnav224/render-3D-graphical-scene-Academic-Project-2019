@@ -51,16 +51,16 @@ class Point3DTest {
     void add() {
         Point3D p1 = new Point3D(1.23, 2.34, 3.45);
         Vector vector = new Vector(1, -1.5, 2.2);
-        Point3D result = p1.add(vector);
-        Assertions.assertEquals(new Point3D(2.23, 0.84, 5.65), result);
+        p1.add(vector);
+        Assertions.assertEquals(new Point3D(2.23, 0.84, 5.65), p1);
     }
 
     @Test
     void subtract() {
         Point3D p1 = new Point3D(1.23, 2.34, 3.45);
         Vector vector = new Vector(1, -1.5, 2.2);
-        Point3D result = p1.subtract(vector);
-        Assertions.assertEquals(new Point3D(0.23, 3.84, 1.25), result);
+        p1.subtract(vector);
+        Assertions.assertEquals(new Point3D(0.23, 3.84, 1.25), p1);
     }
 
     @Test

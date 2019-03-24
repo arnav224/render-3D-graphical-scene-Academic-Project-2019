@@ -69,7 +69,7 @@ public final class Coordinate implements Comparable<Coordinate> {
 
     /************** Operations ***************/
 
-    /*************************************************
+    /*todo************************************************
      * FUNCTION
      * subtract
      * PARAMETERS
@@ -80,10 +80,25 @@ public final class Coordinate implements Comparable<Coordinate> {
      * Result of subtraction of two coordinates.
      * SEE ALSO
      * subtract method in Unil class.
-     **************************************************/
-    public Coordinate subtract(Coordinate other) {
+     **************************************************//*
+    todo public Coordinate subtract(Coordinate other) {
         return new Coordinate(usubtract(_coord, other._coord));
     }
+*/
+    /*************************************************
+     * FUNCTION
+     * subtract
+     * PARAMETERS
+     * Coordinate
+     * MEANING
+     * Subtracts a coordinate to the current coordinate.
+     * SEE ALSO
+     * subtract method in Unil class.
+     **************************************************/
+    public void subtract(Coordinate other) {
+        this._coord = (usubtract(_coord, other._coord));
+    }
+
 
     /*todo ************************************************
      * FUNCTION
