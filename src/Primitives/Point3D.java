@@ -1,4 +1,5 @@
 package Primitives;
+import static Primitives.Util.*;
 
 import java.util.Objects;
 
@@ -76,9 +77,16 @@ public class Point3D extends Point2D {
      * double - The distance between two points.
      **************************************************/
     public double distance(Point3D point3D) {
+        return    Math.sqrt(Math.pow(usubtract(super.getX().getCoordinate(), point3D.getX().getCoordinate()), 2)
+                + Math.pow(usubtract(super.getY().getCoordinate(), point3D.getY().getCoordinate()), 2)
+                + Math.pow(usubtract(this.getZ().getCoordinate(), point3D.getZ().getCoordinate()), 2));
+    }
+/*todo
+    public double distance(Point3D point3D) {
         return Math.sqrt(Math.pow(super.getX().subtract(point3D.getX()).getCoordinate(), 2)
                 + Math.pow(super.getY().subtract(point3D.getY()).getCoordinate(), 2) + Math.pow(this._z.subtract(point3D._z).getCoordinate(), 2));
     }
+*/
     /*************************************************
      * FUNCTION
      * distance
@@ -104,9 +112,9 @@ public class Point3D extends Point2D {
          * add method in Coordinate class.
     **************************************************/
      public void add(Vector vector) {
-         this._x.add(vector.get_head().getX());
-         this._y.add(vector.get_head().getY());
-         this._z.add(vector.get_head().getZ());
+         this._x.add(vector.getHead().getX());
+         this._y.add(vector.getHead().getY());
+         this._z.add(vector.getHead().getZ());
      }
 
     /*todo************************************************
@@ -138,9 +146,9 @@ public class Point3D extends Point2D {
      * subtract method in Coordinate class.
      **************************************************/
     public void subtract(Vector vector){
-        this._x.subtract(vector.get_head().getX());
-        this._y.subtract(vector.get_head().getY());
-        this._z.subtract(vector.get_head().getZ());
+        this._x.subtract(vector.getHead().getX());
+        this._y.subtract(vector.getHead().getY());
+        this._z.subtract(vector.getHead().getZ());
     }
     /*todo************************************************
      * FUNCTION

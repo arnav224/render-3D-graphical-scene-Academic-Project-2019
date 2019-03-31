@@ -17,52 +17,52 @@ public class Material {
         _n = 1;
     }
     public Material(Material material){
-        _Kd = material.get_Kd();
-        _Ks = material.get_Ks();
-        _Kr = material.get_Kr();
-        _Kt = material.get_Kt();
-        _n = material.get_n();
+        _Kd = material.getKd();
+        _Ks = material.getKs();
+        _Kr = material.getKr();
+        _Kt = material.getKt();
+        _n = material.getN();
     }
 
     // ***************** Getters/Setters ********************** //
 
-    public double get_Kd() {
+    public double getKd() {
         return _Kd;
     }
 
-    public void set_Kd(double _Kd) {
+    public void setKd(double _Kd) {
         this._Kd = _Kd;
     }
 
-    public double get_Ks() {
+    public double getKs() {
         return _Ks;
     }
 
-    public void set_Ks(double _Ks) {
+    public void setKs(double _Ks) {
         this._Ks = _Ks;
     }
 
-    public double get_Kr() {
+    public double getKr() {
         return _Kr;
     }
 
-    public void set_Kr(double _Kr) {
+    public void setKr(double _Kr) {
         this._Kr = _Kr;
     }
 
-    public double get_Kt() {
+    public double getKt() {
         return _Kt;
     }
 
-    public void set_Kt(double _Kt) {
+    public void setKt(double _Kt) {
         this._Kt = _Kt;
     }
 
-    public double get_n() {
+    public double getN() {
         return _n;
     }
 
-    public void set_n(double _n) {
+    public void setN(double _n) {
         this._n = _n;
     }
 }
