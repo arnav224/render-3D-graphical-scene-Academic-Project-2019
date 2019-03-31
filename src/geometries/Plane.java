@@ -19,36 +19,35 @@ public class Plane extends Geometry {
     }
     public Plane(Vector _normal, Point3D _Q) {
         //todo zero-chack?
-        this._normal = _normal;
-        this._Q = _Q;
+        this._normal = new Vector(_normal);
+        this._Q = new Point3D(_Q);
     }
 
     // ***************** Getters/Setters ********************** //
     public Vector getNormal() {
-        return _normal;
+        return new Vector(_normal);
     }
     public Plane setNormal(Vector _normal) {
-        this._normal = _normal;
+        this._normal = new Vector(_normal);
         return this;
     }
     public Point3D getQ() {
-        return _Q;
+        return new Point3D(this._Q);
     }
     public Plane setQ(Point3D _Q) {
-        this._Q = _Q;
+        this._Q = new Point3D(_Q);
         return this;
     }
-
 
     // ***************** Operations ******************** //
     @Override
     public Vector getNormal(Point3D point) {
-        return _normal;
+        return new Vector(_normal);
     }
 
-    //todo implement
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
+        //todo implement
         return null;
     }
 }
