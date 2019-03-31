@@ -8,9 +8,9 @@ public abstract class Geometry {
     private double _nShininess = 1;
     private Color _emmission = new Color(0, 0, 0);
 
-//    public abstract List<Point3D> FindIntersections (Ray ray);
-
+    public abstract java.util.List<Point3D> FindIntersections (Ray ray);
     public abstract Vector getNormal(Point3D point);
+
 //    public double getShininess();
 //    public Material getMaterial();
 //    public Color getEmmission();
