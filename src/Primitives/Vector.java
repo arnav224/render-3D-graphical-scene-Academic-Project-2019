@@ -1,5 +1,5 @@
 package Primitives;
-import static Primitives.Util.*;
+//import static Primitives.Util.*;
 
 public class Vector implements Comparable<Vector>{
     private Point3D _head;
@@ -23,15 +23,15 @@ public class Vector implements Comparable<Vector>{
     public Vector(double xHead, double yHead, double zHead){
         this._head = new Point3D(xHead, yHead, zHead);
     }
-    public Vector(Point3D p1, Point3D p2){
+/*    public Vector(Point3D p1, Point3D p2){
         this._head = new Point3D(p1);
         this._head.subtract(new Vector(p2));
+    }*/
+    public Vector(Point3D p1, Point3D p2){
+        this._head = new Point3D(p1.getX().subtract(p2.getX()),
+                p1.getY().subtract(p2.getY()),
+                p1.getZ().subtract(p2.getZ()));
     }
-//    public Vector(Point3D p1, Point3D p2){
-//        this._head = new Point3D(p1.getX().subtract(p2.getX()),
-//                p1.getY().subtract(p2.getY()),
-//                p1.getZ().subtract(p2.getZ()));
-//    }
 
     // ***************** Getters/Setters ********************** //
     public Point3D getHead() {
@@ -78,12 +78,14 @@ public class Vector implements Comparable<Vector>{
      * add method in Point3D class.
      **************************************************/
 
+/*
     public void add (Vector vector ) {
         this._head.add(vector);// = this._head.add(vector);
     }
-    //public Vector add (Vector vector ){
-    //    return new Vector(this._head.add(vector));
-    //}
+*/
+    public Vector add (Vector vector ){
+        return new Vector(this._head.add(vector));
+    }
 
     /*************************************************
      * FUNCTION
@@ -95,9 +97,13 @@ public class Vector implements Comparable<Vector>{
      * SEE ALSO
      * subtract method in Point3D class.
      **************************************************/
-    public void subtract (Vector vector){
+    /*public void subtract (Vector vector){
         this._head.subtract(vector);
+    }*/
+    public Vector subtract (Vector vector){
+        return new Vector(this._head.subtract(vector));
     }
+
     /*************************************************
      * FUNCTION
      * scale
@@ -108,10 +114,15 @@ public class Vector implements Comparable<Vector>{
      * SEE ALSO
      * scale method in Coordinate class.
      **************************************************/
-    public void scale(double scalingFactor){
+    /*public void scale(double scalingFactor){
         this._head = new Point3D(uscale(_head.getX().getCoordinate(), scalingFactor),
                 uscale(_head.getY().getCoordinate(), scalingFactor),
                 uscale(_head.getZ().getCoordinate(), scalingFactor));
+    }*/
+    public Vector scale(double scalingFactor){
+        return new Vector(new Point3D(_head.getX().getCoordinate().scale(scalingFactor),
+                _head.getY().getCoordinate().scale(scalingFactor),
+                _head.getZ().getCoordinate().scale(scalingFactor)));
     }
     /*************************************************
      * FUNCTION
@@ -125,18 +136,16 @@ public class Vector implements Comparable<Vector>{
      * SEE ALSO
      * usubtract, uscale in Util class.
      **************************************************/
-    public Vector crossProduct(Vector vector){
+    /*public Vector crossProduct(Vector vector){
         return new Vector(usubtract(uscale(this._head.getY().getCoordinate(), (vector._head.getZ().getCoordinate())), uscale(this._head.getZ().getCoordinate(), (vector._head.getY().getCoordinate()))),
                 usubtract(uscale(this._head.getZ().getCoordinate(), (vector._head.getX().getCoordinate())), uscale(this._head.getX().getCoordinate(), (vector._head.getZ().getCoordinate()))),
                 usubtract(uscale(this._head.getX().getCoordinate(), (vector._head.getY().getCoordinate())), uscale(this._head.getY().getCoordinate(), (vector._head.getX().getCoordinate()))));
-    }
-/*
+    }*/
     public Vector crossProduct(Vector vector){
         return new Vector(this._head.getY().multiply(vector._head.getZ()).subtract(this._head.getZ().multiply(vector._head.getY())).getCoordinate(),
                 this._head.getZ().multiply(vector._head.getX()).subtract(this._head.getX().multiply(vector._head.getZ())).getCoordinate(),
                 this._head.getX().multiply(vector._head.getY()).subtract(this._head.getY().multiply(vector._head.getX())).getCoordinate());
     }
-*/
     /*************************************************
      * FUNCTION
      * length
@@ -154,10 +163,15 @@ public class Vector implements Comparable<Vector>{
      * MEANING
      * Normalizes the vector.
      **************************************************/
-    public void normalize() {
+    /*public void normalize() {
         if (Primitives.Util.isZero(this.length()))
             throw new ArithmeticException();
         this.scale(1 / this.length());
+    }*/
+    public Vector normalize() {
+        if (Primitives.Util.isZero(this.length()))
+            throw new ArithmeticException();
+        return this.scale(1 / this.length());
     }
     /*************************************************
      * FUNCTION
