@@ -105,8 +105,14 @@ public class Point2D implements Comparable<Point2D>{
      *  double - the distance  between the tow points.
      ***********************************/
     public double distance(Point2D point2D){
+        return   Math.sqrt(Math.pow(usubtract(this.getX().getCoordinate(), point2D.getX().getCoordinate()), 2)
+                + Math.sqrt(Math.pow(usubtract(this.getY().getCoordinate(), point2D.getY().getCoordinate()), 2)));
+    }
+/*todo
+    public double distance(Point2D point2D){
         return Math.sqrt(Math.pow(this._x.subtract(point2D._x).getCoordinate(), 2) + Math.pow(this._y.subtract(point2D._y).getCoordinate(), 2));
     }
+*/
 
     /**********************************
      * FUNCTION

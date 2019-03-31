@@ -10,25 +10,34 @@ public class Vector implements Comparable<Vector>{
         this._head = new Point3D();
     }
     public Vector(Point3D _head) {
+        Point3D zeroPoint = new Point3D();
+        if (zeroPoint.equals(_head))
+            throw new IllegalArgumentException();
         this._head = new Point3D(_head);
     }
     public Vector(Vector _vector) {
+        if (_vector.equals(new Vector()))
+            throw new IllegalArgumentException();
         this._head = new Point3D(_vector._head);
     }
     public Vector(double xHead, double yHead, double zHead){
         this._head = new Point3D(xHead, yHead, zHead);
     }
     public Vector(Point3D p1, Point3D p2){
-        this._head = new Point3D(p1.getX().subtract(p2.getX()),
-                p1.getY().subtract(p2.getY()),
-                p1.getZ().subtract(p2.getZ()));
+        this._head = new Point3D(p1);
+        this._head.subtract(new Vector(p2));
     }
+//    public Vector(Point3D p1, Point3D p2){
+//        this._head = new Point3D(p1.getX().subtract(p2.getX()),
+//                p1.getY().subtract(p2.getY()),
+//                p1.getZ().subtract(p2.getZ()));
+//    }
 
     // ***************** Getters/Setters ********************** //
-    public Point3D get_head() {
+    public Point3D getHead() {
         return new Point3D(_head);
     }
-    public void set_head(Point3D _head) {
+    public void setHead(Point3D _head) {
         this._head = new Point3D(_head);
     }
 
@@ -147,7 +156,7 @@ public class Vector implements Comparable<Vector>{
      **************************************************/
     public void normalize() {
         if (Primitives.Util.isZero(this.length()))
-            throw new IllegalArgumentException();
+            throw new ArithmeticException();
         this.scale(1 / this.length());
     }
     /*************************************************
