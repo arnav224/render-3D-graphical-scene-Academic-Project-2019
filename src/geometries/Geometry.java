@@ -1,14 +1,14 @@
 package geometries;
 import Primitives.*;
-import java.awt.*;
-
+import java.awt.Color;
+import java.util.List;
 
 public abstract class Geometry {
     private Material _material = new Material();
     private double _nShininess = 1;
     private Color _emmission = new Color(0, 0, 0);
 
-    public abstract java.util.List<Point3D> FindIntersections (Ray ray);
+    public abstract List<Point3D> FindIntersections (Ray ray);
     public abstract Vector getNormal(Point3D point);
 
 //    public double getShininess();
