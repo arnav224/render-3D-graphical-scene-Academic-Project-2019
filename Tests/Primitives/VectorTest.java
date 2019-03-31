@@ -33,7 +33,7 @@ class VectorTest {
         System.out.println("Test03: Point3D add");
         Vector vector = new Vector(1.25, -2.0, 3.0);
         Point3D instance = new Point3D(4.75, -5.0, 6.0);
-        instance.add(vector);
+        instance = instance.add(vector);
         Assertions.assertTrue( instance.compareTo(new Point3D(6.0, -7.0, 9.0)) == 0);
     }
 
@@ -42,7 +42,7 @@ class VectorTest {
         System.out.println("Test04: Point3D subtract");
         Vector vector = new Vector(1.0, 2.0, 3.0);
         Point3D instance = new Point3D(4.0, 5.0, 6.0);
-        instance.subtract(vector);
+        instance = instance.subtract(vector);
         Assertions.assertTrue(instance.compareTo(new Point3D(3.0, 3.0, 3.0)) == 0);
     }
 
@@ -63,10 +63,10 @@ class VectorTest {
         Vector v1 = new Vector(1.0, 1.0, 1.0);
         Vector v2 = new Vector(-1.0, -1.0, -1.0);
 
-        v1.add(v2);
+        v1 = v1.add(v2);
         Assertions.assertTrue(v1.compareTo(new Vector(0.0,0.0,0.0)) == 0);
 
-        v2.add(v1);
+        v2 = v2.add(v1);
         Assertions.assertTrue(v2.compareTo(v2) == 0);
     }
 
@@ -77,10 +77,10 @@ class VectorTest {
         Vector v1 = new Vector(1.0, 1.0, 1.0);
         Vector v2 = new Vector(-1.0, -1.0, -1.0);
 
-        v1.subtract(v2);
+        v1 = v1.subtract(v2);
         Assertions.assertTrue(v1.compareTo(new Vector(2.0,2.0,2.0)) == 0);
 
-        v2.subtract(v1);
+        v2 = v2.subtract(v1);
         Assertions.assertTrue(v2.compareTo(new Vector(-3.0,-3.0,-3.0)) == 0);
     }
 
@@ -90,13 +90,13 @@ class VectorTest {
 
         Vector v1 = new Vector(1.0, 1.0, 1.0);
 
-        v1.scale(1);
+        v1 = v1.scale(1);
         Assertions.assertTrue(v1.compareTo(v1) == 0);
 
-        v1.scale(2);
+        v1 = v1.scale(2);
         Assertions.assertTrue(v1.compareTo(new Vector(2.0,2.0,2.0)) == 0);
 
-        v1.scale(-2);
+        v1 = v1.scale(-2);
         Assertions.assertTrue(v1.compareTo(new Vector(-4.0,-4.0,-4.0)) == 0);
     }
 
@@ -126,7 +126,7 @@ class VectorTest {
 
         Vector v = new Vector(100,-60.781,0.0001);
         System.out.printf("Length = %f  ", v.length());
-        v.normalize();
+        v = v.normalize();
         System.out.printf("Length = %f\n", v.length());
 
         Assertions.assertEquals( 1, v.length(), 1e-10);
@@ -154,7 +154,7 @@ class VectorTest {
         Assertions.assertEquals( 0, v3.dotProduct(v1), 1e-10);
 
         Vector v4 = v2.crossProduct(v1);
-        v3.add(v4);
+        v3 = v3.add(v4);
         Assertions.assertEquals( 0, v3.length(), 1e-10);
     }
 

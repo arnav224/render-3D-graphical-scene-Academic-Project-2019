@@ -11,8 +11,6 @@ public class Vector implements Comparable<Vector>{
     }
     public Vector(Point3D _head) {
         Point3D zeroPoint = new Point3D();
-        if (zeroPoint.equals(_head))
-            throw new IllegalArgumentException();
         this._head = new Point3D(_head);
     }
     public Vector(Vector _vector) {
@@ -120,9 +118,9 @@ public class Vector implements Comparable<Vector>{
                 uscale(_head.getZ().getCoordinate(), scalingFactor));
     }*/
     public Vector scale(double scalingFactor){
-        return new Vector(new Point3D(_head.getX().getCoordinate().scale(scalingFactor),
-                _head.getY().getCoordinate().scale(scalingFactor),
-                _head.getZ().getCoordinate().scale(scalingFactor)));
+        return new Vector(new Point3D(_head.getX().scale(scalingFactor),
+                _head.getY().scale(scalingFactor),
+                _head.getZ().scale(scalingFactor)));
     }
     /*************************************************
      * FUNCTION
@@ -186,8 +184,8 @@ public class Vector implements Comparable<Vector>{
      * multiply method in Coordinate class.
      **************************************************/
     public double dotProduct(Vector o){
-        return uscale(this._head.getX().getCoordinate(), (o._head.getX()).getCoordinate()) +
-                uscale(this._head.getY().getCoordinate(), (o._head.getY()).getCoordinate()) +
-                uscale(this._head.getZ().getCoordinate(), (o._head.getZ()).getCoordinate());
+        return this._head.getX().scale(o._head.getX().getCoordinate()).getCoordinate() +
+                this._head.getY().scale(o._head.getY().getCoordinate()).getCoordinate() +
+                this._head.getZ().scale(o._head.getZ().getCoordinate()).getCoordinate();
     }
 }
