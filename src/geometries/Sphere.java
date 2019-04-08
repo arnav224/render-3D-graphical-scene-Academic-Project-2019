@@ -45,7 +45,7 @@ public class Sphere extends RadialGeometry {
     // ***************** Operations ******************** //
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        return point.subtract(this._center).normalize();
     }
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
