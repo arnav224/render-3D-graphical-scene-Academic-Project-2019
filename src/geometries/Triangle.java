@@ -55,9 +55,11 @@ public class Triangle extends Geometry {
 
     // ***************** Operations ******************** //
     @Override
-    public Vector getNormal(Point3D point) {
-        //todo implement
-        return null;
+    public Vector getNormal(Point3D pointNoUse) {
+        return (((this._p2.subtract(this._p1))
+                .crossProduct(this._p3.subtract(this._p1)))
+                .normalize())
+                .scale(-1);
     }
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
