@@ -11,7 +11,6 @@ public class Triangle extends Geometry {
     private Point3D _p3;
 
     // ***************** Constructors ********************** //
-
     public Triangle() {
         this._p1 = new Point3D();
         this._p2 = new Point3D();
