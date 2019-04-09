@@ -1,7 +1,7 @@
 package geometries;
 import Primitives.*;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Sphere extends RadialGeometry {
 
@@ -48,7 +48,7 @@ public class Sphere extends RadialGeometry {
         return point.subtract(this._center).normalize();
     }
     @Override
-    public List<Point3D> FindIntersections(Ray ray) {
+    public ArrayList<Point3D> FindIntersections(Ray ray) {
         return null;
     }
 }

@@ -1,7 +1,7 @@
 package geometries;
 import Primitives.*;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Triangle extends Geometry {
@@ -61,8 +61,9 @@ public class Triangle extends Geometry {
                 .normalize())
                 .scale(-1);
     }
+
     @Override
-    public List<Point3D> FindIntersections(Ray ray) {
+    public ArrayList<Point3D> FindIntersections(Ray ray) {
         //todo implement
         return null;
     }

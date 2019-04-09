@@ -1,14 +1,14 @@
 package geometries;
 import Primitives.*;
 import java.awt.Color;
-import java.util.List;
+import java.util.ArrayList;
 
-public abstract class Geometry {
+public abstract class Geometry implements Intersectable{
     private Material _material = new Material();
     private double _nShininess = 1;
     private Color _emmission = new Color(0, 0, 0);
 
-    public abstract List<Point3D> FindIntersections (Ray ray);
+    public abstract ArrayList<Point3D> FindIntersections (Ray ray);
     public abstract Vector getNormal(Point3D point);
 
 //    public double getShininess();

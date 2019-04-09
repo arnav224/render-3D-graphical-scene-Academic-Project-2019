@@ -1,6 +1,7 @@
 package geometries;
 import Primitives.*;
-import java.util.List;
+
+import java.util.ArrayList;
 
 public class Cylinder extends RadialGeometry {
     private Point3D _axisPoint;
@@ -44,7 +45,7 @@ public class Cylinder extends RadialGeometry {
     // ***************** Operations ******************** //
     //todo
     @Override
-    public List<Point3D> FindIntersections(Ray ray){
+    public ArrayList<Point3D> FindIntersections(Ray ray){
         return null;
     }
     //todo
