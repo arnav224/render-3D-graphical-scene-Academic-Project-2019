@@ -1,6 +1,7 @@
 package geometries;
 import Primitives.*;
-import java.util.List;
+
+import java.util.ArrayList;
 
 public class Plane extends Geometry {
     private Vector _normal;
@@ -46,7 +47,7 @@ public class Plane extends Geometry {
     }
 
     @Override
-    public List<Point3D> FindIntersections(Ray ray) {
+    public ArrayList<Point3D> FindIntersections(Ray ray) {
         //todo implement
         return null;
     }
