@@ -2,7 +2,6 @@ package geometries;
 import Primitives.*;
 import java.util.List;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class Triangle extends Geometry {
@@ -86,5 +85,6 @@ public class Triangle extends Geometry {
         if (signsSum == 3 || signsSum == -3)
             return intersections;
         return new ArrayList<Point3D>();
+
     }
 }

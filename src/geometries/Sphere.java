@@ -1,6 +1,8 @@
 package geometries;
 import Primitives.*;
 
+import java.util.ArrayList;
+
 import java.util.List;
 
 public class Sphere extends RadialGeometry {
@@ -49,6 +51,23 @@ public class Sphere extends RadialGeometry {
     }
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
-        return null;
+        List<Point3D> point3DS = new ArrayList<>();
+        Point3D P0 = ray.getPOO();
+        Vector V = ray.getDirection();
+        Vector L = this._center.subtract(P0);
+        double tm = L.dotProduct(V);
+        double d = Math.sqrt(Math.pow(L.length(),2) - Math.pow(tm,2));
+        double r = this.getRadius();
+        if (d >= r)
+            return point3DS;
+        double th = Math.sqrt(Math.pow(r,2) - Math.pow(d,2));
+        double t1 = tm - th;
+        double t2 = tm + th;
+        if (t1 >= 0)
+            point3DS.add(new Point3D(P0.add(V.scale(t1))));
+        if (t2 >= 0)
+            point3DS.add(new Point3D(P0.add(V.scale(t2))));
+        //לבדוק מה קורה כששתי הנקודות שוות todo
+        return point3DS;
     }
 }
