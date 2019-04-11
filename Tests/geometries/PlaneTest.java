@@ -40,7 +40,8 @@ class PlaneTest {
             }
         }
         assertTrue(intersectionPointsPlane. size() == 9);
-        assertTrue(intersectionPointsPlane2.size() == 9);
+        assertEquals(9, intersectionPointsPlane2.size());
+        //assertTrue(intersectionPointsPlane2.size() == 9);
         for (Point3D iPoint: intersectionPointsPlane)
             System.out.println(iPoint);
         System.out.println("---");
