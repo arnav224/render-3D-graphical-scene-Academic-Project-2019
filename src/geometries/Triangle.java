@@ -1,5 +1,7 @@
 package geometries;
 import Primitives.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Map;
@@ -67,7 +69,7 @@ public class Triangle extends Geometry {
         Point3D P0 = ray.getPOO();
         Vector N = this.getNormal(null);
         Plane plane = new Plane(N, this.getP3());
-        ArrayList<Point3D> intersections = plane.FindIntersections(ray);
+        List<Point3D> intersections = plane.FindIntersections(ray);
         if (intersections.size() == 0)
             return intersections;
         Vector P_P0 = intersections.get(0).subtract(P0);
