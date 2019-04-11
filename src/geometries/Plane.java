@@ -59,6 +59,9 @@ public class Plane extends Geometry {
         double t = (-1)*((this._normal).dotProduct(P0.subtract(this._Q)))/(Mechane);
         if (t >= 0)
             point3DS.add(P0.add(V.scale(t)));
+        //todo
+        else
+            t++;
         return point3DS;
     }
 }

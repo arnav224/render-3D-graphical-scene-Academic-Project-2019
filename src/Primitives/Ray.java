@@ -19,7 +19,7 @@ public class Ray {
 
     public Ray(Point3D _POO, Vector _direction) {
         this._POO = new Point3D(_POO);
-        this._direction = new Vector(_direction);
+        this._direction = new Vector(_direction).normalize();
     }
 
     // ***************** Getters/Setters ********************** //
@@ -36,6 +36,6 @@ public class Ray {
     }
 
     public void setDirection(Vector _direction) {
-        this._direction = new Vector(_direction);
+        this._direction = new Vector(_direction).normalize();
     }
 }
