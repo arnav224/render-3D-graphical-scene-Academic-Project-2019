@@ -1,8 +1,8 @@
 package geometries;
 
 import Primitives.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Intersectable {
-    ArrayList<Point3D> FindIntersections(Ray ray);
+    List<Point3D> FindIntersections(Ray ray);
 }
