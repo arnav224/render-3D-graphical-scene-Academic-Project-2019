@@ -1,6 +1,7 @@
 package geometries;
 import Primitives.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Plane extends Geometry {
@@ -48,7 +49,7 @@ public class Plane extends Geometry {
 
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
-        ArrayList<Point3D> point3DS = new ArrayList<>();
+        List<Point3D> point3DS = new ArrayList<>();
         Point3D P0 = ray.getPOO();
         Vector V = ray.getDirection();
         //Vector v = this._Q.subtract(P0); added according to the instructions.
