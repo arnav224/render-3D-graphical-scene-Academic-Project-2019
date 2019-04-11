@@ -1,7 +1,7 @@
 package geometries;
 import Primitives.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Plane extends Geometry {
     private Vector _normal;
