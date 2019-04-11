@@ -53,10 +53,10 @@ public class Plane extends Geometry {
         Point3D P0 = ray.getPOO();
         Vector V = ray.getDirection();
         //Vector v = this._Q.subtract(P0); added according to the instructions.
-        double Mechane = this._normal.dotProduct(V);
+        double Mechane = (this._normal).dotProduct(V);
         if (Mechane == 0)
             return point3DS;
-        double t = -(this._normal).dotProduct(P0.subtract(this._Q))/(Mechane);
+        double t = (-1)*((this._normal).dotProduct(P0.subtract(this._Q)))/(Mechane);
         if (t >= 0)
             point3DS.add(P0.add(V.scale(t)));
         return point3DS;
