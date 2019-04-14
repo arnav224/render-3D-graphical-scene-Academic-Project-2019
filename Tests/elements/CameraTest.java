@@ -27,7 +27,7 @@ class CameraTest {
                 System.out.println(ray.getDirection());
 // Checking z-coordinate
                 //assertTrue(Double.compare(screen[i][j].getZ().getCoordinate(), -1.0) == 0);
-                assertEquals(0, Double.compare(screen[i][j].getZ().getCoordinate(), -1.0));//output: 1
+                assertEquals(0, Double.compare(screen[i][j].getZ().getCoordinate(), -1.0));
 // Checking all options
                 double x = screen[i][j].getX().getCoordinate();
                 double y = screen[i][j].getX().getCoordinate();
