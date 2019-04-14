@@ -58,16 +58,17 @@ public class Sphere extends RadialGeometry {
         double tm = L.dotProduct(V);
         double d = Math.sqrt(Math.pow(L.length(),2) - Math.pow(tm,2));
         double r = this.getRadius();
-        if (d >= r)
+        if (d > r)
             return point3DS;
         double th = Math.sqrt(Math.pow(r,2) - Math.pow(d,2));
         double t1 = tm - th;
         double t2 = tm + th;
         if (t1 >= 0)
             point3DS.add(new Point3D(P0.add(V.scale(t1))));
+        if (d==r)
+            return point3DS;
         if (t2 >= 0)
             point3DS.add(new Point3D(P0.add(V.scale(t2))));
-        //לבדוק מה קורה כששתי הנקודות שוות todo
         return point3DS;
     }
 }

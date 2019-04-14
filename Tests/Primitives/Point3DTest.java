@@ -43,7 +43,7 @@ class Point3DTest {
         Point3D p1 = new Point3D(1,2,3);
         Point3D p2 = new Point3D(4,5,6);
         double result = p1.distance(p2);
-        Assertions.assertEquals(0, result);
+        Assertions.assertEquals(5.196152422706632, result);
 
     }
 
@@ -51,7 +51,7 @@ class Point3DTest {
     void add() {
         Point3D p1 = new Point3D(1.23, 2.34, 3.45);
         Vector vector = new Vector(1, -1.5, 2.2);
-        p1.add(vector);
+        p1 = p1.add(vector);
         Assertions.assertEquals(new Point3D(2.23, 0.84, 5.65), p1);
 
         p1 = new Point3D(1.23, 2.34, 3.45);
@@ -64,7 +64,7 @@ class Point3DTest {
     void subtract() {
         Point3D p1 = new Point3D(1.23, 2.34, 3.45);
         Vector vector = new Vector(1, -1.5, 2.2);
-        p1.subtract(vector);
+        p1 = p1.subtract(vector);
         Assertions.assertEquals(new Point3D(0.23, 3.84, 1.25), p1);
     }
 

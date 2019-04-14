@@ -76,26 +76,13 @@ public class Triangle extends Geometry {
         Vector P1_P0 = _p1.subtract(P0);
         Vector P2_P0 = _p2.subtract(P0);
         Vector P3_P0 = _p3.subtract(P0);
-        int[] signs = new int[3];
-        signs[0] = (int)Math.signum(P_P0.dotProduct(P1_P0.crossProduct(P2_P0)));
-        signs[0] = (int)Math.signum(P_P0.dotProduct(P3_P0.crossProduct(P1_P0)));
-        signs[0] = (int)Math.signum(P_P0.dotProduct(P2_P0.crossProduct(P3_P0)));
-/*
-        Vector[] N123 = new Vector[3];
-        N123[0] = P1_P0.crossProduct(P2_P0).normalize();
-        N123[1] = P3_P0.crossProduct(P1_P0).normalize();
-        N123[2] = P2_P0.crossProduct(P3_P0).normalize();
-        int signsSum = 0;
-        for (Vector vector : N123) {
-            signsSum += P_P0.dotProduct(vector) > 0 ? 1 : -1;
-        }
-        if (signsSum == 3 || signsSum == -3)
+        int sign1 = (int)Math.signum(P_P0.dotProduct(P1_P0.crossProduct(P2_P0)));
+        int sign2 = (int)Math.signum(P_P0.dotProduct(P2_P0.crossProduct(P3_P0)));
+        int sign3 = (int)Math.signum(P_P0.dotProduct(P3_P0.crossProduct(P1_P0)));
+        if (sign1 == sign2 && sign2 == sign3)
             return intersections;
-*/
-        if (signs[0] == signs[1] && signs[1] == signs[2])
-            return intersections;
-
-        return new ArrayList<Point3D>();
+        intersections.clear();
+        return intersections;
 
     }
 }

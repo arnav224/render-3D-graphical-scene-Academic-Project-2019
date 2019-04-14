@@ -65,7 +65,7 @@ class TriangleTest {
             {
                 rays[i][j] = camera.constructRayThroughPixel
                         (WIDTH, HEIGHT, j, i, 1, 3 * WIDTH, 3 * HEIGHT);
-                List<Point3D> rayIntersectionPoints = triangle. FindIntersections(rays[i][j]);
+                List<Point3D> rayIntersectionPoints = triangle.FindIntersections(rays[i][j]);
                 List<Point3D> rayIntersectionPoints2 = triangle2.FindIntersections(rays[i][j]);
                 for (Point3D iPoint: rayIntersectionPoints)
                     intersectionPointsTriangle.add(iPoint);
@@ -74,7 +74,7 @@ class TriangleTest {
             }
         }
         //assertTrue(intersectionPointsTriangle. size() == 1);
-        assertEquals(1, intersectionPointsTriangle. size());//output: 0
+        assertEquals(1, intersectionPointsTriangle.size());//output: 0
         //assertTrue(intersectionPointsTriangle2.size() == 2);
         assertEquals(2, intersectionPointsTriangle2.size());//output: 0
         System.out.println("Intersection Points:");
