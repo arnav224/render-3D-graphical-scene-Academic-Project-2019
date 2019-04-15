@@ -11,6 +11,14 @@ public abstract class Geometry implements Intersectable{
     public abstract List<Point3D> FindIntersections (Ray ray);
     public abstract Vector getNormal(Point3D point);
 
+    public Color get_emmission() {
+        return _emmission;
+    }
+
+    public Geometry setEmmission(Color _emmission) {
+        this._emmission = _emmission;
+        return this;
+    }
 //    public double getShininess();
 //    public Material getMaterial();
 //    public Color getEmmission();
