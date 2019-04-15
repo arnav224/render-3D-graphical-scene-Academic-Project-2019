@@ -1,5 +1,5 @@
 package geometries;
-import Primitives.*;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;

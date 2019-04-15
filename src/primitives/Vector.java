@@ -1,5 +1,5 @@
-package Primitives;
-//import static Primitives.Util.*;
+package primitives;
+//import static primitives.Util.*;
 
 public class Vector implements Comparable<Vector>{
     private Point3D _head;
@@ -162,12 +162,12 @@ public class Vector implements Comparable<Vector>{
      * Normalizes the vector.
      **************************************************/
     /*public void normalize() {
-        if (Primitives.Util.isZero(this.length()))
+        if (primitives.Util.isZero(this.length()))
             throw new ArithmeticException();
         this.scale(1 / this.length());
     }*/
     public Vector normalize() {
-        if (Primitives.Util.isZero(this.length()))
+        if (primitives.Util.isZero(this.length()))
             throw new ArithmeticException();
         return this.scale(1 / this.length());
     }

@@ -1,5 +1,5 @@
 package elements;
-import Primitives.*;
+import primitives.*;
 
 public class Camera {
     //Eye point of the camera

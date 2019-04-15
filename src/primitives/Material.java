@@ -1,4 +1,4 @@
-package Primitives;
+package primitives;
 
 public class Material {
     private double _Kd; // Diffusion attenuation coefficient

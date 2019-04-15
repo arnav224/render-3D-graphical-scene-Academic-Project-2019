@@ -2,7 +2,7 @@ package geometries;
 
 import elements.Camera;
 import org.junit.jupiter.api.Test;
-import Primitives.*;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;

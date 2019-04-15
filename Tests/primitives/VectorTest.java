@@ -1,11 +1,7 @@
-package Primitives;
+package primitives;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.util.List;
-
-
-import static java.lang.StrictMath.sqrt;
 
 class VectorTest {
     /************************************** Point3D tests **************************************************************/

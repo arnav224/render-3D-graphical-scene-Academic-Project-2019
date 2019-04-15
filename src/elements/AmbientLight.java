@@ -1,7 +1,7 @@
 package elements;
 
-import Primitives.Point3D;
-import Primitives.Vector;
+import primitives.Point3D;
+import primitives.Vector;
 
 import java.awt.*;
 import java.util.Map;
