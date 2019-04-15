@@ -1,6 +1,6 @@
 package geometries;
 
-import Primitives.*;
+import primitives.*;
 import elements.Camera;
 import org.junit.jupiter.api.Test;
 

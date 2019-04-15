@@ -1,6 +1,6 @@
-package Primitives;
+package primitives;
 
-import static Primitives.Util.*;
+import static primitives.Util.*;
 
 public final class Coordinate implements Comparable<Coordinate> {
     protected double _coord;

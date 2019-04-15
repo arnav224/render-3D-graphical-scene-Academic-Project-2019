@@ -1,5 +1,5 @@
 package elements;
-import Primitives.*;
+import primitives.*;
 import java.awt.Color;
 
 public interface LightSource {

@@ -1,5 +1,5 @@
 package geometries;
-import Primitives.*;
+import primitives.*;
 import java.awt.Color;
 import java.util.List;
 
