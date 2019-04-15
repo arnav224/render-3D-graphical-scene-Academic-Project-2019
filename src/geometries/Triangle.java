@@ -76,6 +76,15 @@ public class Triangle extends Geometry {
         Vector P1_P0 = _p1.subtract(P0);
         Vector P2_P0 = _p2.subtract(P0);
         Vector P3_P0 = _p3.subtract(P0);
+        boolean sign1 = P_P0.dotProduct(P1_P0.crossProduct(P2_P0)) > 0;
+        boolean sign2 = P_P0.dotProduct(P2_P0.crossProduct(P3_P0)) > 0;
+        boolean sign3 = P_P0.dotProduct(P3_P0.crossProduct(P1_P0)) > 0;
+        if ((sign1 && sign2 && sign3) || !(sign1 || sign2 || sign3))
+            return intersections;
+        intersections.clear();
+        return intersections;
+
+/*
         int sign1 = (int)Math.signum(P_P0.dotProduct(P1_P0.crossProduct(P2_P0)));
         int sign2 = (int)Math.signum(P_P0.dotProduct(P2_P0.crossProduct(P3_P0)));
         int sign3 = (int)Math.signum(P_P0.dotProduct(P3_P0.crossProduct(P1_P0)));
@@ -83,6 +92,7 @@ public class Triangle extends Geometry {
             return intersections;
         intersections.clear();
         return intersections;
+*/
 
     }
 }
