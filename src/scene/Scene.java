@@ -21,25 +21,24 @@ public class Scene {
         this._background = new Color(0,0,0);
         this._screenDistance = 100;
         this._ambientLight = new AmbientLight();
-        this._camera = new Camera();
+        setCamera(new Camera());
     }
 
     public Scene(Scene scene){
-        this._background = new Color(scene._background.getRGB());
-        this._ambientLight = new AmbientLight(scene._ambientLight);
-        this._geometries = new ArrayList<Geometry>(scene._geometries);
-        this._camera = new Camera(scene._camera);
+        this._background = scene.getBackground();
+        this._ambientLight = scene.getAmbientLight();
+        this._geometries = scene._geometries;
+        this._camera = scene.getCamera();
         this._screenDistance = scene._screenDistance;
-        this._lights = new ArrayList<LightSource>(scene._lights);
+        this._lights = scene._lights;
         this._sceneName = scene._sceneName;
     }
 
-    public Scene(AmbientLight aLight, Color background,
-                 Camera camera, double screenDistance){
-        this._ambientLight = new AmbientLight(aLight);
-        this._background = new Color(background.getRGB());
-        this._camera = new Camera(camera);
-        this._screenDistance = screenDistance;
+    public Scene(AmbientLight aLight, Color background, Camera camera, double screenDistance){
+        setAmbientLight(aLight);
+        setBackground(background);
+        setCamera(camera);
+        setScreenDistance(screenDistance);
         this._geometries = new ArrayList<Geometry>();
         /*todo:
         חסר איתחול לרשימת האורות
