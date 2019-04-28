@@ -1,6 +1,8 @@
 package renderer;
         import java.awt.Color;
         import java.util.*;
+        import java.util.function.Function;
+        import java.util.function.IntFunction;
 /*import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,9 @@ import java.util.Map.Entry;*/
         import primitives.Ray;
         import primitives.Vector;
         import scene.Scene;
+
+        import static sun.nio.ch.IOStatus.normalize;
+
 public class Render
 {
     private Scene _scene;
@@ -85,10 +90,13 @@ public class Render
     private Color calcColor(Geometry geometry, Point3D point) {
         Color intensity = _scene.getAmbientLight().getIntensity();
         Color color = geometry.get_emmission();
-        return new Color(color.getRed() + intensity.getRed(),
-                color.getGreen() + intensity.getGreen(),
-                color.getBlue() + intensity.getBlue()) ;
+        IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x;
+        return new Color(MyNormalize.apply(color.getRed() + intensity.getRed()),
+                MyNormalize.apply(color.getGreen() + intensity.getGreen()),
+                MyNormalize.apply(color.getBlue() + intensity.getBlue())) ;
     }
+
+
     //private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay);
     //private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay);
     //private boolean occluded(LightSource light, Point3D point, Geometry geometry);
