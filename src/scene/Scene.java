@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+
 import elements.AmbientLight;
 import elements.Camera;
 import elements.LightSource;
@@ -98,13 +100,36 @@ public class Scene {
 
     //public Iterator<LightSource> getLightsIterator();
 
+
     @Override
     public String toString() {
-        return this._sceneName;
+        return "Scene{" +
+                ", _sceneName='" + _sceneName + '\'' +
+                "_background=" + _background +
+                ", _ambientLight=" + _ambientLight +
+                ", _geometries=" + _geometries +
+                ", _camera=" + _camera +
+                ", _screenDistance=" + _screenDistance +
+                ", _lights=" + _lights +
+                '}';
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Scene)) return false;
+        Scene scene = (Scene) o;
+        return Double.compare(scene._screenDistance, _screenDistance) == 0 &&
+                Objects.equals(_background, scene._background) &&
+                Objects.equals(_ambientLight, scene._ambientLight) &&
+                Objects.equals(_geometries, scene._geometries) &&
+                Objects.equals(_camera, scene._camera) &&
+                Objects.equals(_lights, scene._lights) &&
+                Objects.equals(_sceneName, scene._sceneName);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }
