@@ -52,11 +52,11 @@ public class Plane extends Geometry {
         List<Point3D> point3DS = new ArrayList<>();
         Point3D P0 = ray.getPOO();
         Vector V = ray.getDirection();
-        //Vector v = this._Q.subtract(P0); added according to the instructions.
+        Vector v = this._Q.subtract(P0); //added according to the instructions.
         double Mechane = (this._normal).dotProduct(V);
         if (Mechane == 0)
             return point3DS;
-        double t = (-1)*((this._normal).dotProduct(P0.subtract(this._Q)))/(Mechane);
+        double t = ((this._normal).dotProduct(v))/(Mechane);
         if (t >= 0)
             point3DS.add(P0.add(V.scale(t)));
         //todo

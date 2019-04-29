@@ -56,8 +56,16 @@ class TriangleTest {
         Triangle triangle2 = new Triangle(new Point3D( 0, 10, -2),
                 new Point3D( 1, -1, -2),
                 new Point3D(-1, -1, -2));
+        Triangle triangle3 = new Triangle(new Point3D( 4, -4, 4),
+                new Point3D( -3, 3, 5),
+                new Point3D(5, 2, 5));
+        Ray ray3 = new Ray(new Point3D(0,0,0), new Vector(0.9,1.9,4.9));
         List<Point3D> intersectionPointsTriangle = new ArrayList<Point3D>();
         List<Point3D> intersectionPointsTriangle2 = new ArrayList<Point3D>();
+        List<Point3D> intersectionPointsTriangle3 = new ArrayList<Point3D>();
+        intersectionPointsTriangle3.addAll(triangle3.FindIntersections(ray3));
+        assertEquals(1, intersectionPointsTriangle3.size());
+
         System.out.println("Camera:\n" + camera);
         for (int i = 0; i < HEIGHT; i++)
         {

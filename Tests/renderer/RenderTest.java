@@ -61,26 +61,26 @@ class RenderTest {
         scene.setScreenDistance(50);
 
         Triangle triangle1 = new Triangle(new Point3D( 150, 0, -150),
-                new Point3D(  0, 150, -50),
+                new Point3D(  0, 150, -70),
                 new Point3D( 150, 150, -50));
 
         Triangle triangle2 = new Triangle(new Point3D( 150, 0, -150),
-                new Point3D(  0, -150, -50),
+                new Point3D(  0, -150, -70),
                 new Point3D( 150,-150, -50));
 
         Triangle triangle3 = new Triangle(new Point3D(-150, 0, -150),
-                new Point3D(  0, 150, -50),
+                new Point3D(  0, 150, -70),
                 new Point3D(-150, 150, -50));
 
         Triangle triangle4 = new Triangle(new Point3D(-150, 0, -150),
-                new Point3D(  0,  -150, -50),
+                new Point3D(  0,  -150, -70),
                 new Point3D(-150, -150, -50));
 
 
-        triangle1.setEmmission(new Color (255, 137, 48));
-        triangle2.setEmmission(new Color (255, 228, 60));
-        triangle3.setEmmission(new Color (27, 144, 10));
-        triangle4.setEmmission(new Color (255, 48, 124));
+        triangle1.setEmmission(new Color (38, 26, 255));
+        triangle2.setEmmission(new Color (101, 22, 16));
+        triangle3.setEmmission(new Color (255, 66, 52));
+        triangle4.setEmmission(new Color (6, 91, 34));
 
         scene.addGeometry(triangle1);
         scene.addGeometry(triangle2);
