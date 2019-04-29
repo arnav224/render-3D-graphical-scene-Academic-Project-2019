@@ -74,6 +74,8 @@ public class Camera {
                                          double screenDist,
                                          double screenWidth,
                                          double screenHeight){
+//        if (y == 0 || x == 0) // todo temp!
+//            ;
 /*todo
 * במימוש הפונקציה יש לתת את הדעת:
  לטווח האורכים של מספר פיקסל האם מתחיל מ – - 0 או מ- 1? הרי ראינו שיש שתי נוסחאות קצת
@@ -82,6 +84,7 @@ public class Camera {
 פיקסלים אי זוגית ובניית קרן דרך פיקסלים ש x ו/או y שלהם שוה ל- 0 . הפתרון איננו תפיסת חריגה
 אלא פתרון תכנותי
 * */
+
         Point3D Pc = _P0.add(_vTo.scale(screenDist));
         double Rx = screenWidth / Nx;
         double Ry = screenHeight / Ny;
