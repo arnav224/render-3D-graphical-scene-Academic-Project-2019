@@ -1,6 +1,7 @@
 package geometries;
 import primitives.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Map;
@@ -57,6 +58,9 @@ public class Triangle extends Geometry {
     // ***************** Operations ******************** //
     @Override
     public Vector getNormal(Point3D point_NoUse) {
+//todo        Vector Normal = this._p2.subtract(this._p1).crossProduct(this._p3.subtract(this._p1));
+//        if (Normal.length() == 0)
+//
         return (((this._p2.subtract(this._p1))
                 .crossProduct(this._p3.subtract(this._p1)))
                 .normalize())
@@ -66,7 +70,15 @@ public class Triangle extends Geometry {
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
         Point3D P0 = ray.getPOO();
-        Vector N = this.getNormal(null);
+        Vector N;
+        try
+        {
+            N = this.getNormal(null);
+        }
+        catch ( ArithmeticException e)
+        {
+            return new ArrayList<>();
+        }
         Plane plane = new Plane(N, this.getP3());
         List<Point3D> intersections = plane.FindIntersections(ray);
         if (intersections.size() == 0)
@@ -86,11 +98,20 @@ public class Triangle extends Geometry {
         return intersections;
 */
 
+        if (P_P0.length() == 0)
+        {
+            intersections.clear();
+            return intersections;
+        }
+
+
         int sign1 = (int)Math.signum(P_P0.dotProduct(P1_P0.crossProduct(P2_P0)));
         int sign2 = (int)Math.signum(P_P0.dotProduct(P2_P0.crossProduct(P3_P0)));
         int sign3 = (int)Math.signum(P_P0.dotProduct(P3_P0.crossProduct(P1_P0)));
         if ((sign1 == sign2 || sign1 == 0 || sign2==0) && (sign2 == sign3 || sign2 == 0 || sign3==0) &&(sign1 == sign3 || sign1 == 0 || sign3==0) )
             return intersections;
+//        if (sign1 == sign2 && sign2 == sign3)
+//            return intersections;
         intersections.clear();
         return intersections;
 
