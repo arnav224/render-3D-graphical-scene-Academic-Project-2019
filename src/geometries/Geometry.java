@@ -7,14 +7,59 @@ public abstract class Geometry implements Intersectable{
     private Material _material = new Material();
     private double _nShininess = 1;
     private Color _emmission = new Color(0, 0, 0);
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public abstract List<Point3D> FindIntersections (Ray ray);
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public abstract Vector getNormal(Point3D point);
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Color get_emmission() {
         return _emmission;
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Geometry setEmmission(Color _emmission) {
         this._emmission = _emmission;
         return this;

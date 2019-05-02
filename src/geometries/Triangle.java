@@ -13,21 +13,69 @@ public class Triangle extends Geometry {
     private Point3D _p3;
 
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Triangle() {
         this._p1 = new Point3D();
         this._p2 = new Point3D();
         this._p3 = new Point3D();
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Triangle(Triangle triangle){
         this._p1 = triangle._p1;
         this._p2 = triangle._p2;
         this._p3 = triangle._p3;
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Triangle(Point3D _p1, Point3D _p2, Point3D _p3) {
         this._p1 = _p1;
         this._p2 = _p2;
         this._p3 = _p3;
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Triangle(Map<String, String> attributes){
         //todo implement
     }
@@ -56,6 +104,18 @@ public class Triangle extends Geometry {
     }
 
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public Vector getNormal(Point3D point_NoUse) {
 //todo        Vector Normal = this._p2.subtract(this._p1).crossProduct(this._p3.subtract(this._p1));
@@ -66,7 +126,18 @@ public class Triangle extends Geometry {
                 .normalize())
                 .scale(-1);
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
         Point3D P0 = ray.getPOO();

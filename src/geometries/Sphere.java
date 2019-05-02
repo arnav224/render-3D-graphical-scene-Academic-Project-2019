@@ -10,15 +10,50 @@ public class Sphere extends RadialGeometry {
     private Point3D _center;
 
     // ***************** Constructors ********************** //
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Sphere() {
         super(0);
         this._center = new Point3D();
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Sphere (Sphere sphere){
         super(sphere.getRadius());
         this._center = new Point3D(sphere.getCenter());
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Sphere(double _radius, Point3D _center) {
         super(_radius);
         this._center = new Point3D(_center);
@@ -45,10 +80,34 @@ public class Sphere extends RadialGeometry {
     }
 
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public Vector getNormal(Point3D point) {
         return point.subtract(this._center).normalize();
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
         List<Point3D> point3DS = new ArrayList<>();

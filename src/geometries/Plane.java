@@ -9,16 +9,52 @@ public class Plane extends Geometry {
     private Point3D _Q;
 
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     //todo Why need?
     public Plane() {
         this._normal = new Vector();
         this._Q = new Point3D();
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Plane (Plane plane){
         //todo zero-chack?
         this._normal = new Vector(plane._normal);
         this._Q = new Point3D(plane._Q);
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Plane(Vector _normal, Point3D _Q) {
         //todo zero-chack?
         this._normal = new Vector(_normal);
@@ -42,11 +78,34 @@ public class Plane extends Geometry {
     }
 
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public Vector getNormal(Point3D pointNoUse) {
         return new Vector(_normal);
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
         List<Point3D> intersectionPointsPlane = new ArrayList<Point3D>();

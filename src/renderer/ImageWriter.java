@@ -15,6 +15,18 @@ public class ImageWriter
     private String _imageName;
 
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public ImageWriter(String imageName, int width, int height, int Ny, int Nx) {
         _Nx = Nx;
         _Ny = Ny;
@@ -23,7 +35,18 @@ public class ImageWriter
         _imageName = imageName;
         _image = new BufferedImage(_imageWidth, _imageHeight, BufferedImage.TYPE_INT_RGB);
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public ImageWriter(ImageWriter imageWriter) {
         _Nx = imageWriter._Nx;
         _Ny = imageWriter._Ny;
@@ -32,7 +55,18 @@ public class ImageWriter
         _imageName = imageWriter._imageName;
         _image = new BufferedImage(_imageWidth, _imageHeight, BufferedImage.TYPE_INT_RGB);
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     // ***************** Getters/Setters ********************** //
     public int getWidth() { return _imageWidth; }
     public int getHeight() { return _imageHeight; }
@@ -51,17 +85,50 @@ public class ImageWriter
             e.printStackTrace();
         }
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public void writePixel(int xIndex, int yIndex, int r, int g, int b) {
         int rgb = new Color(r, g, b).getRGB();
         _image.setRGB(xIndex, yIndex, rgb);
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public void writePixel(int xIndex, int yIndex, int[] rgbArray) {
         int rgb = new Color(rgbArray[0], rgbArray[1], rgbArray[2]).getRGB();
         _image.setRGB(xIndex, yIndex, rgb);
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public void writePixel(int xIndex,int yIndex,Color color) {
         _image.setRGB(xIndex, yIndex, color.getRGB());
     }

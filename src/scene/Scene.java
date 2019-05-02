@@ -19,13 +19,36 @@ public class Scene {
     private String _sceneName = "scene";
 
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Scene(){
         this._background = new Color(0,0,0);
         this._screenDistance = 100;
         this._ambientLight = new AmbientLight();
         setCamera(new Camera());
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Scene(Scene scene){
         this._background = scene.getBackground();
         this._ambientLight = scene.getAmbientLight();
@@ -35,7 +58,18 @@ public class Scene {
         this._lights = scene._lights;
         this._sceneName = scene._sceneName;
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Scene(AmbientLight aLight, Color background, Camera camera, double screenDistance){
         setAmbientLight(aLight);
         setBackground(background);
@@ -88,10 +122,33 @@ public class Scene {
     }
 
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public void addGeometry(Geometry geometry){
         this._geometries.add(geometry);
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Iterator<Geometry> getGeometriesIterator(){
         return this._geometries.iterator();
     }
@@ -100,7 +157,18 @@ public class Scene {
 
     //public Iterator<LightSource> getLightsIterator();
 
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public String toString() {
         return "Scene{" +
@@ -113,7 +181,18 @@ public class Scene {
                 ", _lights=" + _lights +
                 '}';
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

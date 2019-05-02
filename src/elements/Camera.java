@@ -9,13 +9,36 @@ public class Camera {
     private Vector _vRight;
 
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Camera(){
         _P0 = new Point3D (0, 0, 10);
         _vUp = new Vector(1.0, 0.0, 0.0);
         _vTo = new Vector(0.0, 0.0, -1.0);
         _vRight = _vTo.crossProduct(_vUp).normalize();
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Camera (Camera camera)
     {
         _P0 = camera.getP0();
@@ -23,13 +46,36 @@ public class Camera {
         _vTo = camera.get_vTo();
         _vRight = camera.get_vRight();
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Camera (Point3D P0, Vector vUp, Vector vTo){
         _P0 = new Point3D(P0);
         _vUp = new Vector(vUp);
         _vTo = new Vector(vTo);
         _vRight = _vTo.crossProduct(_vUp).normalize();
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
 //  public Camera (Map<String, String> attributes(;
 
 // ***************** Getters/Setters ********************** //
@@ -64,11 +110,35 @@ public class Camera {
     }
 
     // ***************** Administration ********************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public String toString()
     {
         return "Vto: " + _vTo + "\n" + "Vup: " + _vUp + "\n" + "Vright:" + _vRight + ".";
     }
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Ray constructRayThroughPixel (int Nx, int Ny,
                                          double x, double y,
                                          double screenDist,

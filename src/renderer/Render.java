@@ -23,6 +23,18 @@ public class Render
     private ImageWriter _imageWriter;
     private final int RECURSION_LEVEL = 3;
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public Render(ImageWriter imageWriter, Scene scene){
         set_imageWriter(imageWriter);
         set_scene(scene);
@@ -51,7 +63,18 @@ public class Render
 
     // ***************** Operations ******************** //
     // Based on the 4-5 Recitations presentation of Elishai//
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public void renderImage(){
         for (int i = 0; i < _imageWriter.getHeight(); i++){
             for (int j = 0; j < _imageWriter.getWidth(); j++){
@@ -71,6 +94,19 @@ public class Render
     }
 
     //private Entry<Geometry, Point3D> findClosesntIntersection(Ray ray);
+
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public void printGrid(int interval){
         for (int i = 0; i < _imageWriter.getHeight(); i++){
             for (int j = 0; j < _imageWriter.getWidth(); j++) {
@@ -81,13 +117,36 @@ public class Render
 
 
     }
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     public void writeToImage(){
         this._imageWriter.writeToimage();
     }
 
     //private Color calcColor(Geometry geometry, Point3D point, Ray ray);
     //private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level); // Recursive
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     private Color calcColor(Geometry geometry, Point3D point) {
         Color intensity = _scene.getAmbientLight().getIntensity();
         Color color = geometry.get_emmission();
@@ -104,6 +163,19 @@ public class Render
     //private Color calcSpecularComp(double ks, Vector v, Vector normal, Vector l, double shininess, Color lightIntensity);
     //private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity);
     //private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints);
+
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     private Map.Entry<Geometry, List<Point3D>> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints) {
         double distance = Double.MAX_VALUE;
         Point3D P0 = _scene.getCamera().getP0();
@@ -119,7 +191,18 @@ public class Render
         }
         return minDistancePoint;
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     private Map<Geometry, List<Point3D>> getSceneRayIntersections(Ray ray){
         Iterator<Geometry> geometries = _scene.getGeometriesIterator();
         Map<Geometry, List<Point3D>> intersectionPoints = new HashMap<Geometry, List<Point3D>>();
@@ -134,11 +217,34 @@ public class Render
 
     //private Color addColors(Color a, Color b);
 
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
-
+    /*************************************************
+     * FUNCTION
+     *
+     * PARAMETERS
+     *
+     * RETURN VALUE
+     *
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public String toString() {
         return "scene: " + _scene.toString() + "imageWriter: " + _imageWriter.toString();
