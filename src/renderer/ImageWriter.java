@@ -7,8 +7,8 @@ import javax.imageio.ImageIO;
 
 public class ImageWriter
 {
-    private int _imageWidth;
-    private int _imageHeight;
+    private int _imageWidth; // image Width
+    private int _imageHeight; // image Height
     private int _Ny, _Nx;
     final String PROJECT_PATH = System.getProperty("user.dir");
     private BufferedImage _image;
@@ -17,15 +17,9 @@ public class ImageWriter
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * ImageWriter
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Initializing fields.
      **************************************************/
     public ImageWriter(String imageName, int width, int height, int Ny, int Nx) {
         _Nx = Nx;
@@ -37,15 +31,11 @@ public class ImageWriter
     }
     /*************************************************
      * FUNCTION
-     *
+     * ImageWriter
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * ImageWriter
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * copy Constructor.
      **************************************************/
     public ImageWriter(ImageWriter imageWriter) {
         _Nx = imageWriter._Nx;
@@ -55,18 +45,7 @@ public class ImageWriter
         _imageName = imageWriter._imageName;
         _image = new BufferedImage(_imageWidth, _imageHeight, BufferedImage.TYPE_INT_RGB);
     }
-    /*************************************************
-     * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
-     * MEANING
-     *
-     * SEE ALSO
-     *
-     **************************************************/
+
     // ***************** Getters/Setters ********************** //
     public int getWidth() { return _imageWidth; }
     public int getHeight() { return _imageHeight; }
@@ -76,9 +55,16 @@ public class ImageWriter
     public void setNx(int _Nx) { this._Nx = _Nx; }
 
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     * writeToimage
+     * MEANING
+     * Write the image to a file.
+     **************************************************/
     public void writeToimage() {
         File outFile = new File(PROJECT_PATH + "/" + _imageName + ".jpg");
-        try {
+        try
+        {
             ImageIO.write(_image, "jpg", outFile);
         }
         catch (IOException e) {
@@ -87,15 +73,12 @@ public class ImageWriter
     }
     /*************************************************
      * FUNCTION
-     *
+     * writePixel
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * 2 ints - indexes of a pixel.
+     * 3 ints - color.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * write one pixel to the buffer.
      **************************************************/
     public void writePixel(int xIndex, int yIndex, int r, int g, int b) {
         int rgb = new Color(r, g, b).getRGB();
@@ -103,15 +86,12 @@ public class ImageWriter
     }
     /*************************************************
      * FUNCTION
-     *
+     * writePixel
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * 2 ints - indexes of a pixel.
+     * int[] - array of red, green, blue.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * write one pixel to the buffer.
      **************************************************/
     public void writePixel(int xIndex, int yIndex, int[] rgbArray) {
         int rgb = new Color(rgbArray[0], rgbArray[1], rgbArray[2]).getRGB();
@@ -119,15 +99,12 @@ public class ImageWriter
     }
     /*************************************************
      * FUNCTION
-     *
+     * writePixel
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * 2 ints - indexes of a pixel.
+     * Color - color.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * write one pixel to the buffer.
      **************************************************/
     public void writePixel(int xIndex,int yIndex,Color color) {
         _image.setRGB(xIndex, yIndex, color.getRGB());

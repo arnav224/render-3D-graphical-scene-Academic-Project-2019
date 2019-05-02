@@ -11,25 +11,19 @@ import elements.LightSource;
 import geometries.Geometry;
 public class Scene {
     private Color _background;
-    private AmbientLight _ambientLight;
-    private List<Geometry> _geometries = new ArrayList<Geometry>();
+    private AmbientLight _ambientLight; // ambient Light
+    private List<Geometry> _geometries = new ArrayList<Geometry>(); // a list of geometries
     private Camera _camera;
-    private double _screenDistance;
-    private List<LightSource> _lights = new ArrayList<LightSource>();
-    private String _sceneName = "scene";
+    private double _screenDistance; // The camera distance from the screen.
+    private List<LightSource> _lights = new ArrayList<LightSource>(); // lights
+    private String _sceneName = "scene"; // scene Name
 
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * Scene
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * default Constructor
      **************************************************/
     public Scene(){
         this._background = new Color(0,0,0);
@@ -39,15 +33,11 @@ public class Scene {
     }
     /*************************************************
      * FUNCTION
-     *
+     * Scene
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * Scene
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * copy Constructor
      **************************************************/
     public Scene(Scene scene){
         this._background = scene.getBackground();
@@ -60,15 +50,12 @@ public class Scene {
     }
     /*************************************************
      * FUNCTION
-     *
+     * Scene
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * AmbientLight, Color, Camera,
+     * double - screenDistance
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Initializing fields.
      **************************************************/
     public Scene(AmbientLight aLight, Color background, Camera camera, double screenDistance){
         setAmbientLight(aLight);
@@ -124,30 +111,22 @@ public class Scene {
     // ***************** Operations ******************** //
     /*************************************************
      * FUNCTION
-     *
+     * addGeometry
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * Geometry
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * add Geometry to the geometries' list.
      **************************************************/
     public void addGeometry(Geometry geometry){
         this._geometries.add(geometry);
     }
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
+     * getGeometriesIterator
      * RETURN VALUE
-     *
+     * Iterator<Geometry>
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * return iterator of geometries' list.
      **************************************************/
     public Iterator<Geometry> getGeometriesIterator(){
         return this._geometries.iterator();
@@ -159,15 +138,7 @@ public class Scene {
 
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
-     * MEANING
-     *
-     * SEE ALSO
-     *
+     * toString
      **************************************************/
     @Override
     public String toString() {
@@ -183,15 +154,7 @@ public class Scene {
     }
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
-     * MEANING
-     *
-     * SEE ALSO
-     *
+     * equals
      **************************************************/
     @Override
     public boolean equals(Object o) {

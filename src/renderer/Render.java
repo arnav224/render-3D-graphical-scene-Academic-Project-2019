@@ -19,21 +19,17 @@ import java.util.Map.Entry;*/
 
 public class Render
 {
-    private Scene _scene;
-    private ImageWriter _imageWriter;
+    private Scene _scene; // An object that describes the scene.
+    private ImageWriter _imageWriter; // Object to write the image.
     private final int RECURSION_LEVEL = 3;
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
-     *
+     * Render
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * ImageWriter, Scene.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Initializing fields.
      **************************************************/
     public Render(ImageWriter imageWriter, Scene scene){
         set_imageWriter(imageWriter);
@@ -62,29 +58,29 @@ public class Render
     }
 
     // ***************** Operations ******************** //
-    // Based on the 4-5 Recitations presentation of Elishai//
+
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * renderImage
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * This function operates the rendering of the image. Calculates each pixel in the image.
      **************************************************/
     public void renderImage(){
         for (int i = 0; i < _imageWriter.getHeight(); i++){
             for (int j = 0; j < _imageWriter.getWidth(); j++){
+
+                /* Receiving the ray that crosses the pixel */
                 Ray ray = _scene.getCamera().constructRayThroughPixel(_imageWriter.getNx(),
                         _imageWriter.getNy(), i, j,_scene.getScreenDistance(), _imageWriter.getWidth(),
                         _imageWriter.getHeight());
+
+                // Receiving intersection points
                 Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);
+
                 if (intersectionPoints.isEmpty())
-                    _imageWriter.writePixel(i, j, _scene.getBackground());
+                    _imageWriter.writePixel(i, j, _scene.getBackground()); // Write the pixel with a background color.
                 else{
+                    /* Find a closest Point and write the pixel. */
                     Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
                     if (closestPoint != null)
                         _imageWriter.writePixel(i, j, calcColor(closestPoint.getKey(), closestPoint.getValue().get(0)));
@@ -97,15 +93,11 @@ public class Render
 
     /*************************************************
      * FUNCTION
-     *
+     * printGrid
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * int - interval.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Print a grid.
      **************************************************/
     public void printGrid(int interval){
         for (int i = 0; i < _imageWriter.getHeight(); i++){
@@ -119,15 +111,11 @@ public class Render
     }
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * writeToImage
      * MEANING
-     *
+     * Write the image to a file.
      * SEE ALSO
-     *
+     * writeToimage in ImageWriter class.
      **************************************************/
     public void writeToImage(){
         this._imageWriter.writeToimage();
@@ -137,20 +125,19 @@ public class Render
     //private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level); // Recursive
     /*************************************************
      * FUNCTION
-     *
+     * calcColor
      * PARAMETERS
-     *
+     * Geometry, Point3D.
      * RETURN VALUE
-     *
+     * Color - the color of the point.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Calculates the point's color.
      **************************************************/
     private Color calcColor(Geometry geometry, Point3D point) {
         Color intensity = _scene.getAmbientLight().getIntensity();
         Color color = geometry.get_emmission();
-        IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x;
+        IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
+        /* Connect all colors */
         return new Color(MyNormalize.apply(color.getRed() + intensity.getRed()),
                 MyNormalize.apply(color.getGreen() + intensity.getGreen()),
                 MyNormalize.apply(color.getBlue() + intensity.getBlue())) ;
@@ -166,24 +153,22 @@ public class Render
 
     /*************************************************
      * FUNCTION
-     *
+     * getClosestPoint
      * PARAMETERS
-     *
+     * Map<Geometry, List<Point3D>> - Pairs of geometries and points along the ray.
      * RETURN VALUE
-     *
+     * Map.Entry<Geometry, List<Point3D>> - closest point and its Geometry.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Calculates the closest point to the camera.
      **************************************************/
     private Map.Entry<Geometry, List<Point3D>> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints) {
         double distance = Double.MAX_VALUE;
-        Point3D P0 = _scene.getCamera().getP0();
+        Point3D P0 = _scene.getCamera().getP0(); // camera center.
         Map.Entry<Geometry, List<Point3D>> minDistancePoint = null;
         for (Map.Entry<Geometry, List<Point3D>> entry: intersectionPoints.entrySet()) {
             for (Point3D point: entry.getValue()) {
                 if (P0.distance(point) < distance) {
-                    minDistancePoint = entry;
+                    minDistancePoint = entry; // We found a closer point.
                     distance = P0.distance(point);
                 }
             }
@@ -193,15 +178,13 @@ public class Render
     }
     /*************************************************
      * FUNCTION
-     *
+     * getSceneRayIntersections
      * PARAMETERS
-     *
+     * Ray
      * RETURN VALUE
-     *
+     * Map<Geometry, List<Point3D>> - Pairs of geometries and points along the ray.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Find intersection points for each of the geometries in the scene.
      **************************************************/
     private Map<Geometry, List<Point3D>> getSceneRayIntersections(Ray ray){
         Iterator<Geometry> geometries = _scene.getGeometriesIterator();
@@ -219,31 +202,17 @@ public class Render
 
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
-     * MEANING
-     *
-     * SEE ALSO
-     *
+     * equals
      **************************************************/
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (obj instanceof Render)
+            return _scene.equals(((Render) obj)._scene) && _imageWriter.equals(((Render) obj)._imageWriter);
+        return false;
     }
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
-     * MEANING
-     *
-     * SEE ALSO
-     *
+     * toString
      **************************************************/
     @Override
     public String toString() {
