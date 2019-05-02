@@ -12,58 +12,42 @@ public class AmbientLight extends Light implements LightSource {
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * AmbientLight
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Initializes the color field to black
      **************************************************/
     public AmbientLight(){
         super(0,0,0);
     }
     /*************************************************
      * FUNCTION
-     *
+     * AmbientLight
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * AmbientLight
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * copy constructor
      **************************************************/
     public AmbientLight(AmbientLight aLight){
         super(aLight.getColor());
     }
     /*************************************************
      * FUNCTION
-     *
+     * AmbientLight
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * 3 ints - initializes the color field.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Constructor
      **************************************************/
     public AmbientLight(int r, int g, int b){
         super(r, g, b);
     }
     /*************************************************
      * FUNCTION
-     *
+     * AmbientLight
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * Map<String, String> -
      * MEANING
-     *
+     * Constructor
      * SEE ALSO
      *
      **************************************************/
@@ -79,15 +63,7 @@ public class AmbientLight extends Light implements LightSource {
 
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
-     * MEANING
-     *
-     * SEE ALSO
-     *
+     * toString
      **************************************************/
     @Override
     public String toString() {
@@ -98,15 +74,7 @@ public class AmbientLight extends Light implements LightSource {
     }
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
-     * MEANING
-     *
-     * SEE ALSO
-     *
+     * equals
      **************************************************/
     @Override
     public boolean equals(Object o) {
@@ -118,15 +86,13 @@ public class AmbientLight extends Light implements LightSource {
 
     /*************************************************
      * FUNCTION
-     *
+     * getIntensity
      * PARAMETERS
-     *
+     * Point3D - not in use
      * RETURN VALUE
-     *
+     * Color
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Calculates the color with the lighting
      **************************************************/
     @Override
     public Color getIntensity(Point3D point) {
@@ -134,15 +100,11 @@ public class AmbientLight extends Light implements LightSource {
     }
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
+     * getIntensity
      * RETURN VALUE
-     *
+     * Color
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Returns the color with the lighting
      **************************************************/
     public Color getIntensity() {
         return getIntensity(null);
@@ -150,11 +112,11 @@ public class AmbientLight extends Light implements LightSource {
 
     /*************************************************
      * FUNCTION
-     *
+     * getL
      * PARAMETERS
-     *
+     * Point3D -
      * RETURN VALUE
-     *
+     * Vector -
      * MEANING
      *
      * SEE ALSO

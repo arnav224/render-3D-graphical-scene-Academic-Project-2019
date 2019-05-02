@@ -5,21 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Plane extends Geometry {
-    private Vector _normal;
-    private Point3D _Q;
+    private Vector _normal; //Normal to plain
+    private Point3D _Q; //Any point on the plane
 
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
-     *
-     * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * Plane
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Initializing fields
      **************************************************/
     //todo Why need?
     public Plane() {
@@ -28,32 +22,24 @@ public class Plane extends Geometry {
     }
     /*************************************************
      * FUNCTION
-     *
+     * Plane
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * Plane
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * copy Constructor
      **************************************************/
-    public Plane (Plane plane){
+    public Plane(Plane plane){
         //todo zero-chack?
         this._normal = new Vector(plane._normal);
         this._Q = new Point3D(plane._Q);
     }
     /*************************************************
      * FUNCTION
-     *
+     * Plane
      * PARAMETERS
-     *
-     * RETURN VALUE
-     *
+     * Vector, Point3D
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Initializing fields
      **************************************************/
     public Plane(Vector _normal, Point3D _Q) {
         //todo zero-chack?
@@ -80,15 +66,13 @@ public class Plane extends Geometry {
     // ***************** Operations ******************** //
     /*************************************************
      * FUNCTION
-     *
+     * getNormal
      * PARAMETERS
-     *
+     * Point3D
      * RETURN VALUE
-     *
+     * Vector
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * finding the Normal from the Plane.
      **************************************************/
     @Override
     public Vector getNormal(Point3D pointNoUse) {
@@ -96,28 +80,27 @@ public class Plane extends Geometry {
     }
     /*************************************************
      * FUNCTION
-     *
+     * FindIntersections
      * PARAMETERS
-     *
+     * Ray - A ray from the view plane.
      * RETURN VALUE
-     *
+     * List<Point3D> - The intersection points.
      * MEANING
-     *
-     * SEE ALSO
-     *
+     * Finding intersection points with the Plane.
      **************************************************/
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
         List<Point3D> intersectionPointsPlane = new ArrayList<Point3D>();
-        Point3D P0 = ray.getPOO();
+        Point3D P0 = ray.getPOO(); // The beginning of the ray.
         Point3D Q0 = this.getQ();
         Vector N = this.getNormal(null);
         Vector V = ray.getDirection();
         Vector v = new Vector(Q0, P0);
-        double t = -N.dotProduct(v)/(N.dotProduct(V));
-                //-1 * N.dotProduct(v) / N.dotProduct(v);
 
-        if (t >= 0) {
+        //'t' is a parameter that will be multiplied by the normalized vector of the direction of the ray.
+        double t = -N.dotProduct(v)/(N.dotProduct(V));  //-1 * N.dotProduct(v) / N.dotProduct(v);
+
+        if (t >= 0) { // if t > / = 0 then the intersection point is visible from the camera's view.
 //            V.scale(t);
 //            P0.add(V);
             intersectionPointsPlane.add(P0.add(V.scale(t)));
