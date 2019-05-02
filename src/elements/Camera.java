@@ -92,6 +92,8 @@ public class Camera {
         Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx )).subtract(_vUp.scale((y-Ny/2)*Ry));
         //Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx + Rx/2)).subtract(_vUp.scale((y-Ny/2)*Ry + Ry/2)); //this is the original formula
         return new Ray(pixel, pixel.subtract(_P0).normalize());
+        //todo the ray start from?
+        //return new Ray(new Point3D(), pixel.subtract(_P0).normalize());
     //new Point3D((x-(Nx-1)/2)*Rx, (y-(Ny-1)/2)*Ry, -1*screenDist)
     }
 }

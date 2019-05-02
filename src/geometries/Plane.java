@@ -49,6 +49,24 @@ public class Plane extends Geometry {
 
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
+        List<Point3D> intersectionPointsPlane = new ArrayList<Point3D>();
+        Point3D P0 = ray.getPOO();
+        Point3D Q0 = this.getQ();
+        Vector N = this.getNormal(null);
+        Vector V = ray.getDirection();
+        Vector v = new Vector(Q0, P0);
+        double t = -N.dotProduct(v)/(N.dotProduct(V));
+                //-1 * N.dotProduct(v) / N.dotProduct(v);
+
+        if (t >= 0) {
+//            V.scale(t);
+//            P0.add(V);
+            intersectionPointsPlane.add(P0.add(V.scale(t)));
+        }
+        return intersectionPointsPlane;
+
+
+/*
         List<Point3D> point3DS = new ArrayList<>();
         Point3D P0 = ray.getPOO();
         Vector V = ray.getDirection();
@@ -58,10 +76,15 @@ public class Plane extends Geometry {
             return point3DS;
         double t = ((this._normal).dotProduct(v))/(Mechane);
         if (t >= 0)
+        {
             point3DS.add(P0.add(V.scale(t)));
-        //todo
-        else
-            t++;
+
+            Vector Normal = this.getNormal();
+            Vector tmpVector = this.getQ().subtract(P0.add(V.scale(t)));
+            double tmp = Normal.dotProduct(tmpVector);
+
+        }
         return point3DS;
+*/
     }
 }

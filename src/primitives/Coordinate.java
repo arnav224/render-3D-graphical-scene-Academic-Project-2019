@@ -121,7 +121,7 @@ public final class Coordinate implements Comparable<Coordinate> {
      **************************************************/
 
     public Coordinate add(Coordinate other) {
-        return new Coordinate(uadd(_coord, other._coord));
+        return new Coordinate(uadd(this._coord, other._coord));
     }
 
 /*

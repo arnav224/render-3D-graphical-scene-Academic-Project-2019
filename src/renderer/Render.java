@@ -63,7 +63,8 @@ public class Render
                     _imageWriter.writePixel(i, j, _scene.getBackground());
                 else{
                     Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
-                    _imageWriter.writePixel(i, j, calcColor(closestPoint.getKey(), closestPoint.getValue().get(0)));
+                    if (closestPoint != null)
+                        _imageWriter.writePixel(i, j, calcColor(closestPoint.getKey(), closestPoint.getValue().get(0)));
                 }
             }
         }

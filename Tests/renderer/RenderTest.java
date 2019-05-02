@@ -100,6 +100,31 @@ class RenderTest {
     }
 
     @Test
+    public void emmissionTest2_2()
+    {
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+
+        Triangle triangle1 = new Triangle(new Point3D( 150, 0, -150),
+                new Point3D(  0, 150, -70),
+                new Point3D( 150, 150, -50));
+
+        triangle1.setEmmission(new Color (38, 26, 255));
+
+        scene.addGeometry(triangle1);
+
+        ImageWriter imageWriter = new ImageWriter("Render test @@@@@@@@", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.printGrid(50);
+        render.writeToImage();
+
+
+    }
+
+    @Test
     public void emmissionTest3()
     {
         Scene scene = new Scene();
@@ -122,6 +147,11 @@ class RenderTest {
                 new Point3D(-50, -001, -100));
 
         ImageWriter imageWriter = new ImageWriter("Emmission test3", 500, 500, 500, 500);
+        triangle1.setEmmission(new Color (38, 26, 255));
+        triangle2.setEmmission(new Color (101, 22, 16));
+        triangle3.setEmmission(new Color (255, 66, 52));
+        triangle4.setEmmission(new Color (6, 91, 34));
+
         scene.addGeometry(triangle1);
         scene.addGeometry(triangle2);
         scene.addGeometry(triangle3);

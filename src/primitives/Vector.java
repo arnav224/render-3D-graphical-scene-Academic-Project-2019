@@ -26,9 +26,9 @@ public class Vector implements Comparable<Vector>{
         this._head.subtract(new Vector(p2));
     }*/
     public Vector(Point3D p1, Point3D p2){
-        this._head = new Point3D(p1.getX().subtract(p2.getX()),
-                p1.getY().subtract(p2.getY()),
-                p1.getZ().subtract(p2.getZ()));
+        this._head = new Point3D(p2.getX().subtract(p1.getX()),
+                p2.getY().subtract(p1.getY()),
+                p2.getZ().subtract(p1.getZ()));
     }
 
     // ***************** Getters/Setters ********************** //
