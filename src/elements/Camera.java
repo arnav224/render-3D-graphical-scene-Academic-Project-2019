@@ -3,19 +3,32 @@ import primitives.*;
 
 public class Camera {
     //Eye point of the camera
-    private Point3D _P0;
-    private Vector _vUp;
-    private Vector _vTo;
-    private Vector _vRight;
+    private Point3D _P0; //center point
+    private Vector _vUp; //y-axis
+    private Vector _vTo; //-z-axis
+    private Vector _vRight; //x-axis
 
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     * Camera
+     * MEANING
+     * Default camera position initialization.
+     **************************************************/
     public Camera(){
         _P0 = new Point3D (0, 0, 10);
         _vUp = new Vector(1.0, 0.0, 0.0);
         _vTo = new Vector(0.0, 0.0, -1.0);
         _vRight = _vTo.crossProduct(_vUp).normalize();
     }
-
+    /*************************************************
+     * FUNCTION
+     * Camera
+     * PARAMETERS
+     * Camera
+     * MEANING
+     * copy constructor
+     **************************************************/
     public Camera (Camera camera)
     {
         _P0 = camera.getP0();
@@ -23,13 +36,34 @@ public class Camera {
         _vTo = camera.get_vTo();
         _vRight = camera.get_vRight();
     }
-
+    /*************************************************
+     * FUNCTION
+     * Camera
+     * PARAMETERS
+     * Point3D, Vector, Vector.
+     * RETURN VALUE
+     * Camera
+     * MEANING
+     * Camera position initialization.
+     **************************************************/
     public Camera (Point3D P0, Vector vUp, Vector vTo){
         _P0 = new Point3D(P0);
         _vUp = new Vector(vUp);
         _vTo = new Vector(vTo);
         _vRight = _vTo.crossProduct(_vUp).normalize();
     }
+    /*************************************************
+     * FUNCTION
+     * Camera
+     * PARAMETERS
+     * Map<String, String> -
+     * RETURN VALUE
+     * Camera
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
 //  public Camera (Map<String, String> attributes(;
 
 // ***************** Getters/Setters ********************** //
@@ -64,16 +98,34 @@ public class Camera {
     }
 
     // ***************** Administration ********************** //
+    /*************************************************
+     * FUNCTION
+     * toString
+     **************************************************/
     public String toString()
     {
         return "Vto: " + _vTo + "\n" + "Vup: " + _vUp + "\n" + "Vright:" + _vRight + ".";
     }
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     * constructRayThroughPixel
+     * PARAMETERS
+     * 2 ints -
+     * 2 doubles -
+     * 3 doubles -
+     * RETURN VALUE
+     * Ray -
+     * MEANING
+     * todo
+     * SEE ALSO
+     *
+     **************************************************/
     public Ray constructRayThroughPixel (int Nx, int Ny,
                                          double x, double y,
                                          double screenDist,
                                          double screenWidth,
-                                         double screenHeight){
+                                         double screenHeight){ //todo: to green
 //        if (y == 0 || x == 0) // todo temp!
 //            ;
 /*todo

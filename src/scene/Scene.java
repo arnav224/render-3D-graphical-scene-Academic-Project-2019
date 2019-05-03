@@ -11,21 +11,34 @@ import elements.LightSource;
 import geometries.Geometry;
 public class Scene {
     private Color _background;
-    private AmbientLight _ambientLight;
-    private List<Geometry> _geometries = new ArrayList<Geometry>();
+    private AmbientLight _ambientLight; // ambient Light
+    private List<Geometry> _geometries = new ArrayList<Geometry>(); // a list of geometries
     private Camera _camera;
-    private double _screenDistance;
-    private List<LightSource> _lights = new ArrayList<LightSource>();
-    private String _sceneName = "scene";
+    private double _screenDistance; // The camera distance from the screen.
+    private List<LightSource> _lights = new ArrayList<LightSource>(); // lights
+    private String _sceneName = "scene"; // scene Name
 
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     * Scene
+     * MEANING
+     * default Constructor
+     **************************************************/
     public Scene(){
         this._background = new Color(0,0,0);
         this._screenDistance = 100;
         this._ambientLight = new AmbientLight();
         setCamera(new Camera());
     }
-
+    /*************************************************
+     * FUNCTION
+     * Scene
+     * PARAMETERS
+     * Scene
+     * MEANING
+     * copy Constructor
+     **************************************************/
     public Scene(Scene scene){
         this._background = scene.getBackground();
         this._ambientLight = scene.getAmbientLight();
@@ -35,7 +48,15 @@ public class Scene {
         this._lights = scene._lights;
         this._sceneName = scene._sceneName;
     }
-
+    /*************************************************
+     * FUNCTION
+     * Scene
+     * PARAMETERS
+     * AmbientLight, Color, Camera,
+     * double - screenDistance
+     * MEANING
+     * Initializing fields.
+     **************************************************/
     public Scene(AmbientLight aLight, Color background, Camera camera, double screenDistance){
         setAmbientLight(aLight);
         setBackground(background);
@@ -88,10 +109,25 @@ public class Scene {
     }
 
     // ***************** Operations ******************** //
+    /*************************************************
+     * FUNCTION
+     * addGeometry
+     * PARAMETERS
+     * Geometry
+     * MEANING
+     * add Geometry to the geometries' list.
+     **************************************************/
     public void addGeometry(Geometry geometry){
         this._geometries.add(geometry);
     }
-
+    /*************************************************
+     * FUNCTION
+     * getGeometriesIterator
+     * RETURN VALUE
+     * Iterator<Geometry>
+     * MEANING
+     * return iterator of geometries' list.
+     **************************************************/
     public Iterator<Geometry> getGeometriesIterator(){
         return this._geometries.iterator();
     }
@@ -100,7 +136,10 @@ public class Scene {
 
     //public Iterator<LightSource> getLightsIterator();
 
-
+    /*************************************************
+     * FUNCTION
+     * toString
+     **************************************************/
     @Override
     public String toString() {
         return "Scene{" +
@@ -113,7 +152,10 @@ public class Scene {
                 ", _lights=" + _lights +
                 '}';
     }
-
+    /*************************************************
+     * FUNCTION
+     * equals
+     **************************************************/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

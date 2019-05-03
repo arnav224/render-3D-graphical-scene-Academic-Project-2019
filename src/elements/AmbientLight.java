@@ -8,18 +8,49 @@ import java.util.Map;
 import java.util.Objects;
 
 public class AmbientLight extends Light implements LightSource {
-    private final double _Ka = 0.1;
+    private final double _Ka = 0.1; //light intensity
     // ***************** Constructors ********************** //
+    /*************************************************
+     * FUNCTION
+     * AmbientLight
+     * MEANING
+     * Initializes the color field to black
+     **************************************************/
     public AmbientLight(){
         super(0,0,0);
     }
+    /*************************************************
+     * FUNCTION
+     * AmbientLight
+     * PARAMETERS
+     * AmbientLight
+     * MEANING
+     * copy constructor
+     **************************************************/
     public AmbientLight(AmbientLight aLight){
         super(aLight.getColor());
     }
+    /*************************************************
+     * FUNCTION
+     * AmbientLight
+     * PARAMETERS
+     * 3 ints - initializes the color field.
+     * MEANING
+     * Constructor
+     **************************************************/
     public AmbientLight(int r, int g, int b){
         super(r, g, b);
     }
-
+    /*************************************************
+     * FUNCTION
+     * AmbientLight
+     * PARAMETERS
+     * Map<String, String> -
+     * MEANING
+     * Constructor
+     * SEE ALSO
+     *
+     **************************************************/
     public AmbientLight(Map<String, String> attributes){
         //todo
     }
@@ -30,7 +61,10 @@ public class AmbientLight extends Light implements LightSource {
         return _Ka;
     }
 
-
+    /*************************************************
+     * FUNCTION
+     * toString
+     **************************************************/
     @Override
     public String toString() {
         return "AmbientLight{" +
@@ -38,7 +72,10 @@ public class AmbientLight extends Light implements LightSource {
                 "_Ka=" + _Ka +
                 '}';
     }
-
+    /*************************************************
+     * FUNCTION
+     * equals
+     **************************************************/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,16 +84,44 @@ public class AmbientLight extends Light implements LightSource {
         return Double.compare(that._Ka, _Ka) == 0 && this._color.equals(((AmbientLight) o).getColor());
     }
 
-
+    /*************************************************
+     * FUNCTION
+     * getIntensity
+     * PARAMETERS
+     * Point3D - not in use
+     * RETURN VALUE
+     * Color
+     * MEANING
+     * Calculates the color with the lighting
+     **************************************************/
     @Override
     public Color getIntensity(Point3D point) {
         return new Color((int)_Ka * _color.getRed(), (int)_Ka * _color.getGreen(), (int)_Ka * _color.getBlue());
     }
+    /*************************************************
+     * FUNCTION
+     * getIntensity
+     * RETURN VALUE
+     * Color
+     * MEANING
+     * Returns the color with the lighting
+     **************************************************/
     public Color getIntensity() {
         return getIntensity(null);
     }
 
-
+    /*************************************************
+     * FUNCTION
+     * getL
+     * PARAMETERS
+     * Point3D -
+     * RETURN VALUE
+     * Vector -
+     * MEANING
+     *
+     * SEE ALSO
+     *
+     **************************************************/
     @Override
     public Vector getL(Point3D point) {
         //todo
