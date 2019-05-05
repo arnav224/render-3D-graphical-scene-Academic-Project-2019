@@ -15,6 +15,7 @@ class CameraTest {
 //    public void testRaysConstruction(){
 //        final int WIDTH = 3;
 //        final int HEIGHT = 3;
+    //אצפ
 //        Point3D[][] screen = new Point3D [HEIGHT][WIDTH];
 //        Camera camera = new Camera(new Point3D(0.0 ,0.0 ,0.0),
 //                new Vector (0.0, 1.0, 0.0),
