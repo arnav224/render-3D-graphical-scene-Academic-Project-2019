@@ -98,9 +98,6 @@ public class Triangle extends Geometry {
      **************************************************/
     @Override
     public Vector getNormal(Point3D point_NoUse) {
-//todo        Vector Normal = this._p2.subtract(this._p1).crossProduct(this._p3.subtract(this._p1));
-//        if (Normal.length() == 0)
-//
         return (((this._p2.subtract(this._p1))
                 .crossProduct(this._p3.subtract(this._p1))) // A cross product of 2 sides returns the normal.
                 .normalize())

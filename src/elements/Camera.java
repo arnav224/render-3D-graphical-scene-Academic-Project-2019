@@ -126,23 +126,16 @@ public class Camera {
                                          double screenDist,
                                          double screenWidth,
                                          double screenHeight){ //todo: to green
-//        if (y == 0 || x == 0) // todo temp!
-//            ;
-/*todo
-* במימוש הפונקציה יש לתת את הדעת:
- לטווח האורכים של מספר פיקסל האם מתחיל מ – - 0 או מ- 1? הרי ראינו שיש שתי נוסחאות קצת
-שונות בהתאם לערך מינימלי של מספר פיקסל.
- לעובדה שניסיון ליצור ווקטור אפס גורם חריגה ועליכם להתאים את הקוד למקרה שמדובר בכמות
-פיקסלים אי זוגית ובניית קרן דרך פיקסלים ש x ו/או y שלהם שוה ל- 0 . הפתרון איננו תפיסת חריגה
-אלא פתרון תכנותי
-* */
-
         Point3D Pc = _P0.add(_vTo.scale(screenDist));
         double Rx = screenWidth / Nx;
         double Ry = screenHeight / Ny;
         //todo add or sub
         Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx )).subtract(_vUp.scale((y-Ny/2)*Ry));
         //Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx + Rx/2)).subtract(_vUp.scale((y-Ny/2)*Ry + Ry/2)); //this is the original formula
+        if (Nx % 2 == 0)
+            pixel = pixel.add(new Vector(Rx/2,0,0));
+        if (Ny % 2 == 0)
+            pixel = pixel.add(new Vector(0,-Ry/2,0));
         return new Ray(pixel, pixel.subtract(_P0).normalize());
         //todo the ray start from?
         //return new Ray(new Point3D(), pixel.subtract(_P0).normalize());
