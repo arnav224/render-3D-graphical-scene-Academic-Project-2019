@@ -15,7 +15,12 @@ class RenderTest {
         Scene scene = new Scene();
         scene.setScreenDistance(50);
 
-        Sphere sphere = new Sphere(50, new Point3D(0.0, 0.0, -50));
+        Quadrangle quadrangle = new Quadrangle(new Point3D(-30, 0, -100),
+                new Point3D(0, 100, -100),
+                new Point3D(100, 100, -100),
+                new Point3D(0, -100, -100));
+
+        Sphere sphere = new Sphere(200, new Point3D(0.0, 0.0, -400));
         Triangle triangle1 = new Triangle(new Point3D(100, 0, -50),
                 new Point3D(0, 100, -50),
                 new Point3D(100, 100, -50));
@@ -32,12 +37,15 @@ class RenderTest {
                 new Point3D(0, -100, -50),
                 new Point3D(-100, -100, -50));
 
+        quadrangle.setEmmission(new Color(94, 255, 31));
         sphere.setEmmission(new Color(255, 50, 40));
         triangle1.setEmmission(new Color(64, 59, 255));
         triangle2.setEmmission(new Color(255, 228, 60));
         triangle3.setEmmission(new Color(255, 121, 40));
         triangle4.setEmmission(new Color(255, 48, 124));
 
+
+        scene.addGeometry(quadrangle);
         scene.addGeometry(sphere);
         scene.addGeometry(triangle1);
         scene.addGeometry(triangle2);
