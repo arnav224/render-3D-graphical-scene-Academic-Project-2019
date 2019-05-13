@@ -6,6 +6,7 @@ public class Material {
     private double _Kr; // Reflection coefficient (1 for mirror)
     private double _Kt; // Refraction coefficient (1 for transparent)
     private double _n; // Refraction index
+    private int _nShininess; // Sheen coefficient
 
     // ***************** Constructors ********************** //
     public Material()
@@ -22,7 +23,10 @@ public class Material {
         _Kr = material.getKr();
         _Kt = material.getKt();
         _n = material.getN();
+        _nShininess = material.getShininess();
     }
+
+
 
     // ***************** Getters/Setters ********************** //
 
@@ -65,4 +69,8 @@ public class Material {
     public void setN(double _n) {
         this._n = _n;
     }
+
+    public int getShininess() { return _nShininess;  }
+
+    public void setShininess(int _nShininess){this._nShininess = _nShininess;}
 }

@@ -20,11 +20,9 @@ public abstract class Light {
     public Color getColor() {
         return _color;
     }
-
-    public Light setColor(Color _color) {
+    public void setColor(Color _color) {
         this._color = _color;
-        return this;
     }
 
-    //todo        public abstract Color getIntensity();
+    public abstract Color getIntensity();
 }
