@@ -16,6 +16,6 @@ public class DirectionalLight extends Light implements LightSource {
 
     @Override
     public Color getIntensity() {
-        return new Color();
+        return super.getColor();
     }
 }

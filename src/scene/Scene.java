@@ -134,7 +134,9 @@ public class Scene {
 
     //public void addLight(LightSource light);
 
-    //public Iterator<LightSource> getLightsIterator();
+    public Iterator<LightSource> getLightsIterator() {
+        return this._lights.iterator();
+    }
 
     /*************************************************
      * FUNCTION
@@ -174,4 +176,6 @@ public class Scene {
     public int hashCode() {
         return 0;
     }
+
+
 }

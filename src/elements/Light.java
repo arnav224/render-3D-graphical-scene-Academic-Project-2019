@@ -9,7 +9,7 @@ public abstract class Light {
         this._color = new Color(0,0,0);
     }
     public Light (Color color){
-        this._color = color;
+        this._color = new Color(color.getRed());
     }
     public Light (int r, int g, int b){
         this._color = new Color(r, g, b);
@@ -18,10 +18,10 @@ public abstract class Light {
     // ***************** Getters/Setters ********************** //
 
     public Color getColor() {
-        return _color;
+        return new Color(this._color.getRGB());
     }
     public void setColor(Color _color) {
-        this._color = _color;
+        this._color = new Color(_color.getRGB());
     }
 
     public abstract Color getIntensity();
