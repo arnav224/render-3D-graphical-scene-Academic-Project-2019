@@ -136,11 +136,24 @@ public class Render
     private Color calcColor(Geometry geometry, Point3D point) {
         Color intensity = _scene.getAmbientLight().getIntensity();
         Color color = geometry.get_emmission();
+        return addColors(color,intensity);
+    }
+
+    /*************************************************
+     * FUNCTION
+     * addColors
+     * PARAMETERS
+     * color
+     * RETURN VALUE
+     * color
+     * MEANING
+     * this functions get two different color and add them one to each other
+     **************************************************/
+    private Color addColors(Color a, Color b){
         IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
-        /* Connect all colors */
-        return new Color(MyNormalize.apply(color.getRed() + intensity.getRed()),
-                MyNormalize.apply(color.getGreen() + intensity.getGreen()),
-                MyNormalize.apply(color.getBlue() + intensity.getBlue())) ;
+        return new Color(MyNormalize.apply(a.getRed() + b.getRed()),
+                         MyNormalize.apply(a.getGreen() + b.getGreen()),
+                         MyNormalize.apply(a.getBlue() + b.getBlue())) ;
     }
 
 
