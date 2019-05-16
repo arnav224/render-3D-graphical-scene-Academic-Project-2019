@@ -54,6 +54,49 @@ class RenderTest {
     }
 
     @Test
+    public void emmissionTest1() {
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+
+        Sphere sphere = new Sphere(50, new Point3D(0.0, 0.0, -50));
+        Triangle triangle1 = new Triangle(new Point3D(100, 0, -50),
+                new Point3D(0, 100, -50),
+                new Point3D(100, 100, -50));
+
+        Triangle triangle2 = new Triangle(new Point3D(100, 0, -50),
+                new Point3D(0, -100, -50),
+                new Point3D(100, -100, -50));
+
+        Triangle triangle3 = new Triangle(new Point3D(-100, 0, -50),
+                new Point3D(0, 100, -50),
+                new Point3D(-100, 100, -50));
+
+        Triangle triangle4 = new Triangle(new Point3D(-100, 0, -50),
+                new Point3D(0, -100, -50),
+                new Point3D(-100, -100, -50));
+
+        sphere.setEmmission(new Color(0, 0, 0));
+        triangle1.setEmmission(new Color(50, 255, 21));
+        triangle2.setEmmission(new Color(0, 0, 0));
+        triangle3.setEmmission(new Color(255, 49, 56));
+        triangle4.setEmmission(new Color(28, 31, 255));
+
+        scene.addGeometry(sphere);
+        scene.addGeometry(triangle1);
+        scene.addGeometry(triangle2);
+        scene.addGeometry(triangle3);
+        scene.addGeometry(triangle4);
+
+        ImageWriter imageWriter = new ImageWriter("Emmission test1", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.printGrid(50);
+        render.writeToImage();
+    }
+
+    @Test
     public void emmissionTest2() {
         Scene scene = new Scene();
         scene.setScreenDistance(50);
@@ -79,7 +122,7 @@ class RenderTest {
         triangle1.setEmmission(new Color(38, 26, 255));
         triangle2.setEmmission(new Color(101, 22, 16));
         triangle3.setEmmission(new Color(255, 66, 52));
-        triangle4.setEmmission(new Color(6, 91, 34));
+        triangle4.setEmmission(new Color(0, 0, 0));
 
 
         scene.addGeometry(triangle1);
