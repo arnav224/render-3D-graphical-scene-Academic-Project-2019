@@ -179,8 +179,8 @@ public class Render
     }
     private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity){
         //double dif = Math.abs(kd*normal.dotProduct(l));
-        int k = (int)(kd * normal.dotProduct(l));
-        return new Color(k * lightIntensity.getRed()%256, k* lightIntensity.getBlue()%256, k * lightIntensity.getGreen()%256);
+        int k = Math.abs((int)(kd * normal.dotProduct(l)));
+        return new Color((k * lightIntensity.getRed())%256, (k* lightIntensity.getBlue())%256, (k * lightIntensity.getGreen())%256);
     }
     //private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints);
 

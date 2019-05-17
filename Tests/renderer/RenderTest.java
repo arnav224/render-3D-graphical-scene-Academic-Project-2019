@@ -4,6 +4,7 @@ import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.*;
 import scene.*;
+import elements.*;
 
 import java.awt.*;
 
@@ -96,6 +97,91 @@ class RenderTest {
         render.writeToImage();
     }
 
+    @Test
+    public void emmissionTest1_1() {
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+
+        Sphere sphere = new Sphere(100, new Point3D(0.0, 0.0, -150));
+        Triangle triangle1 = new Triangle(new Point3D(600, 0, -350),
+                new Point3D(0, 600, -350),
+                new Point3D(600, 600, -350));
+
+        Triangle triangle2 = new Triangle(new Point3D(600, 0, -350),
+                new Point3D(0, -600, -350),
+                new Point3D(600, -600, -350));
+
+        Triangle triangle3 = new Triangle(new Point3D(-600, 0, -350),
+                new Point3D(0, 600, -350),
+                new Point3D(-600, 600, -350));
+
+        Triangle triangle4 = new Triangle(new Point3D(-600, 0, -350),
+                new Point3D(0, -600, -350),
+                new Point3D(-600, -600, -350));
+
+        PointLight pointLight = new PointLight(new Color(255,255,255),new Point3D(550,350,-250),0.02,0.02,0.02);
+        PointLight pointLight1 = new PointLight(new Color(255,255,255),new Point3D(50,30,-250),0.02,0.02,0.02);
+//        PointLight pointLight2 = new PointLight(new Color(255,255,255),new Point3D(200,200,-30),0.01,0.01,0.01);
+//        PointLight pointLight3 = new PointLight(new Color(255,255,255),new Point3D(50,50,-30),0.01,0.01,0.01);
+//        PointLight pointLight4 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+//        PointLight pointLight5 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+
+        sphere.setEmmission(new Color(255, 50, 40));
+        triangle1.setEmmission(new Color(64, 59, 255));
+        triangle2.setEmmission(new Color(0, 0, 0));
+        triangle3.setEmmission(new Color(255, 121, 40));
+        triangle4.setEmmission(new Color(255, 48, 124));
+
+        scene.addGeometry(sphere);
+        scene.addGeometry(triangle1);
+        scene.addGeometry(triangle2);
+        scene.addGeometry(triangle3);
+        scene.addGeometry(triangle4);
+        scene.addLight(pointLight);
+        scene.addLight(pointLight1);
+//        scene.addLight(pointLight2);
+//        scene.addLight(pointLight3);
+
+        ImageWriter imageWriter = new ImageWriter("Emmission test1_1", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.printGrid(50);
+        render.writeToImage();
+    }
+    @Test
+    public void emmissionTest1_2() {
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+
+        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -550));
+
+
+        PointLight pointLight = new PointLight(new Color(0,255,255),new Point3D(50,50,50),0.02,0.02,0.02);
+        PointLight pointLight1 = new PointLight(new Color(255,255,0),new Point3D(50,30,-250),0.02,0.02,0.02);
+//        PointLight pointLight2 = new PointLight(new Color(255,255,255),new Point3D(200,200,-30),0.01,0.01,0.01);
+//        PointLight pointLight3 = new PointLight(new Color(255,255,255),new Point3D(50,50,-30),0.01,0.01,0.01);
+//        PointLight pointLight4 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+//        PointLight pointLight5 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+
+        sphere.setEmmission(new Color(88, 55, 255));
+
+
+        scene.addGeometry(sphere);
+        scene.addLight(pointLight);
+        scene.addLight(pointLight1);
+//        scene.addLight(pointLight2);
+//        scene.addLight(pointLight3);
+
+        ImageWriter imageWriter = new ImageWriter("Emmission test1_2", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.printGrid(50);
+        render.writeToImage();
+    }
     @Test
     public void emmissionTest2() {
         Scene scene = new Scene();

@@ -132,11 +132,9 @@ public class Scene {
         return this._geometries.iterator();
     }
 
-    //public void addLight(LightSource light);
+    public void addLight(LightSource light){this._lights.add(light);}
 
-    public Iterator<LightSource> getLightsIterator() {
-        return this._lights.iterator();
-    }
+    public Iterator<LightSource> getLightsIterator() { return this._lights.iterator(); }
 
     /*************************************************
      * FUNCTION
