@@ -156,10 +156,10 @@ class RenderTest {
         scene.setScreenDistance(50);
 
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -550));
+        Plane plane = new Plane(new Vector(0,0, -1), new Point3D(0,0, -100));
 
-
-        PointLight pointLight = new PointLight(new Color(0,255,255),new Point3D(50,50,50),0.02,0.02,0.02);
-        PointLight pointLight1 = new PointLight(new Color(255,255,0),new Point3D(50,30,-250),0.02,0.02,0.02);
+        PointLight pointLight = new PointLight(new Color(0,255,255),new Point3D(50,50,-10),0,0.5,0);
+        //PointLight pointLight1 = new PointLight(new Color(255,255,0),new Point3D(50,30,-250),0.2,0.1,0.1);
 //        PointLight pointLight2 = new PointLight(new Color(255,255,255),new Point3D(200,200,-30),0.01,0.01,0.01);
 //        PointLight pointLight3 = new PointLight(new Color(255,255,255),new Point3D(50,50,-30),0.01,0.01,0.01);
 //        PointLight pointLight4 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
@@ -168,9 +168,10 @@ class RenderTest {
         sphere.setEmmission(new Color(88, 55, 255));
 
 
-        scene.addGeometry(sphere);
+        //scene.addGeometry(sphere);
+        scene.addGeometry(plane);
         scene.addLight(pointLight);
-        scene.addLight(pointLight1);
+        //scene.addLight(pointLight1);
 //        scene.addLight(pointLight2);
 //        scene.addLight(pointLight3);
 
@@ -289,6 +290,39 @@ class RenderTest {
         render.printGrid(50);
         render.writeToImage();
 
+    }
+
+    @Test
+    public void emmissionTest_spotLight() {
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+
+        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -550));
+
+
+        SpotLight SpotLight = new SpotLight(new Color(0,255,255),new Point3D(50,50,-10),new Vector(20, 10, -50),0,0.5,0);
+        //PointLight pointLight1 = new PointLight(new Color(255,255,0),new Point3D(50,30,-250),0.2,0.1,0.1);
+//        PointLight pointLight2 = new PointLight(new Color(255,255,255),new Point3D(200,200,-30),0.01,0.01,0.01);
+//        PointLight pointLight3 = new PointLight(new Color(255,255,255),new Point3D(50,50,-30),0.01,0.01,0.01);
+//        PointLight pointLight4 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+//        PointLight pointLight5 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+
+        sphere.setEmmission(new Color(88, 55, 255));
+
+
+        scene.addGeometry(sphere);
+        scene.addLight(SpotLight);
+        //scene.addLight(pointLight1);
+//        scene.addLight(pointLight2);
+//        scene.addLight(pointLight3);
+
+        ImageWriter imageWriter = new ImageWriter("emmissionTest_spotLight", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.printGrid(50);
+        render.writeToImage();
     }
 
     @Test

@@ -15,10 +15,17 @@ public class SpotLight extends PointLight{
     // ***************** Getters/Setters ********************** //
     public Color getIntensity(Point3D point){
         double d = point.distance(_position);
-        double coefficient = this._direction.dotProduct(new Vector(this._position, point).normalize())/(_Kc * _Kl * d * _Kq * Math.pow(d,2));
+        double coefficient = this._direction.dotProduct(new Vector(this._position, point).normalize())/(_Kc + _Kl * d + _Kq * Math.pow(d,2));
+        if(coefficient > 1) { coefficient = 1; }
         Color I0 = this.getIntensity();
         return new Color((int)(I0.getRed()*coefficient),
                 (int)(I0.getGreen()*coefficient),
                 (int)(I0.getBlue()*coefficient));
     }
+
+    @Override
+    public Vector getL(Point3D point){
+        return new Vector(this._position, point);
+    }
+
 }
