@@ -16,7 +16,7 @@ public class AmbientLight extends Light{
      * Initializes the color field to black
      **************************************************/
     public AmbientLight(){
-        super(0,0,0);
+        super(255,255,255);
     }
     /*************************************************
      * FUNCTION
@@ -74,7 +74,7 @@ public class AmbientLight extends Light{
      * Calculates the color with the lighting
      **************************************************/
     public Color getIntensity(Point3D point) {
-        return new Color((int)_Ka * _color.getRed(), (int)_Ka * _color.getGreen(), (int)_Ka * _color.getBlue());
+        return new Color((int)(_Ka * _color.getRed()), (int)(_Ka * _color.getGreen()), (int)(_Ka * _color.getBlue()));
     }
     /*************************************************
      * FUNCTION
@@ -84,6 +84,7 @@ public class AmbientLight extends Light{
      * MEANING
      * Returns the color with the lighting
      **************************************************/
+    @Override
     public Color getIntensity() {
         return getIntensity(null);
     }

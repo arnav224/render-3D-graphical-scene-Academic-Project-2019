@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;*/
         import elements.LightSource;
-        import geometries.FlatGeometry;
-        import geometries.Geometry;
-        import primitives.Point3D;
-        import primitives.Ray;
+        import geometries.*;
+        import primitives.*;
         import primitives.Vector;
         import scene.Scene;
 
+        import static javafx.scene.input.KeyCode.R;
         import static sun.nio.ch.IOStatus.normalize;
 
 public class Render
@@ -134,34 +133,55 @@ public class Render
      * Calculates the point's color.
      **************************************************/
     private Color calcColor(Geometry geometry, Point3D point) {
-        Color intensity = _scene.getAmbientLight().getIntensity();
-        Color color = geometry.get_emmission();
-        return addColors(color,intensity);
-    }
+        Color ambientLight = _scene.getAmbientLight().getIntensity(point);
+        Color emissionLight = geometry.get_emmission();
+        //IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
+        Iterator<LightSource> lights = _scene.getLightsIterator();
+        Color diffuseLight = new Color(0,0,0);
+        Color specularLight = new Color(0,0,0);
+        while (lights.hasNext()) {
+            LightSource lightSource = lights.next();
+            diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
+                    geometry.getNormal(point),
+                    lightSource.getL(point),
+                    lightSource.getIntensity(point)), diffuseLight);
+            specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
+                    new Vector(point, _scene.getCamera().getP0()),
+                    geometry.getNormal(point),
+                    lightSource.getL(point),
+                    geometry.getMaterial().getShininess(),
+                    lightSource.getIntensity(point)), specularLight);
+        }
 
-    /*************************************************
-     * FUNCTION
-     * addColors
-     * PARAMETERS
-     * color
-     * RETURN VALUE
-     * color
-     * MEANING
-     * this functions get two different color and add them one to each other
-     **************************************************/
-    private Color addColors(Color a, Color b){
-        IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
-        return new Color(MyNormalize.apply(a.getRed() + b.getRed()),
-                         MyNormalize.apply(a.getGreen() + b.getGreen()),
-                         MyNormalize.apply(a.getBlue() + b.getBlue())) ;
+        /* Connect all colors */
+        return addColors(addColors(ambientLight, emissionLight), addColors(diffuseLight, specularLight)) ;
     }
 
 
     //private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay);
     //private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay);
     //private boolean occluded(LightSource light, Point3D point, Geometry geometry);
-    //private Color calcSpecularComp(double ks, Vector v, Vector normal, Vector l, double shininess, Color lightIntensity);
-    //private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity);
+    private Color calcSpecularComp(double ks, Vector v, Vector normal, Vector l, double shininess, Color lightIntensity){
+//        Vector r = new Vector(normal);
+//        r.scale(-2*normal.dotProduct(l));
+//        r.add(l);
+//        r.normalize();
+//        v.normalize();
+//        double specular = ks*Math.pow(r.dotProduct(v),shininess);
+//        if(specular < 0)
+//        {specular *= -1;}
+//        return new Color((int)(lightIntensity.getRed()* specular)%256 ,
+//                (int)(lightIntensity.getGreen()*specular)%256,
+//                (int)(lightIntensity.getBlue()*specular)%256);
+        Vector R = l.subtract(normal.scale(l.dotProduct(normal) * 2)).normalize();
+        int k = (int)(ks * Math.pow(R.dotProduct(v.normalize()),shininess));
+        return new Color(k * lightIntensity.getRed()%256, k* lightIntensity.getBlue()%256, k * lightIntensity.getGreen()%256);
+    }
+    private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity){
+        //double dif = Math.abs(kd*normal.dotProduct(l));
+        int k = Math.abs((int)(kd * normal.dotProduct(l)));
+        return new Color((k * lightIntensity.getRed())%256, (k* lightIntensity.getBlue())%256, (k * lightIntensity.getGreen())%256);
+    }
     //private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints);
 
     /*************************************************
@@ -211,7 +231,12 @@ public class Render
         return intersectionPoints;
     }
 
-    //private Color addColors(Color a, Color b);
+    private Color addColors(Color a, Color b){
+        IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
+        return new Color(MyNormalize.apply(a.getRed() + b.getRed()),
+                MyNormalize.apply(a.getGreen() + b.getGreen()),
+                MyNormalize.apply(a.getBlue() + b.getBlue())) ;
+    }
 
     /*************************************************
      * FUNCTION
