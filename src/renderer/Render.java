@@ -143,7 +143,7 @@ public class Render
         Color specularLight = new Color(0,0,0);
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
-            if (!occlu♦ded(lightSource, point, geometry)) {
+            if (!occluded(lightSource, point, geometry)) {
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
                         geometry.getNormal(point),
                         lightSource.getL(point),
