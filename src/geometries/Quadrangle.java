@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Quadrangle extends Geometry {
+public class Quadrangle extends Geometry implements FlatGeometry{
     private Triangle _tri1;
     private Triangle _tri2;
 
