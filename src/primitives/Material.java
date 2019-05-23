@@ -16,6 +16,7 @@ public class Material {
         _Kr = 0;
         _Kt = 0;
         _n = 1;
+        _nShininess = 19;
     }
     public Material(Material material){
         _Kd = material.getKd();
