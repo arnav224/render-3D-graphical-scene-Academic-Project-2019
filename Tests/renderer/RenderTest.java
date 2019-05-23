@@ -151,6 +151,35 @@ class RenderTest {
         render.writeToImage();
     }
     @Test
+    public void directoinaiTest() {
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+
+        Plane plane = new Plane(new Vector(0,0,-100),new Point3D(0,0,-20));
+
+
+        DirectionalLight directionalLight = new DirectionalLight(new Color(0,255,255),new Vector(0,0,-1));
+//        PointLight pointLight2 = new PointLight(new Color(255,255,255),new Point3D(200,200,-30),0.01,0.01,0.01);
+//        PointLight pointLight3 = new PointLight(new Color(255,255,255),new Point3D(50,50,-30),0.01,0.01,0.01);
+//        PointLight pointLight4 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+//        PointLight pointLight5 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+
+
+
+        scene.addGeometry(plane);
+        scene.addLight(directionalLight);
+//        scene.addLight(pointLight2);
+//        scene.addLight(pointLight3);
+
+        ImageWriter imageWriter = new ImageWriter("directoinaiTest", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.printGrid(50);
+        render.writeToImage();
+    }
+    @Test
     public void emmissionTest1_2() {
         Scene scene = new Scene();
         scene.setScreenDistance(50);
@@ -181,8 +210,7 @@ class RenderTest {
         render.renderImage();
         render.printGrid(50);
         render.writeToImage();
-    }
-    @Test
+    }    @Test
     public void emmissionTest2() {
         Scene scene = new Scene();
         scene.setScreenDistance(50);

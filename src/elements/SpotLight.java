@@ -21,4 +21,10 @@ public class SpotLight extends PointLight{
                 (int)(I0.getGreen()*coefficient),
                 (int)(I0.getBlue()*coefficient));
     }
+
+    @Override
+    public Vector getL(Point3D point){
+        return new Vector(this._position, point);
+    }
+
 }
