@@ -11,8 +11,8 @@ public class Material {
     // ***************** Constructors ********************** //
     public Material()
     {
-        _Kd = 1;
-        _Ks = 1;
+        _Kd = 10;
+        _Ks = 100;
         _Kr = 0;
         _Kt = 0;
         _n = 1;

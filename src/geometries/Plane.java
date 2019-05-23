@@ -4,7 +4,7 @@ import primitives.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plane extends Geometry {
+public class Plane extends Geometry implements FlatGeometry{
     private Vector _normal; //Normal to plain
     private Point3D _Q; //Any point on the plane
 

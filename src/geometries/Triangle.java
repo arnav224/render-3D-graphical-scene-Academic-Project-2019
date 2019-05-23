@@ -6,7 +6,7 @@ import java.util.List;
 
 import java.util.Map;
 
-public class Triangle extends Geometry {
+public class Triangle extends Geometry implements FlatGeometry{
     /* Three vertices of the triangle */
     private Point3D _p1;
     private Point3D _p2;
