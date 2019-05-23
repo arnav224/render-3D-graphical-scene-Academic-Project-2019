@@ -143,6 +143,7 @@ public class Render
         Color specularLight = new Color(0,0,0);
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
+
             if (!occluded(lightSource, point, geometry)) {
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
                         geometry.getNormal(point),
@@ -157,6 +158,7 @@ public class Render
 
             }
         }
+
         /* Connect all colors */
         return addColors(addColors(ambientLight, emissionLight), addColors(diffuseLight, specularLight)) ;
     }
@@ -179,21 +181,25 @@ public class Render
 //                (int)(lightIntensity.getBlue()*specular)%256);
         Vector R = l.subtract(normal.scale(l.dotProduct(normal) * 2)).normalize();
         int k = (int)(ks * Math.pow(R.dotProduct(v.normalize()),shininess));
+
         return new Color(MyNormalize.apply(k * lightIntensity.getRed()),
                 MyNormalize.apply(k * lightIntensity.getGreen()),
                 MyNormalize.apply(k * lightIntensity.getBlue())) ;
 
 //        return new Color(k * lightIntensity.getRed()%256, k* lightIntensity.getBlue()%256, k * lightIntensity.getGreen()%256);
 
+
     }
     private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity){
         //double dif = Math.abs(kd*normal.dotProduct(l));
         int k = Math.abs((int)(kd * normal.dotProduct(l)));
+
         return new Color(MyNormalize.apply(k * lightIntensity.getRed()),
                 MyNormalize.apply(k * lightIntensity.getGreen()),
                 MyNormalize.apply(k * lightIntensity.getBlue())) ;
 
 //        return new Color((k * lightIntensity.getRed())%256, (k* lightIntensity.getBlue())%256, (k * lightIntensity.getGreen())%256);
+
     }
     //private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints);
 

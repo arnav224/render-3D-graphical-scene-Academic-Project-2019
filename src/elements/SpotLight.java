@@ -16,6 +16,7 @@ public class SpotLight extends PointLight{
     public Color getIntensity(Point3D point){
 
 
+
         Color pointLightColor = super.getIntensity(point);
 
         Vector l = super.getL(point);
@@ -41,6 +42,7 @@ public class SpotLight extends PointLight{
 //        return new Color((int)(I0.getRed()*coefficient),
 //                (int)(I0.getGreen()*coefficient),
 //                (int)(I0.getBlue()*coefficient));
+
     }
 
     @Override

@@ -51,6 +51,7 @@ public abstract class Geometry implements Intersectable{
         return this;
     }
 
+
     public Material getMaterial(){
         return new Material(this._material);
     }
@@ -61,6 +62,7 @@ public abstract class Geometry implements Intersectable{
     public double getShininess(){
         return this._nShininess;
     }
+
 
 //    public Color getEmmission();
 //    public void setMaterial(Material _material);
