@@ -21,11 +21,9 @@ public class PointLight extends Light implements LightSource {
     public Color getIntensity(Point3D point){
         double d = point.distance(_position);
 
+//        double coefficient = 1/(_Kc * (_Kl * d) * (_Kq*Math.pow(d,2)));
         double coefficient = 1 / (_Kc + _Kl * d + _Kq * Math.pow(d,2));
         if(coefficient > 1) { coefficient = 1; }
-//        if(coefficient < 0) {
-//            coefficient = 0;
-//        }
 
         Color I0 = this.getIntensity();
         return new Color((int)(I0.getRed()*coefficient),

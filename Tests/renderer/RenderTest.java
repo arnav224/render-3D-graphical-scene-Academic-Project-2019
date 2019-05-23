@@ -370,11 +370,19 @@ class RenderTest {
     public void shadowTest(){
 
         Scene scene = new Scene();
-        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
+        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -750));
         sphere.setShininess(20);
         sphere.setEmmission(new Color(0, 0, 100));
 
         scene.addGeometry(sphere);
+
+//        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -1000),
+//                new Point3D( -3500, -3500, -100),
+//                new Point3D(  3500, -3500, -1000));
+//
+//        Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -1000),
+//                new Point3D( -3500,  3500, -500),
+//                new Point3D( -3500, -3500, -100));
 
         Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
                 new Point3D( -3500, -3500, -1000),
@@ -383,7 +391,8 @@ class RenderTest {
         Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -2000),
                 new Point3D( -3500,  3500, -1000),
                 new Point3D( -3500, -3500, -1000));
-
+        triangle1.setEmmission( new Color(121, 107, 87));
+        triangle2.setEmmission( new Color(121, 107, 87));
         scene.addGeometry(triangle1);
         scene.addGeometry(triangle2);
 

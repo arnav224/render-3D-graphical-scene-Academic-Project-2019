@@ -16,7 +16,7 @@ public class AmbientLight extends Light{
      * Initializes the color field to black
      **************************************************/
     public AmbientLight(){
-        super(255,255,255);
+        super(0,0,0);
     }
     /*************************************************
      * FUNCTION

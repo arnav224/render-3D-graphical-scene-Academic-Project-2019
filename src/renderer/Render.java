@@ -144,7 +144,7 @@ public class Render
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
 
-            if (!occluded(lightSource, point, geometry)) {
+            if (true || !occluded(lightSource, point, geometry)) {
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
                         geometry.getNormal(point),
                         lightSource.getL(point),
