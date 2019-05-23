@@ -50,12 +50,21 @@ public abstract class Geometry implements Intersectable{
         this._emmission = _emmission;
         return this;
     }
-//    public double getShininess();
+
+
     public Material getMaterial(){
         return new Material(this._material);
     }
+
+    public void setShininess(double n){
+        this._nShininess = n;
+    }
+    public double getShininess(){
+        return this._nShininess;
+    }
+
+
 //    public Color getEmmission();
-//    public void setShininess(double n);
 //    public void setMaterial(Material _material);
 //    public void setEmmission(Color emmission);
 //    public void setKs(double ks);

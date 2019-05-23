@@ -18,6 +18,8 @@ import java.util.Map.Entry;*/
 
 public class Render
 {
+    IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
+
     private Scene _scene; // An object that describes the scene.
     private ImageWriter _imageWriter; // Object to write the image.
     private final int RECURSION_LEVEL = 3;
@@ -141,16 +143,20 @@ public class Render
         Color specularLight = new Color(0,0,0);
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
-            diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
-                    geometry.getNormal(point),
-                    lightSource.getL(point),
-                    lightSource.getIntensity(point)), diffuseLight);
-            specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
-                    new Vector(point, _scene.getCamera().getP0()),
-                    geometry.getNormal(point),
-                    lightSource.getL(point),
-                    geometry.getMaterial().getShininess(),
-                    lightSource.getIntensity(point)), specularLight);
+
+            if (!occluded(lightSource, point, geometry)) {
+                diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
+                        geometry.getNormal(point),
+                        lightSource.getL(point),
+                        lightSource.getIntensity(point)), diffuseLight);
+                specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
+                        new Vector(point, _scene.getCamera().getP0()),
+                        geometry.getNormal(point),
+                        lightSource.getL(point),
+                        geometry.getMaterial().getShininess(),
+                        lightSource.getIntensity(point)), specularLight);
+
+            }
         }
 
         /* Connect all colors */
@@ -175,12 +181,25 @@ public class Render
 //                (int)(lightIntensity.getBlue()*specular)%256);
         Vector R = l.subtract(normal.scale(l.dotProduct(normal) * 2)).normalize();
         int k = (int)(ks * Math.pow(R.dotProduct(v.normalize()),shininess));
-        return new Color(k * lightIntensity.getRed()%256, k* lightIntensity.getBlue()%256, k * lightIntensity.getGreen()%256);
+
+        return new Color(MyNormalize.apply(k * lightIntensity.getRed()),
+                MyNormalize.apply(k * lightIntensity.getGreen()),
+                MyNormalize.apply(k * lightIntensity.getBlue())) ;
+
+//        return new Color(k * lightIntensity.getRed()%256, k* lightIntensity.getBlue()%256, k * lightIntensity.getGreen()%256);
+
+
     }
     private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity){
         //double dif = Math.abs(kd*normal.dotProduct(l));
         int k = Math.abs((int)(kd * normal.dotProduct(l)));
-        return new Color((k * lightIntensity.getRed())%256, (k* lightIntensity.getBlue())%256, (k * lightIntensity.getGreen())%256);
+
+        return new Color(MyNormalize.apply(k * lightIntensity.getRed()),
+                MyNormalize.apply(k * lightIntensity.getGreen()),
+                MyNormalize.apply(k * lightIntensity.getBlue())) ;
+
+//        return new Color((k * lightIntensity.getRed())%256, (k* lightIntensity.getBlue())%256, (k * lightIntensity.getGreen())%256);
+
     }
     //private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints);
 
@@ -256,9 +275,47 @@ public class Render
     public String toString() {
         return "scene: " + _scene.toString() + "imageWriter: " + _imageWriter.toString();
     }
+
+
+    /*************************************************
+     * FUNCTION
+     * occluded
+     * PARAMETERS
+     * LightSource, point3d, Geometry
+     * RETURN VALUE
+     * boolean
+     * MEANING
+     * This function check for specific point if thers more then one object how stand in fron of him,
+     * and return true only if we have the frontal point
+     **************************************************/
+    private boolean occluded(LightSource light, Point3D point, Geometry geometry) {
+        //1. Connect the point to the light source
+        //2. Reverse the vector to point backward to the light source
+        Vector lightDirection = light.getL(point).scale(-1);
+
+        //3. the point that send the ray back
+        Point3D geometryPoint = new Point3D(point);
+
+        //3.5 Floating point corecction
+        //Vector epsVector = new Vector(0.0000001,0.0000001,0.0000001);
+        Vector epsVector = new Vector(geometry.getNormal(point)).scale(2);
+        geometryPoint = geometryPoint.add(epsVector);
+
+        //4. Construct ray from the point back to the light
+        Ray lightRay = new Ray(geometryPoint, lightDirection);
+        //5. Get all the intersection between the pint and the light source into a mao
+        Map <Geometry,List<Point3D>> intersectionPoint = getSceneRayIntersections(lightRay);
+
+        // 5.5 Flat geometry
+        if (geometry instanceof FlatGeometry){
+            intersectionPoint.remove(geometry);
+        }
+
+        //6. If the map is empty - the light goes directly to the point
+        //   Otherwise - there's something between them
+        return !intersectionPoint.isEmpty();
+    }
 }
-
-
 
 
 /*
