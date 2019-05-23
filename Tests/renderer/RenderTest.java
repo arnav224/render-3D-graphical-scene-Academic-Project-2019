@@ -180,16 +180,63 @@ class RenderTest {
         render.printGrid(50);
         render.writeToImage();
     }
-    @Test
 
+    @Test
     public void emmissionTest1_2() {
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+
+        Sphere sphere = new Sphere(75, new Point3D(0.0, 0.0, -100));
+        Triangle triangle1 = new Triangle(new Point3D(  0,  10, -41),
+                new Point3D( 25, 15, -41),
+                new Point3D(  0, -20, -41));
+
+        Plane plane = new Plane(new Vector(0,0, -1), new Point3D(0,0, -300));
+
+        PointLight pointLight = new PointLight(new Color(255, 249, 34),new Point3D(10,10,-10),0,0.8,0);
+        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(50, 50, 200),
+                new Vector(-2, -2, -3), 0, 0.0001, 0.00005));
+        //PointLight pointLight1 = new PointLight(new Color(255,255,0),new Point3D(50,30,-250),0.2,0.1,0.1);
+
+//        PointLight pointLight2 = new PointLight(new Color(255,255,255),new Point3D(200,200,-30),0.01,0.01,0.01);
+//        PointLight pointLight3 = new PointLight(new Color(255,255,255),new Point3D(50,50,-30),0.01,0.01,0.01);
+//        PointLight pointLight4 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+//        PointLight pointLight5 = new PointLight(new Color(255,255,255),new Point3D(200,50,-30),0.6,0.6,0.6);
+
+        triangle1.setEmmission(new Color(255, 93, 33));
+        sphere.setEmmission(new Color(60, 23, 137));
+        plane.setEmmission(new Color(255, 58, 199));
+
+        scene.addGeometry(triangle1);
+        scene.addGeometry(sphere);
+        scene.addGeometry(plane);
+        //scene.addLight(pointLight);
+        //scene.addLight(pointLight1);
+
+//        scene.addLight(pointLight2);
+//        scene.addLight(pointLight3);
+
+        ImageWriter imageWriter = new ImageWriter("Emmission test1_2", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.printGrid(50);
+        render.writeToImage();
+
+    }
+
+    @Test
+    public void emmissionTest1_2_3() {
         Scene scene = new Scene();
         scene.setScreenDistance(50);
 
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -550));
 
-        Plane plane = new Plane(new Vector(0,0, -1), new Point3D(0,0, -100));
-
+        Plane plane = new Plane(new Vector(0,20, -100), new Point3D(0,0, -700));
+        Triangle triangle1 = new Triangle(new Point3D(  0,  10, -10),
+                new Point3D( -20, -0, -10),
+                new Point3D(  0, -20, -10));
         PointLight pointLight = new PointLight(new Color(255, 249, 34),new Point3D(50,50,-10),0,0.8,0);
         //PointLight pointLight1 = new PointLight(new Color(255,255,0),new Point3D(50,30,-250),0.2,0.1,0.1);
 
@@ -210,7 +257,7 @@ class RenderTest {
 //        scene.addLight(pointLight2);
 //        scene.addLight(pointLight3);
 
-        ImageWriter imageWriter = new ImageWriter("Emmission test1_2", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Emmission test1_2_3", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
 
@@ -219,7 +266,28 @@ class RenderTest {
         render.writeToImage();
 
     }
+
     @Test
+    public void  spointlight () throws Exception
+    {
+        Scene scene = new Scene();
+        Sphere sphere = new Sphere( 500, new Point3D(0.0, 0.0, -1000));
+        sphere.setEmmission(new Color(241, 6, 151));
+        sphere.setShininess(20);
+        scene.addGeometry(sphere);
+
+        scene.addLight(new SpotLight(new Color(200, 200, 200), new Point3D(-250, -250, -150),
+                new Vector(2, 2, -2), 0.0001, 0.0001,0.0001));
+
+        ImageWriter imageWriter = new ImageWriter("spot tese", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        //render.printGrid(50);
+        render.writeToImage();
+
+    }
 
     public void emmissionTest2() {
         Scene scene = new Scene();
@@ -396,7 +464,7 @@ class RenderTest {
         scene.addGeometry(triangle1);
         scene.addGeometry(triangle2);
 
-        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 200, -100),
+        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(100, 100, -100),
                 new Vector(-2, -2, -3), 0, 0.0001, 0.00005));
 
 

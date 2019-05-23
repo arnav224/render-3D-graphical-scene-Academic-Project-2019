@@ -144,7 +144,7 @@ public class Render
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
 
-            if (true || !occluded(lightSource, point, geometry)) {
+            if ( !occluded(lightSource, point, geometry)) {
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
                         geometry.getNormal(point),
                         lightSource.getL(point),
@@ -291,14 +291,20 @@ public class Render
     private boolean occluded(LightSource light, Point3D point, Geometry geometry) {
         //1. Connect the point to the light source
         //2. Reverse the vector to point backward to the light source
-        Vector lightDirection = light.getL(point);//.scale(-1);
+        Vector lightDirection = light.getL(point).scale(-1);//.scale(-1);
 
         //3. the point that send the ray back
         //Point3D geometryPoint = new Point3D(point);
 
         //3.5 Floating point corecction
         //Vector epsVector = new Vector(0.0000001,0.0000001,0.0000001);
-        Vector epsVector = new Vector(geometry.getNormal(point)).scale(2);
+//        Vector normal = geometry.getNormal(point);
+//        normal.scale(normal.length())
+
+
+
+
+        Vector epsVector = new Vector(geometry.getNormal(point)).scale(0.005);
         Point3D geometryPoint = new Point3D(point).add(epsVector);
 
         //4. Construct ray from the point back to the light
