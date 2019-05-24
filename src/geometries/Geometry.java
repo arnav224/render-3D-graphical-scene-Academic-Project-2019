@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Geometry implements Intersectable{
     private Material _material = new Material();
-    private double _nShininess = 1;
+    //private double _nShininess = 1;
     private Color _emmission = new Color(0, 0, 0);
     /*************************************************
      * FUNCTION
@@ -56,19 +56,31 @@ public abstract class Geometry implements Intersectable{
         return new Material(this._material);
     }
 
-    public void setShininess(double n){
-        this._nShininess = n;
+    public void setShininess(int n){
+        this._material.setShininess(n);
     }
-    public double getShininess(){
-        return this._nShininess;
+    public int getShininess(){
+        return this._material.getShininess();
     }
 
 
-//    public Color getEmmission();
-//    public void setMaterial(Material _material);
-//    public void setEmmission(Color emmission);
-//    public void setKs(double ks);
-//    public void setKd(double kd);
-//    public void setKr(double Kr);
-//    public void setKt(double Kt);
+    public Color getEmmission(){
+        return new Color(_emmission.getRGB());
+    }
+    public void setMaterial(Material _material){
+        this._material = new Material(_material);
+    }
+
+    public void setKs(double ks){
+        this._material.setKs(ks);
+    }
+    public void setKd(double kd){
+        this._material.setKd(kd);
+    }
+    public void setKr(double Kr){
+        this._material.setKr(Kr);
+    }
+    public void setKt(double Kt){
+        this._material.setKt(Kt);
+    }
 }

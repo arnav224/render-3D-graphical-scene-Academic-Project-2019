@@ -167,24 +167,27 @@ public class Render
     //private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay);
     //private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay);
     //private boolean occluded(LightSource light, Point3D point, Geometry geometry);
-    private Color calcSpecularComp(double ks, Vector v, Vector normal, Vector l, double shininess, Color lightIntensity){
-//        Vector r = new Vector(normal);
-//        r.scale(-2*normal.dotProduct(l));
-//        r.add(l);
-//        r.normalize();
-//        v.normalize();
+    private Color calcSpecularComp(double ks, Vector v, Vector normal, Vector l, int shininess, Color lightIntensity){
+        //Vector r = new Vector(normal);
+//        r = r.scale(-2*normal.dotProduct(l));
+//        r = r.add(l);
+//        r = r.normalize();
+//        v = v.normalize();
 //        double specular = ks*Math.pow(r.dotProduct(v),shininess);
 //        if(specular < 0)
 //        {specular *= -1;}
 //        return new Color((int)(lightIntensity.getRed()* specular)%256 ,
 //                (int)(lightIntensity.getGreen()*specular)%256,
 //                (int)(lightIntensity.getBlue()*specular)%256);
-        Vector R = l.subtract(normal.scale(l.dotProduct(normal) * 2)).normalize();
-        int k = (int)(ks * Math.pow(R.dotProduct(v.normalize()),shininess));
-
-        return new Color(MyNormalize.apply(k * lightIntensity.getRed()),
-                MyNormalize.apply(k * lightIntensity.getGreen()),
-                MyNormalize.apply(k * lightIntensity.getBlue())) ;
+        v = v.normalize();
+        //l = l.normalize();
+        Vector R = (l.subtract(normal.scale(l.dotProduct(normal) * 2))).normalize();
+        double k = (ks * Math.pow(R.dotProduct(v),shininess));
+        if(k < 0)
+            k *= -1;
+        return new Color(MyNormalize.apply((int)(k * lightIntensity.getRed())),
+                MyNormalize.apply((int)(k * lightIntensity.getGreen())),
+                MyNormalize.apply((int)(k * lightIntensity.getBlue())));
 
 //        return new Color(k * lightIntensity.getRed()%256, k* lightIntensity.getBlue()%256, k * lightIntensity.getGreen()%256);
 
@@ -192,11 +195,11 @@ public class Render
     }
     private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity){
         //double dif = Math.abs(kd*normal.dotProduct(l));
-        int k = Math.abs((int)(kd * normal.dotProduct(l)));
-
-        return new Color(MyNormalize.apply(k * lightIntensity.getRed()),
-                MyNormalize.apply(k * lightIntensity.getGreen()),
-                MyNormalize.apply(k * lightIntensity.getBlue())) ;
+        double k = Math.abs(kd * normal.dotProduct(l.normalize()));
+        //return new Color(0,0,0);
+        return new Color(MyNormalize.apply((int)(k * lightIntensity.getRed())),
+                MyNormalize.apply((int)(k * lightIntensity.getGreen())),
+                MyNormalize.apply((int)(k * lightIntensity.getBlue())));
 
 //        return new Color((k * lightIntensity.getRed())%256, (k* lightIntensity.getBlue())%256, (k * lightIntensity.getGreen())%256);
 
