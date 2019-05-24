@@ -433,24 +433,45 @@ class RenderTest {
     @Test
     public void emmissionTest4() {
     }
+    @Test
+    public void shadowTest1YH() {
+        Scene scene = new Scene();
+        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -800));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(241, 6, 151));
 
+        scene.addGeometry(sphere);
+
+        Triangle triangle1 = new Triangle(new Point3D(  300,  300, -500),
+                new Point3D( -300, -300, -500),
+                new Point3D(  300, -300, -500));
+
+
+
+        scene.addGeometry(triangle1);
+
+
+        scene.addLight(new SpotLight(new Color(200, 200, 200), new Point3D(-50, 50, -300),
+                new Vector(20, 20, -80), 0.0001, 0.0001,0.0001));
+
+
+        ImageWriter imageWriter = new ImageWriter("Shadow testYH", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+
+    }
     @Test
     public void shadowTest(){
 
         Scene scene = new Scene();
-        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -750));
-        sphere.setShininess(20);
-        sphere.setEmmission(new Color(0, 0, 100));
+        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
+        sphere.setShininess(80);
+        sphere.setEmmission(new Color(0, 0, 30));
 
         scene.addGeometry(sphere);
-
-//        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -1000),
-//                new Point3D( -3500, -3500, -100),
-//                new Point3D(  3500, -3500, -1000));
-//
-//        Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -1000),
-//                new Point3D( -3500,  3500, -500),
-//                new Point3D( -3500, -3500, -100));
 
         Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
                 new Point3D( -3500, -3500, -1000),
@@ -459,13 +480,12 @@ class RenderTest {
         Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -2000),
                 new Point3D( -3500,  3500, -1000),
                 new Point3D( -3500, -3500, -1000));
-        triangle1.setEmmission( new Color(121, 107, 87));
-        triangle2.setEmmission( new Color(121, 107, 87));
+
         scene.addGeometry(triangle1);
         scene.addGeometry(triangle2);
 
-        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(100, 100, -100),
-                new Vector(-2, -2, -3), 0, 0.0001, 0.00005));
+        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 200, -100),
+                new Vector(-2, -2, -3), 0, 0.000001, 0.0000005));
 
 
         ImageWriter imageWriter = new ImageWriter("Shadow test", 500, 500, 500, 500);
@@ -536,5 +556,126 @@ class RenderTest {
         render.writeToImage();
 
     }
+
+        @Test
+        public void recursiveTest()
+        {
+            Scene scene = new Scene();
+            scene.setScreenDistance(300);
+
+            Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
+            sphere.setShininess(20);
+            sphere.setEmmission(new Color(0, 0, 100));
+            sphere.setKt(0.5);
+            scene.addGeometry(sphere);
+
+            Sphere sphere2 = new Sphere(250, new Point3D(0.0, 0.0, -1000));
+            sphere2.setShininess(20);
+            sphere2.setEmmission(new Color(100, 20, 20));
+            sphere2.setKt(0);
+            scene.addGeometry(sphere2);
+
+            scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(-200, -200, -150),
+                    new Vector(2, 2, -3), 0.1, 0.00001, 0.000005));
+
+            ImageWriter imageWriter = new ImageWriter("Recursive Test 11", 500, 500, 500, 500);
+
+            Render render = new Render(imageWriter, scene);
+
+            render.renderImage();
+            render.writeToImage();
+        }
+
+
+        @Test
+        public void recursiveTest2(){
+
+            Scene scene = new Scene();
+            scene.setScreenDistance(300);
+
+            Sphere sphere = new Sphere(300, new Point3D(-550, -500, -1000));
+            sphere.setShininess(20);
+            sphere.setEmmission(new Color(0, 0, 100));
+            sphere.setKt(0.5);
+            scene.addGeometry(sphere);
+
+            Sphere sphere2 = new Sphere(150, new Point3D(-550, -500, -1000));
+            sphere2.setShininess(20);
+            sphere2.setEmmission(new Color(100, 20, 20));
+            sphere2.setKt(0);
+            scene.addGeometry(sphere2);
+
+            Triangle triangle = new Triangle(new Point3D(  1500, -1500, -1500),
+                    new Point3D( -1500,  1500, -1500),
+                    new Point3D(  200,  200, -375));
+
+            Triangle triangle2 = new Triangle(new Point3D(  1500, -1500, -1500),
+                    new Point3D( -1500,  1500, -1500),
+                    new Point3D( -1500, -1500, -1500));
+
+            triangle.setEmmission(new Color(20, 20, 20));
+            triangle2.setEmmission(new Color(20, 20, 20));
+            triangle.setKr(1);
+            triangle2.setKr(0.5);
+            scene.addGeometry(triangle);
+            scene.addGeometry(triangle2);
+
+            scene.addLight(new SpotLight(new Color(255, 100, 100),  new Point3D(200, 200, -150),
+                    new Vector(-2, -2, -3), 0, 0.00001, 0.000005));
+
+            ImageWriter imageWriter = new ImageWriter("Recursive Test 2", 500, 500, 500, 500);
+
+            Render render = new Render(imageWriter, scene);
+
+            render.renderImage();
+            render.writeToImage();
+
+        }
+
+        @Test
+        public void recursiveTest3(){
+
+            Scene scene = new Scene();
+            scene.setScreenDistance(300);
+
+            Sphere sphere = new Sphere(300, new Point3D(0, 0, -1000));
+            sphere.setShininess(20);
+            sphere.setEmmission(new Color(0, 0, 100));
+            sphere.setKt(0.5);
+            scene.addGeometry(sphere);
+
+            Sphere sphere2 = new Sphere(150, new Point3D(0, 0, -1000));
+            sphere2.setShininess(20);
+            sphere2.setEmmission(new Color(100, 20, 20));
+            sphere2.setKt(0);
+            scene.addGeometry(sphere2);
+
+            Triangle triangle = new Triangle(new Point3D(  2000, -1000, -1500),
+                    new Point3D( -1000,  2000, -1500),
+                    new Point3D(  700,  700, -375));
+
+            Triangle triangle2 = new Triangle(new Point3D(  2000, -1000, -1500),
+                    new Point3D( -1000,  2000, -1500),
+                    new Point3D( -1000, -1000, -1500));
+
+            triangle.setEmmission(new Color(20, 20, 20));
+            triangle2.setEmmission(new Color(20, 20, 20));
+            triangle.setKr(1);
+            triangle2.setKr(0.5);
+            scene.addGeometry(triangle);
+            scene.addGeometry(triangle2);
+
+            scene.addLight(new SpotLight(new Color(255, 100, 100),  new Point3D(200, 200, -150),
+                    new Vector(-2, -2, -3), 0, 0.00001, 0.000005));
+
+            ImageWriter imageWriter = new ImageWriter("Recursive Test 3", 500, 500, 500, 500);
+
+            Render render = new Render(imageWriter, scene);
+
+            render.renderImage();
+            render.writeToImage();
+        }
+
+
 
 }
