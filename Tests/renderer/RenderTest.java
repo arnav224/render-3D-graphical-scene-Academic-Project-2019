@@ -267,6 +267,7 @@ class RenderTest {
 
     }
 
+
     @Test
     public void  spointlight () throws Exception
     {
@@ -463,6 +464,49 @@ class RenderTest {
         render.writeToImage();
 
     }
+
+    @Test
+    public void DirectionalLight(){
+
+        Scene scene = new Scene();
+        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1500));
+        sphere.setShininess(80);
+        sphere.setEmmission(new Color(143, 45, 15));
+
+        scene.addGeometry(sphere);
+        Quadrangle quadrangle = new Quadrangle(new Point3D( -2000, -2000, 0),new Point3D( -2000, 2000, 0),
+                new Point3D( -2000, -2000, -2000),new Point3D( -2000, 2000, -2000));
+        quadrangle.setEmmission(new Color(143, 76, 15));
+        scene.addGeometry(quadrangle);
+        Triangle triangle1 = new Triangle(new Point3D(  550,  0, -1500),
+                new Point3D( 450, -200, -900),
+                new Point3D(  450, 300, -850));
+        triangle1.setEmmission(new Color(218, 22, 255));
+        scene.addGeometry(triangle1);
+
+//        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
+//                new Point3D( -3500, -3500, -2000),
+//                new Point3D(  3500, -3500, -2000));
+//
+//        Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -2000),
+//                new Point3D( -3500,  3500, -2000),
+//                new Point3D( -3500, -3500, -2000));
+//        triangle2.setEmmission(new Color(14, 26, 72));
+//        triangle1.setEmmission(new Color(14, 26, 72));
+//        scene.addGeometry(triangle1);
+//        scene.addGeometry(triangle2);
+
+        scene.addLight(new DirectionalLight(new Color(255, 231, 50), new Vector(-10, -2, -1)));
+        ImageWriter imageWriter = new ImageWriter("    DirectionalLight_1", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+
+    }
+
+
     @Test
     public void shadowTest(){
 

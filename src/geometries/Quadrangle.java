@@ -11,7 +11,7 @@ public class Quadrangle extends Geometry implements FlatGeometry{
     private Triangle _tri2;
 
     public Quadrangle(Point3D p1, Point3D p2, Point3D p3, Point3D p4) {
-        _tri1 = new Triangle(p1, p2, p4);
+        _tri1 = new Triangle(p1, p2, p3);
         _tri2 = new Triangle(p2, p3, p4);
         if (_tri1.getNormal(null).crossProduct((_tri2.getNormal(null))).length() != 0)
             throw new ExceptionInInitializerError("The four points are not on the same plane");
