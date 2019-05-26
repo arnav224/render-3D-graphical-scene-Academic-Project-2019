@@ -668,6 +668,26 @@ class RenderTest {
     }
 
         @Test
+        public void QuadrangleTest(){
+            Scene scene = new Scene();
+            scene.setScreenDistance(50);
+            Quadrangle quadrangle = new Quadrangle(new Point3D(50,50,-50),new Point3D(50,-50,-50),
+                    new Point3D(-50,50,-50),new Point3D(-50,-50,-50));
+            quadrangle.setEmmission(new Color(0, 0, 100));
+            scene.addGeometry(quadrangle);
+
+            scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(-200, -200, -150),
+                    new Vector(2, 2, -3), 0.1, 0.00001, 0.000005));
+
+            ImageWriter imageWriter = new ImageWriter("QuadrangleTest1", 500, 500, 500, 500);
+
+            Render render = new Render(imageWriter, scene);
+
+            render.renderImage();
+            render.writeToImage();
+
+        }
+        @Test
         public void recursiveTest()
         {
             Scene scene = new Scene();
@@ -742,50 +762,284 @@ class RenderTest {
 
         }
 
-        @Test
-        public void recursiveTest3(){
+    @Test
+    public void recursiveTest3(){
 
-            Scene scene = new Scene();
-            scene.setScreenDistance(300);
+        Scene scene = new Scene();
+        scene.setScreenDistance(300);
 
-            Sphere sphere = new Sphere(300, new Point3D(0, 0, -1000));
-            sphere.setShininess(20);
-            sphere.setEmmission(new Color(0, 0, 100));
-            sphere.setKt(0.5);
-            scene.addGeometry(sphere);
+        Sphere sphere = new Sphere(300, new Point3D(0, 0, -1000));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(0, 0, 100));
+        sphere.setKt(0.5);
+        scene.addGeometry(sphere);
 
-            Sphere sphere2 = new Sphere(150, new Point3D(0, 0, -1000));
-            sphere2.setShininess(20);
-            sphere2.setEmmission(new Color(100, 20, 20));
-            sphere2.setKt(0);
-            scene.addGeometry(sphere2);
+        Sphere sphere2 = new Sphere(150, new Point3D(0, 0, -1000));
+        sphere2.setShininess(20);
+        sphere2.setEmmission(new Color(100, 20, 20));
+        sphere2.setKt(0);
+        scene.addGeometry(sphere2);
 
-            Triangle triangle = new Triangle(new Point3D(  2000, -1000, -1500),
-                    new Point3D( -1000,  2000, -1500),
-                    new Point3D(  700,  700, -375));
+        Triangle triangle = new Triangle(new Point3D(  2000, -1000, -1500),
+                new Point3D( -1000,  2000, -1500),
+                new Point3D(  700,  700, -375));
 
-            Triangle triangle2 = new Triangle(new Point3D(  2000, -1000, -1500),
-                    new Point3D( -1000,  2000, -1500),
-                    new Point3D( -1000, -1000, -1500));
+        Triangle triangle2 = new Triangle(new Point3D(  2000, -1000, -1500),
+                new Point3D( -1000,  2000, -1500),
+                new Point3D( -1000, -1000, -1500));
 
-            triangle.setEmmission(new Color(20, 20, 20));
-            triangle2.setEmmission(new Color(20, 20, 20));
-            triangle.setKr(1);
-            triangle2.setKr(0.5);
-            scene.addGeometry(triangle);
-            scene.addGeometry(triangle2);
+        triangle.setEmmission(new Color(20, 20, 20));
+        triangle2.setEmmission(new Color(20, 20, 20));
+        triangle.setKr(1);
+        triangle2.setKr(0.5);
+        scene.addGeometry(triangle);
+        scene.addGeometry(triangle2);
 
-            scene.addLight(new SpotLight(new Color(255, 100, 100),  new Point3D(200, 200, -150),
-                    new Vector(-2, -2, -3), 0, 0.00001, 0.000005));
+        scene.addLight(new SpotLight(new Color(255, 100, 100),  new Point3D(200, 200, -150),
+                new Vector(-2, -2, -3), 0, 0.00001, 0.000005));
 
-            ImageWriter imageWriter = new ImageWriter("Recursive Test 3", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Recursive Test 3", 500, 500, 500, 500);
 
-            Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene);
 
-            render.renderImage();
-            render.writeToImage();
-        }
+        render.renderImage();
+        render.writeToImage();
+    }
 
+    @Test
+    public void Point_1(){
+
+        Scene scene = new Scene();
+        scene.setScreenDistance(400);
+
+        Sphere sphere = new Sphere(300, new Point3D(0, 0, -1000));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(120, 47, 90));
+        sphere.setKt(0.8);
+        scene.addGeometry(sphere);
+
+        Sphere sphere2 = new Sphere(1700, new Point3D(-2000, 0, -1000));
+        sphere2.setShininess(25);
+        sphere2.setEmmission(new Color(156, 139, 34));
+        sphere2.setKt(0.2);
+        scene.addGeometry(sphere2);
+
+//        Sphere sphere3 = new Sphere(1700, new Point3D(-2030, 0, -1000));
+//        sphere3.setShininess(20);
+//        sphere3.setEmmission(new Color(155, 61, 156));
+//        sphere3.setKt(0.59);
+//        scene.addGeometry(sphere3);
+
+//        Quadrangle quadrangle = new Quadrangle(new Point3D(550,1000,0),
+//                new Point3D(-50,1000,-2000), new Point3D(550,-1000,0),new Point3D(-50,-1000,-2000));
+//        quadrangle.setEmmission(new Color(121, 104, 116));
+        //scene.addGeometry(quadrangle);
+
+        Triangle triangle = new Triangle(new Point3D(  -500, 3000, 0),
+                new Point3D( -500,  -3000, 0),
+                new Point3D(  -200,  0, -20000));
+
+
+        triangle.setEmmission(new Color(20, 20, 20));
+        triangle.setKr(1);
+        scene.addGeometry(triangle);
+
+        scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
+        scene.addLight(new PointLight(new Color(27, 255, 204), new Point3D(2300, -700, -1500),0.01, 0.00001, 0.000005));
+
+        ImageWriter imageWriter = new ImageWriter("Point_1", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+    @Test
+    public void aaaaaatest(){
+
+        Scene scene = new Scene();
+        scene.setScreenDistance(400);
+
+        Sphere sphere = new Sphere(300, new Point3D(0, 0, -1000));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(120, 47, 90));
+        sphere.setKt(0.8);
+        scene.addGeometry(sphere);
+
+        Sphere sphere2 = new Sphere(150, new Point3D(150, 200, -1000));
+        sphere2.setShininess(20);
+        sphere2.setEmmission(new Color(156, 139, 34));
+        sphere2.setKt(0.2);
+        scene.addGeometry(sphere2);
+
+//        Quadrangle quadrangle = new Quadrangle(new Point3D(550,1000,0),
+//                new Point3D(-50,1000,-2000), new Point3D(550,-1000,0),new Point3D(-50,-1000,-2000));
+//        quadrangle.setEmmission(new Color(121, 104, 116));
+        //scene.addGeometry(quadrangle);
+
+        Triangle triangle = new Triangle(new Point3D(  -1000, 3000, 0),
+                new Point3D( -1000,  -3000, 0),
+                new Point3D(  -800,  0, -8000));
+
+
+        triangle.setEmmission(new Color(20, 20, 20));
+        triangle.setKr(1);
+        scene.addGeometry(triangle);
+
+        scene.addLight(new SpotLight(new Color(255, 100, 100),  new Point3D(500, 200, -1000),
+                new Vector(-2, -2, -3), 0, 0.00001, 0.000005));
+        scene.addLight(new SpotLight(new Color(237, 171, 59),  new Point3D(350, -300, -800),
+                new Vector(-2, 5, -3), 0, 0.00001, 0.000005));
+
+        ImageWriter imageWriter = new ImageWriter("aaaaaatest", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    @Test
+    public void Table_Test() {
+
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+        scene.setBackground(new Color(2, 0, 0));
+        //scene.set_camera(new Camera(new Point3D(40,0,100),new Vector(1,0,0),new Vector(0,0,-1)));
+        //----The code of the routain , you can get a look in scene class
+        //ROUTING UP/DOWN
+        // scene.set_camera(new Camera(new Point3D(0,0,0), scene.RoutinY(scene.get_camera().get_Vup(),-45),
+        //       scene.RoutinY(scene.get_camera().get_Vto(),-45)));
+        //ROUTING AROUND
+        //scene.set_camera(new Camera(new Point3D(0,0,0), scene.RoutinX(scene.get_camera().get_Vup(),-50),
+        //       scene.RoutinX(scene.get_camera().get_Vto(),-50)));
+        //the top of table
+        Point3D Tabl_A = new Point3D(-60, -100, -51);
+        Point3D Tabl_B = new Point3D(-60, 100, -51);
+        Point3D Tabl_C = new Point3D(-80, 100, -51);
+        Point3D Tabl_D = new Point3D(-80, -100, -51);
+        Point3D Tabl_E = new Point3D(-60, -100, -151);
+        Point3D Tabl_F = new Point3D(-60, 100, -151);
+        Point3D Tabl_G = new Point3D(-80, 100, -151);
+        Point3D Tabl_H = new Point3D(-80, -100, -151);
+
+        Quadrangle up = new Quadrangle(Tabl_E, Tabl_F, Tabl_G, Tabl_H);
+        up.setEmmission(new Color(228, 128, 58));
+        Quadrangle down = new Quadrangle(Tabl_A, Tabl_B, Tabl_C, Tabl_D);
+        down.setEmmission(new Color(228, 128, 58));
+        Quadrangle right = new Quadrangle(Tabl_H, Tabl_F, Tabl_B, Tabl_D);
+        right.setEmmission(new Color(228, 128, 58));
+        Quadrangle left = new Quadrangle(Tabl_A, Tabl_G, Tabl_C, Tabl_E);
+        left.setEmmission(new Color(228, 128, 58));
+        Quadrangle front = new Quadrangle(Tabl_H, Tabl_G, Tabl_C, Tabl_D);
+        front.setEmmission(new Color(228, 128, 58));
+        Quadrangle back = new Quadrangle(Tabl_A, Tabl_B, Tabl_E, Tabl_F);
+        back.setEmmission(new Color(228, 128, 58));
+
+        scene.addGeometry(up);
+        scene.addGeometry(down);
+        scene.addGeometry(right);
+        scene.addGeometry(left);
+        scene.addGeometry(front);
+        scene.addGeometry(back);
+
+/*
+        //the front left leg
+        Point3D Leg_front_left_A = new Point3D(-80, -90, -61);
+        Point3D Leg_front_left_B = add_point(Leg_front_left_A, 0, 15, 0);//new Point3D(-80, -75, -61);
+        Point3D Leg_front_left_C = new Point3D(-240, -75, -61);
+        Point3D Leg_front_left_D = new Point3D(-240, -90, -61);
+        Point3D Leg_front_left_E = new Point3D(-80, -90, -76);
+        Point3D Leg_front_left_F = new Point3D(-80, -75, -76);
+        Point3D Leg_front_left_G = new Point3D(-240, -75, -76);
+        Point3D Leg_front_left_H = new Point3D(-240, -90, -76);
+
+        List<Quadrilateral> Leg_front_left = cube(Leg_front_left_A, Leg_front_left_B, Leg_front_left_C,
+                Leg_front_left_D, Leg_front_left_E, Leg_front_left_F, Leg_front_left_G, Leg_front_left_H);
+
+        scene.addGeometry(Leg_front_left.get(0));
+        scene.addGeometry(Leg_front_left.get(1));
+        scene.addGeometry(Leg_front_left.get(2));
+        scene.addGeometry(Leg_front_left.get(3));
+        scene.addGeometry(Leg_front_left.get(4));
+        scene.addGeometry(Leg_front_left.get(5));
+
+        //the front right leg
+        Point3D Leg_front_right_A = new Point3D(-80, 75, -61);
+        Point3D Leg_front_right_B = new Point3D(-80, 90, -61);
+        Point3D Leg_front_right_G = new Point3D(-240, 90, -76);
+        Point3D Leg_front_right_C = add_point(Leg_front_right_G, 0, 0, 15);
+        Point3D Leg_front_right_D = add_point(Leg_front_right_A, -160, 0, 0);
+        Point3D Leg_front_right_E = add_point(Leg_front_right_A, 0.0, 0.0, -15.0);
+        Point3D Leg_front_right_F = add_point(Leg_front_right_G, 160, 0.0, 0.0);
+        Point3D Leg_front_right_H = add_point(Leg_front_right_G, 0, -15, 0.0);
+
+        List<Quadrilateral> Leg_frong_right = cube(Leg_front_right_A, Leg_front_right_B, Leg_front_right_C, Leg_front_right_D
+                , Leg_front_right_E, Leg_front_right_F, Leg_front_right_G, Leg_front_right_H);
+
+        scene.addGeometry(Leg_frong_right.get(0));
+        scene.addGeometry(Leg_frong_right.get(1));
+        scene.addGeometry(Leg_frong_right.get(2));
+        scene.addGeometry(Leg_frong_right.get(3));
+        scene.addGeometry(Leg_frong_right.get(4));
+        scene.addGeometry(Leg_frong_right.get(5));
+
+        //the back left leg
+        Point3D Leg_back_left_A = new Point3D(-80, -90, -126);
+        Point3D Leg_back_left_G = new Point3D(-240, -75, -141);
+        Point3D Leg_back_left_B = add_point(Leg_back_left_A, 0, 15, 0);
+        Point3D Leg_back_left_C = add_point(Leg_back_left_G, 0, 0, 15);
+        Point3D Leg_back_left_D = add_point(Leg_back_left_A, -160, 0, 0);
+        Point3D Leg_back_left_E = add_point(Leg_back_left_A, 0, 0, -15);
+        Point3D Leg_back_left_F = add_point(Leg_back_left_G, 160, 0.0, 0.0);
+        Point3D Leg_back_left_H = add_point(Leg_back_left_G, 0, -15, 0.0);
+
+        List<Quadrilateral> Leg_back_left = cube(Leg_back_left_A, Leg_back_left_B, Leg_back_left_C, Leg_back_left_D,
+                Leg_back_left_E, Leg_back_left_F, Leg_back_left_G, Leg_back_left_H);
+
+        scene.addGeometry(Leg_back_left.get(0));
+        scene.addGeometry(Leg_back_left.get(1));
+        scene.addGeometry(Leg_back_left.get(2));
+        scene.addGeometry(Leg_back_left.get(3));
+        scene.addGeometry(Leg_back_left.get(4));
+        scene.addGeometry(Leg_back_left.get(5));
+
+        //the back right leg
+        Point3D Leg_back_right_A = new Point3D(-80, 75, -126);
+        Point3D Leg_back_right_G = new Point3D(-240, 90, -141);
+        Point3D Leg_back_right_B = add_point(Leg_back_right_A, 0, 15, 0);
+        Point3D Leg_back_right_C = add_point(Leg_back_right_G, 0, 0, 15);
+        Point3D Leg_back_right_D = add_point(Leg_back_right_A, -160, 0, 0);
+        Point3D Leg_back_right_E = add_point(Leg_back_right_A, 0, 0, -15);
+        Point3D Leg_back_right_F = add_point(Leg_back_right_G, 160, 0, 0);
+        Point3D Leg_back_right_H = add_point(Leg_back_right_G, 0, -15, 0);
+
+        List<Quadrilateral> Leg_back_right = cube(Leg_back_right_A, Leg_back_right_B, Leg_back_right_C, Leg_back_right_D,
+                Leg_back_right_E, Leg_back_right_F, Leg_back_right_G, Leg_back_right_H);
+
+        scene.addGeometry(Leg_back_right.get(0));
+        scene.addGeometry(Leg_back_right.get(1));
+        scene.addGeometry(Leg_back_right.get(2));
+        scene.addGeometry(Leg_back_right.get(3));
+        scene.addGeometry(Leg_back_right.get(4));
+        scene.addGeometry(Leg_back_right.get(5));
+
+
+        Quadrilateral background = new Quadrilateral(new Point3D(-250, -250, -51), new Point3D(-250, 250, -51),
+                new Point3D(-250, 250, -151), new Point3D(-250, -250, -151));
+        background.set_emmission(new Color(2, 0, 0));
+        scene.addGeometry(background);
+*/
+        scene.addLight(new SpotLight(new Color(255, 100, 100),  new Point3D(240, 50, -50),
+                new Vector(-2, 0, -3), 0.1, 0.00001, 0.000005));
+
+        scene.addLight(new DirectionalLight(new Color(100, 0, 102), new Vector(-1, -0.5, 0)));
+
+        ImageWriter imageWriter = new ImageWriter("Table test", 500, 500, 500, 500);
+        Render render = new Render(imageWriter, scene);
+        render.renderImage();
+        render.writeToImage();
+    }
 
 
 }

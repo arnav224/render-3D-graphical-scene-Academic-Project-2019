@@ -108,52 +108,44 @@ public class Camera {
     }
     // ***************** Operations ******************** //
 
+
     /*************************************************
      * FUNCTION
-     * constructRayThroughPixel
+     * constructRayThroughPixel - For a given scene and a given pixel,
+     * a ray should be returned from the pixel on the viewPlane and in the correct direction.
      * PARAMETERS
-     * int Nx, int Ny, // Screen size
-     * double x, double y, // Point
-     * double screenDist, double screenWidth, double screenHeight
+     * int Nx, int Ny, // Screen size - The number of pixels in length and width.
+     * double x, double y, // Point - The number of pixels to progress on the axes to the current point.
+     * double screenDist, // - Position the screen relative to the camera point
+     * double screenWidth, double screenHeight // - The screen size in the units used.
      * RETURN VALUE
      * Ray
      * MEANING
      * This function sends ray through pixel into the view plane
-     **************************************************/
-
-    /*************************************************
-     * FUNCTION
-     * constructRayThroughPixel
-     * PARAMETERS
-     * 2 ints -
-     * 2 doubles -
-     * 3 doubles -
-     * RETURN VALUE
-     * Ray -
-     * MEANING
-     * todo
      * SEE ALSO
      *
      **************************************************/
-    public Ray constructRayThroughPixel (int Nx, int Ny,
-                                         double x, double y,
+
+    public Ray constructRayThroughPixel (int Nx, int Ny, // Screen size
+                                         double x, double y,  // Point
                                          double screenDist,
                                          double screenWidth,
-                                         double screenHeight){ //todo: to green
-        Point3D Pc = _P0.add(_vTo.scale(screenDist));
+                                         double screenHeight){
+        // Define the Ratio
         double Rx = screenWidth / Nx;
         double Ry = screenHeight / Ny;
-        //todo add or sub
+
+        // The viewPlan center point
+        Point3D Pc = _P0.add(_vTo.scale(screenDist));
+
+        // the current pixel on the viewPlane
         Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx )).subtract(_vUp.scale((y-Ny/2)*Ry));
-        //Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx + Rx/2)).subtract(_vUp.scale((y-Ny/2)*Ry + Ry/2)); //this is the original formula
+                                                                                                                                                                                                //Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx + Rx/2)).subtract(_vUp.scale((y-Ny/2)*Ry + Ry/2)); //this is the original formula
         if (Nx % 2 == 0)
             pixel = pixel.add(new Vector(Rx/2,0,0));
         if (Ny % 2 == 0)
             pixel = pixel.add(new Vector(0,-Ry/2,0));
         return new Ray(pixel, pixel.subtract(_P0).normalize());
-        //todo the ray start from?
-        //return new Ray(new Point3D(), pixel.subtract(_P0).normalize());
-    //new Point3D((x-(Nx-1)/2)*Rx, (y-(Ny-1)/2)*Ry, -1*screenDist)
     }
 }
 
