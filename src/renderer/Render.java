@@ -369,10 +369,10 @@ public class Render
 //    Vector v=new Vector(reflectedRay.getP());
 //    v.scale(-1);
 //    reflectedRay.setP(v.getHead());
-        Map<Geometry, Point3D> reflecteEntry1 = findClosestIntersection(reflectedRay);
+        Map.Entry<Geometry, Point3D> reflecteEntry1 = findClosesntIntersection(reflectedRay);
 
 
-        if (!reflecteEntry1.isEmpty()) {
+        if (reflecteEntry1 != null) {
             Map.Entry<Geometry, Point3D> entry = reflecteEntry1.entrySet().iterator().next();
             Color reflectedColor = calcColor(entry.getKey(), entry.getValue(), reflectedRay,level+1);
             double kr = geometry.getMaterial().getKr();
@@ -383,13 +383,13 @@ public class Render
 //      reflectedLight = new Color((int) (kr * reflectedColor.getRGB()));
 
         }
-        Ray refractedRay = constructRefractedRay(geometry.getNormal(point), point, inRay);
+        Ray refractedRay = constructRefractedRay(geometry, point, inRay);
 //    Vector v1=new Vector(refractedRay.getP());
 //    v1.scale(-1);
 //    refractedRay.setP(v1.getHead());
-        Map<Geometry, Point3D> refracteEntry1 = findClosestIntersection(refractedRay);
+        Map.Entry<Geometry, List<Point3D>> refracteEntry1 = findClosesntIntersection(refractedRay);
 
-        if (!refracteEntry1.isEmpty())
+        if (refracteEntry1 != null)
         {
             Map.Entry<Geometry, Point3D> entry2 = refracteEntry1.entrySet().iterator().next();
             Color refractedColor = calcColor(entry2.getKey(), entry2.getValue(), refractedRay,level+1);
@@ -410,6 +410,76 @@ public class Render
 
         return sofi;
     }
+    /*************************************************
+     * FUNCTION
+     * constructRefractedRay
+     * PARAMETERS
+     * Geometry, point3d, Ray
+     * RETURN VALUE
+     * ray
+     * MEANING
+     * This function calculate the refracted ray towards the next object
+     **************************************************/
+    private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay){
+
+        Vector normal = geometry.getNormal(point);
+
+        if (geometry instanceof FlatGeometry){
+            return new Ray (point.add(normal.scale(-2)), inRay.getDirection());
+        } else {
+            return new Ray (point.add(normal.scale(-2)), inRay.getDirection());
+        }
+
+    }
+//    private Map.Entry<Geometry, List<Point3D>> findClosesntIntersection(Ray ray){
+//        Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);
+//
+//        if (intersectionPoints.size() == 0)
+//            return null;
+//
+//        Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
+//        //Map.Entry<Geometry, Point3D> entry = closestPoint.entrySet().iterator().next();
+//        return closestPoint /*entry*/;
+//    }
+    private Map.Entry<Geometry, Point3D> findClosesntIntersection(Ray ray){
+        Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);
+
+        if (intersectionPoints.size() == 0)
+            return null;
+
+        Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
+        Point3D point3D = closestPoint.getValue().iterator().next();
+        Map.Entry<Geometry, Point3D> entry = new Map.Entry<Geometry, Point3D>(closestPoint.getKey(),closestPoint.getValue().get(0)) ;
+        return entry;
+    }
+    /*************************************************
+     * FUNCTION
+     * constructReflectedRay
+     * PARAMETERS
+     * Vector, point3d, Ray
+     * RETURN VALUE
+     * Ray
+     * MEANING
+     * This function calculate the reflected ray from the surface
+     **************************************************/
+    private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay) throws Exception {
+
+        Vector l = inRay.getDirection();
+        l.normalize();
+
+        normal.scale(-2 * l.dotProduct(normal));
+        l.add(normal);
+
+        Vector R = new Vector(l);
+        R.normalize();
+
+        point.add(normal);
+
+        Ray reflectedRay = new Ray(point, R);
+
+        return reflectedRay;
+    }
+
 }
 /*
 package renderer;
