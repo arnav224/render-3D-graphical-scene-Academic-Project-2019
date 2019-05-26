@@ -107,6 +107,20 @@ public class Camera {
         return "Vto: " + _vTo + "\n" + "Vup: " + _vUp + "\n" + "Vright:" + _vRight + ".";
     }
     // ***************** Operations ******************** //
+
+    /*************************************************
+     * FUNCTION
+     * constructRayThroughPixel
+     * PARAMETERS
+     * int Nx, int Ny, // Screen size
+     * double x, double y, // Point
+     * double screenDist, double screenWidth, double screenHeight
+     * RETURN VALUE
+     * Ray
+     * MEANING
+     * This function sends ray through pixel into the view plane
+     **************************************************/
+
     /*************************************************
      * FUNCTION
      * constructRayThroughPixel
