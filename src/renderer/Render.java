@@ -180,7 +180,7 @@ public class Render
 //                (int)(lightIntensity.getGreen()*specular)%256,
 //                (int)(lightIntensity.getBlue()*specular)%256);
         v = v.normalize();
-        //l = l.normalize();
+        l = l.normalize();
         Vector R = (l.subtract(normal.scale(l.dotProduct(normal) * 2))).normalize();
         double k = (ks * Math.pow(R.dotProduct(v),shininess));
         if(k < 0)
@@ -324,9 +324,93 @@ public class Render
         //   Otherwise - there's something between them
         return !intersectionPoint.isEmpty();
     }
+
+
+    private Color calcColor(Geometry geometry, Point3D point, Ray ray) {
+        return calcColor(geometry, point, ray, 0);
+    }
+
+    private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level)
+    {
+
+        if(RECURSION_LEVEL==level)
+            return new Color(0, 0, 0);
+
+        Color AmbientLight = _scene.getAmbientLight().getIntensity(point);
+        Color emisionLight = geometry.getEmmission();
+
+        Iterator<LightSource> lights = _scene.getLightsIterator();
+
+        Color deffuseLight = new Color(0, 0, 0);
+        Color specularLight = new Color(0, 0, 0);
+        Color reflectedLight = new Color(0, 0, 0);//ההשפעה של ההשתקפות שלי
+        Color refractedLight = new Color(0, 0, 0);//ההשפעה של השקיפות
+        while (lights.hasNext()) {
+            LightSource light = lights.next();
+
+            if (!occluded(light, point, geometry))
+            {
+
+
+                deffuseLight=addColors(deffuseLight, calcDiffusiveComp(geometry.getMaterial().getKd(),
+                        geometry.getNormal(point), light.getL(point), light.getIntensity(point)));
+
+
+
+                specularLight=addColors(specularLight,calcSpecularComp(geometry.getMaterial().getKs(),
+                        new Vector(point, _scene.getCamera().getP0()), geometry.getNormal(point), light.getL(point),
+                        geometry.getMaterial().getN(), light.getIntensity(point)));
+
+
+            }
+        }
+
+        Ray reflectedRay = constructReflectedRay(geometry.getNormal(point), point, inRay);
+//    Vector v=new Vector(reflectedRay.getP());
+//    v.scale(-1);
+//    reflectedRay.setP(v.getHead());
+        Map<Geometry, Point3D> reflecteEntry1 = findClosestIntersection(reflectedRay);
+
+
+        if (!reflecteEntry1.isEmpty()) {
+            Map.Entry<Geometry, Point3D> entry = reflecteEntry1.entrySet().iterator().next();
+            Color reflectedColor = calcColor(entry.getKey(), entry.getValue(), reflectedRay,level+1);
+            double kr = geometry.getMaterial().getKr();
+            int reflectR = (int) (kr * reflectedColor.getRed());
+            int reflectG = (int) (kr * reflectedColor.getGreen());
+            int reflectB = (int) (kr * reflectedColor.getBlue());
+            reflectedLight = new Color(reflectR, reflectG, reflectB);
+//      reflectedLight = new Color((int) (kr * reflectedColor.getRGB()));
+
+        }
+        Ray refractedRay = constructRefractedRay(geometry.getNormal(point), point, inRay);
+//    Vector v1=new Vector(refractedRay.getP());
+//    v1.scale(-1);
+//    refractedRay.setP(v1.getHead());
+        Map<Geometry, Point3D> refracteEntry1 = findClosestIntersection(refractedRay);
+
+        if (!refracteEntry1.isEmpty())
+        {
+            Map.Entry<Geometry, Point3D> entry2 = refracteEntry1.entrySet().iterator().next();
+            Color refractedColor = calcColor(entry2.getKey(), entry2.getValue(), refractedRay,level+1);
+            double kt = geometry.getMaterial().getKt();
+            int refractR = (int) (kt * refractedColor.getRed());
+            int refractG = (int) (kt * refractedColor.getGreen());
+            int refractB = (int) (kt * refractedColor.getBlue());
+            refractedLight = new Color(refractR, refractG, refractB);
+//     refractedLight = new Color((int) (kt * refractedColor.getRGB()));
+        }
+
+
+        Color sofi=addColors(AmbientLight,emisionLight);
+        sofi=addColors(sofi,deffuseLight);
+        sofi=addColors(sofi,specularLight);
+        sofi=addColors(sofi,reflectedLight);
+        sofi=addColors(sofi,refractedLight);
+
+        return sofi;
+    }
 }
-
-
 /*
 package renderer;
         import java.awt.Color;
