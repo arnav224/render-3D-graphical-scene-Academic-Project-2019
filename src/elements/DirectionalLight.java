@@ -5,7 +5,7 @@ import primitives.*;
 import java.awt.*;
 
 public class DirectionalLight extends Light implements LightSource {
-    private Vector _direction;
+    private Vector _direction;//Direction of light.
     // ***************** Constructors ********************** //
     public DirectionalLight(Color color, Vector direction){
         this._color = new Color(color.getRed());

@@ -3,7 +3,7 @@ package elements;
 import java.awt.*;
 
 public abstract class Light {
-    protected Color _color;
+    protected Color _color;//The color of light
     // ***************** Constructors ********************** //
     public Light(){
         this._color = new Color(0,0,0);

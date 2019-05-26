@@ -20,6 +20,7 @@ public class SpotLight extends PointLight{
         Vector l = super.getL(point).normalize();
         //double coefficient = 1 / (_Kc + _Kl * d + _Kq * Math.pow(d,2));
 
+            /*Calculation of attenuation coefficients*/
 //        double k = Math.abs(_direction.dotProduct(l))/(_Kc * _Kl * d * _Kq * Math.pow(d,2));
         double k = Math.abs(_direction.normalize().dotProduct(l))/(_Kc + _Kl * d + _Kq * Math.pow(d,2));
 
