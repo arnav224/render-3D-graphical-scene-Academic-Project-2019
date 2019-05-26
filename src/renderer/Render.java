@@ -22,7 +22,7 @@ public class Render
 
     private Scene _scene; // An object that describes the scene.
     private ImageWriter _imageWriter; // Object to write the image.
-    private final int RECURSION_LEVEL = 3;
+    private final int RECURSION_LEVEL = 3;//The amount of recursion.
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
@@ -151,20 +151,24 @@ public class Render
      * Calculates the point's color.
      **************************************************/
     private Color calcColor(Geometry geometry, Point3D point) {
-        Color ambientLight = _scene.getAmbientLight().getIntensity(point);
-        Color emissionLight = geometry.get_emmission();
+        Color ambientLight = _scene.getAmbientLight().getIntensity(point);// Ambient Light in the point.
+        Color emissionLight = geometry.get_emmission(); // Emission Light in the point.
         //IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
-        Iterator<LightSource> lights = _scene.getLightsIterator();
-        Color diffuseLight = new Color(0,0,0);
-        Color specularLight = new Color(0,0,0);
+        Iterator<LightSource> lights = _scene.getLightsIterator();//Iterator all lights.
+        Color diffuseLight = new Color(0,0,0);//Diffuse light initialization.
+        Color specularLight = new Color(0,0,0);//Specular light initialization.
+
+        /*Calculates the power of all the lights that come to the point.*/
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
 
-            if ( !occluded(lightSource, point, geometry)) {
+            if ( !occluded(lightSource, point, geometry)) { // The light is not blocked.
+                /*Add diffuse light*/
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
                         geometry.getNormal(point),
                         lightSource.getL(point),
                         lightSource.getIntensity(point)), diffuseLight);
+                /*Add specular light*/
                 specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
                         new Vector(point, _scene.getCamera().getP0()),
                         geometry.getNormal(point),
@@ -178,12 +182,154 @@ public class Render
         /* Connect all colors */
         return addColors(addColors(ambientLight, emissionLight), addColors(diffuseLight, specularLight)) ;
     }
+    /*************************************************
+     * FUNCTION
+     * calcColor
+     * PARAMETERS
+     * Geometry, Point3D, Ray - Ray from the VIEW PLAIN to the Point on the Geometry.
+     * RETURN VALUE
+     * Color - Color on the point.
+     * MEANING
+     * This function calculate color for point with his geometry color, by calling the 'calcColor' recursive function.
+     **************************************************/
+    private Color calcColor(Geometry geometry, Point3D point, Ray ray) {
+        return calcColor(geometry, point, ray, 0);
+    }
+    /*************************************************
+     * FUNCTION
+     * calcColor
+     * PARAMETERS
+     * Geometry, Point3D, Ray
+     * int - level of recursion.
+     * RETURN VALUE
+     * Color
+     * MEANING
+     * This function calculate color for point with his geometry color
+     **************************************************/
+    private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level)
+    {
 
+        if(RECURSION_LEVEL==level)// Exit conditions from recursion.
+            return new Color(0, 0, 0);
 
-    //private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay);
-    //private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay);
-    //private boolean occluded(LightSource light, Point3D point, Geometry geometry);
+        Color AmbientLight = _scene.getAmbientLight().getIntensity(point);// Ambient Light in the point.
+        Color emisionLight = geometry.getEmmission();// Emission Light in the point.
+
+        Iterator<LightSource> lights = _scene.getLightsIterator();//Iterator all lights.
+
+        Color diffuseLight = new Color(0, 0, 0);//Diffuse light initialization.
+        Color specularLight = new Color(0, 0, 0);//Specular light initialization.
+        Color reflectedLight = new Color(0, 0, 0);//reflectedLight - The effect of reflection.
+        Color refractedLight = new Color(0, 0, 0);//refractedLight - The effect of refraction.
+
+        /*Calculates the power of all the lights that come to the point.*/
+        while (lights.hasNext()) {
+            LightSource lightSource = lights.next();
+
+            if ( !occluded(lightSource, point, geometry)) {// The light is not blocked.
+                /*Add diffuse light*/
+                diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
+                        geometry.getNormal(point),
+                        lightSource.getL(point),
+                        lightSource.getIntensity(point)), diffuseLight);
+                /*Add specular light*/
+                specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
+                        new Vector(point, _scene.getCamera().getP0()),
+                        geometry.getNormal(point),
+                        lightSource.getL(point),
+                        geometry.getMaterial().getShininess(),
+                        lightSource.getIntensity(point)), specularLight);
+
+            }
+
+        }
+
+        //**// Recursive calls
+
+        // Recursive call for a reflected ray
+        Ray reflectedRay = constructReflectedRay(geometry.getNormal(point), point, inRay);
+        Map.Entry<Geometry, Point3D> reflecteEntry1 = findClosesntIntersection(reflectedRay);
+
+        if (reflecteEntry1 != null) {
+            Color reflectedColor = calcColor(reflecteEntry1.getKey(),
+                    reflecteEntry1.getValue(), reflectedRay,level+1);
+            double kr = geometry.getMaterial().getKr();
+            int reflectR = (int) (kr * reflectedColor.getRed());
+            int reflectG = (int) (kr * reflectedColor.getGreen());
+            int reflectB = (int) (kr * reflectedColor.getBlue());
+            reflectedLight = new Color(reflectR, reflectG, reflectB);
+
+        }
+
+        /* Recursive call for a refracted ray*/
+        Ray refractedRay = constructRefractedRay(geometry, point, inRay);
+        Map.Entry<Geometry, Point3D> refracteEntry1 = findClosesntIntersection(refractedRay);
+
+        if (refracteEntry1 != null)
+        {
+            Color refractedColor = calcColor(refracteEntry1.getKey(), refracteEntry1.getValue(), refractedRay,level+1);
+            double kt = geometry.getMaterial().getKt();
+            int refractR = (int) (kt * refractedColor.getRed());
+            int refractG = (int) (kt * refractedColor.getGreen());
+            int refractB = (int) (kt * refractedColor.getBlue());
+            refractedLight = new Color(refractR, refractG, refractB);
+        }
+        //**// End of recursive calls
+
+        /* Connect all colors */
+        Color finalColor=addColors(AmbientLight,emisionLight);
+        finalColor=addColors(finalColor,diffuseLight);
+        finalColor=addColors(finalColor,specularLight);
+        finalColor=addColors(finalColor,reflectedLight);
+        finalColor=addColors(finalColor,refractedLight);
+
+        return finalColor;
+    }
+
+    /*************************************************
+     * FUNCTION
+     * calcDiffusiveComp
+     * PARAMETERS
+     * double kd, Vector normal, Vector l - light to point vector,
+     * Color light Intensity.
+     * RETURN VALUE
+     * Color
+     * MEANING
+     * This function calculate the diffusive factor and change the color by it
+     **************************************************/
+    private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity){
+        /*When normal and l are normalized, normal ・ l is the cosine of the angle between them. The power is K.*/
+        double k = Math.abs(kd * normal.dotProduct(l.normalize()));
+        return new Color(MyNormalize.apply((int)(k * lightIntensity.getRed())),
+                MyNormalize.apply((int)(k * lightIntensity.getGreen())),
+                MyNormalize.apply((int)(k * lightIntensity.getBlue())));
+
+//        return new Color((k * lightIntensity.getRed())%256, (k* lightIntensity.getBlue())%256, (k * lightIntensity.getGreen())%256);
+
+    }
+
+    /*************************************************
+     * FUNCTION
+     * calcSpecularComp
+     * PARAMETERS
+     * double ks, Vector v, Vector normal,
+     * Vector l - light to point vector, double shininess, Color lightIntensity
+     * RETURN VALUE
+     * Color
+     * MEANING
+     * This function calculate the specular factor and change the color by it.
+     **************************************************/
     private Color calcSpecularComp(double ks, Vector v, Vector normal, Vector l, int shininess, Color lightIntensity){
+
+        v = v.normalize();
+        l = l.normalize();
+        Vector R = (l.subtract(normal.scale(l.dotProduct(normal) * 2))).normalize();// the reflectance direction.
+        double k = (ks * Math.pow(R.dotProduct(v),shininess));//Light is exponentially reduced by K.
+        if(k < 0)
+            k *= -1;
+        return new Color(MyNormalize.apply((int)(k * lightIntensity.getRed())),
+                MyNormalize.apply((int)(k * lightIntensity.getGreen())),
+                MyNormalize.apply((int)(k * lightIntensity.getBlue())));
 
 //        Vector r = new Vector(normal);
 //        r = r.scale(-2*normal.dotProduct(l));
@@ -196,31 +342,11 @@ public class Render
 //        return new Color((int)(lightIntensity.getRed()* specular)%256 ,
 //                (int)(lightIntensity.getGreen()*specular)%256,
 //                (int)(lightIntensity.getBlue()*specular)%256);
-        v = v.normalize();
-        l = l.normalize();
-        Vector R = (l.subtract(normal.scale(l.dotProduct(normal) * 2))).normalize();
-        double k = (ks * Math.pow(R.dotProduct(v),shininess));
-        if(k < 0)
-            k *= -1;
-        return new Color(MyNormalize.apply((int)(k * lightIntensity.getRed())),
-                MyNormalize.apply((int)(k * lightIntensity.getGreen())),
-                MyNormalize.apply((int)(k * lightIntensity.getBlue())));
-
 //        return new Color(k * lightIntensity.getRed()%256, k* lightIntensity.getBlue()%256, k * lightIntensity.getGreen()%256);
 
 
     }
-    private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity){
-        //double dif = Math.abs(kd*normal.dotProduct(l));
-        double k = Math.abs(kd * normal.dotProduct(l.normalize()));
-        //return new Color(0,0,0);
-        return new Color(MyNormalize.apply((int)(k * lightIntensity.getRed())),
-                MyNormalize.apply((int)(k * lightIntensity.getGreen())),
-                MyNormalize.apply((int)(k * lightIntensity.getBlue())));
 
-//        return new Color((k * lightIntensity.getRed())%256, (k* lightIntensity.getBlue())%256, (k * lightIntensity.getGreen())%256);
-
-    }
     //private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints);
 
     /*************************************************
@@ -270,6 +396,16 @@ public class Render
         return intersectionPoints;
     }
 
+    /*************************************************
+     * FUNCTION
+     * addColors
+     * PARAMETERS
+     * 2 Color
+     * RETURN VALUE
+     * Color
+     * MEANING
+     * this functions get two different colors and add them one to each other
+     **************************************************/
     private Color addColors(Color a, Color b){
         IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
         return new Color(MyNormalize.apply(a.getRed() + b.getRed()),
@@ -313,17 +449,16 @@ public class Render
         //2. Reverse the vector to point backward to the light source
         Vector lightDirection = light.getL(point).scale(-1);//.scale(-1);
 
-        //3. the point that send the ray back
+
         //Point3D geometryPoint = new Point3D(point);
 
-        //3.5 Floating point corecction
         //Vector epsVector = new Vector(0.0000001,0.0000001,0.0000001);
 //        Vector normal = geometry.getNormal(point);
 //        normal.scale(normal.length())
 
 
-
-
+        //3. the point that send the ray back
+        //3.5 Floating point corecction
         Vector epsVector = new Vector(geometry.getNormal(point)).scale(0.005);
         Point3D geometryPoint = new Point3D(point).add(epsVector);
 
@@ -342,98 +477,40 @@ public class Render
         return !intersectionPoint.isEmpty();
     }
 
+    /*************************************************
+     * FUNCTION
+     * constructReflectedRay
+     * PARAMETERS
+     * Vector, point3d, Ray
+     * RETURN VALUE
+     * Ray
+     * MEANING
+     * This function calculate the reflected ray from the surface
+     **************************************************/
+    private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay){
 
-    private Color calcColor(Geometry geometry, Point3D point, Ray ray) {
-        return calcColor(geometry, point, ray, 0);
-    }
+        Vector l = inRay.getDirection();
+        l = l.normalize();
 
-    private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level)
-    {
+        normal = normal.scale(-2 * l.dotProduct(normal));
+        l = l.add(normal);
 
-        if(RECURSION_LEVEL==level)
-            return new Color(0, 0, 0);
+        Vector R = new Vector(l);
+        R = R.normalize();
 
-        Color AmbientLight = _scene.getAmbientLight().getIntensity(point);
-        Color emisionLight = geometry.getEmmission();
+        point = point.add(normal);
 
-        Iterator<LightSource> lights = _scene.getLightsIterator();
+        Ray reflectedRay = new Ray(point, R);
 
-        Color diffuseLight = new Color(0, 0, 0);
-        Color specularLight = new Color(0, 0, 0);
-        Color reflectedLight = new Color(0, 0, 0);//ההשפעה של ההשתקפות שלי
-        Color refractedLight = new Color(0, 0, 0);//ההשפעה של השקיפות
-        while (lights.hasNext()) {
-            LightSource lightSource = lights.next();
-
-            if ( !occluded(lightSource, point, geometry)) {
-                diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
-                        geometry.getNormal(point),
-                        lightSource.getL(point),
-                        lightSource.getIntensity(point)), diffuseLight);
-                specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
-                        new Vector(point, _scene.getCamera().getP0()),
-                        geometry.getNormal(point),
-                        lightSource.getL(point),
-                        geometry.getMaterial().getShininess(),
-                        lightSource.getIntensity(point)), specularLight);
-
-            }
-
-        }
-
-        Ray reflectedRay = constructReflectedRay(geometry.getNormal(point), point, inRay);
-//    Vector v=new Vector(reflectedRay.getP());
-//    v.scale(-1);
-//    reflectedRay.setP(v.getHead());
-        Map.Entry<Geometry, Point3D> reflecteEntry1 = findClosesntIntersection(reflectedRay);
-
-
-        if (reflecteEntry1 != null) {
-//            Map.Entry<Geometry, Point3D> entry = reflecteEntry1.entrySet().iterator().next();
-            Color reflectedColor = calcColor(reflecteEntry1.getKey(),
-                    reflecteEntry1.getValue(), reflectedRay,level+1);
-            double kr = geometry.getMaterial().getKr();
-            int reflectR = (int) (kr * reflectedColor.getRed());
-            int reflectG = (int) (kr * reflectedColor.getGreen());
-            int reflectB = (int) (kr * reflectedColor.getBlue());
-            reflectedLight = new Color(reflectR, reflectG, reflectB);
-//      reflectedLight = new Color((int) (kr * reflectedColor.getRGB()));
-
-        }
-        Ray refractedRay = constructRefractedRay(geometry, point, inRay);
-//    Vector v1=new Vector(refractedRay.getP());
-//    v1.scale(-1);
-//    refractedRay.setP(v1.getHead());
-        Map.Entry<Geometry, Point3D> refracteEntry1 = findClosesntIntersection(refractedRay);
-
-        if (refracteEntry1 != null)
-        {
-//            Map.Entry<Geometry, Point3D> entry2 = refracteEntry1.entrySet().iterator().next();
-            Color refractedColor = calcColor(refracteEntry1.getKey(), refracteEntry1.getValue(), refractedRay,level+1);
-            double kt = geometry.getMaterial().getKt();
-            int refractR = (int) (kt * refractedColor.getRed());
-            int refractG = (int) (kt * refractedColor.getGreen());
-            int refractB = (int) (kt * refractedColor.getBlue());
-            refractedLight = new Color(refractR, refractG, refractB);
-//     refractedLight = new Color((int) (kt * refractedColor.getRGB()));
-        }
-
-
-        Color sofi=addColors(AmbientLight,emisionLight);
-        sofi=addColors(sofi,diffuseLight);
-        sofi=addColors(sofi,specularLight);
-        sofi=addColors(sofi,reflectedLight);
-        sofi=addColors(sofi,refractedLight);
-
-        return sofi;
+        return reflectedRay;
     }
     /*************************************************
      * FUNCTION
      * constructRefractedRay
      * PARAMETERS
-     * Geometry, point3d, Ray
+     * Geometry, Point3D, Ray
      * RETURN VALUE
-     * ray
+     * Ray
      * MEANING
      * This function calculate the refracted ray towards the next object
      **************************************************/
@@ -458,51 +535,32 @@ public class Render
 //        //Map.Entry<Geometry, Point3D> entry = closestPoint.entrySet().iterator().next();
 //        return closestPoint /*entry*/;
 //    }
-    private Map.Entry<Geometry, Point3D> findClosesntIntersection(Ray ray){
-        Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);
 
-        if (intersectionPoints.size() == 0)
+    /*************************************************
+     * FUNCTION
+     * findClosesntIntersection
+     * PARAMETERS
+     * Ray
+     * RETURN VALUE
+     * Map.Entry<Geometry, Point3D>
+     * MEANING
+     * The function finds the next intersection with the ray.
+     **************************************************/
+    private Map.Entry<Geometry, Point3D> findClosesntIntersection(Ray ray){
+        Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);//Find the intersection points.
+
+        if (intersectionPoints.size() == 0)//No intersection points.
             return null;
 
+        /*The next intersection with the ray.*/
         Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
         //Point3D point3D = closestPoint.getValue().get(0);
         Map<Geometry, Point3D> map = new HashMap<Geometry, Point3D>();
         map.put(closestPoint.getKey(),closestPoint.getValue().get(0));
-        return map.entrySet().iterator().next(); // new Map.Entry<Geometry, Point3D>(closestPoint.getKey(),closestPoint.getValue().get(0)) ;
+        return map.entrySet().iterator().next();
+        // new Map.Entry<Geometry, Point3D>(closestPoint.getKey(),closestPoint.getValue().get(0)) ;
     }
-    /*************************************************
-     * FUNCTION
-     * constructReflectedRay
-     * PARAMETERS
-     * Vector, point3d, Ray
-     * RETURN VALUE
-     * Ray
-     * MEANING
-     * This function calculate the reflected ray from the surface
-     **************************************************/
-//    private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay) {
-//        Vector l = inRay.getDirection().normalize();
-//        //Vector R = new Vector(l).normalize();
-//        Ray reflectedRay = new Ray(point.add(normal.scale(-2 * l.dotProduct(normal)).add(normal)), l);
-//        return reflectedRay;
-//    }
-    private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay){
 
-        Vector l = inRay.getDirection();
-        l = l.normalize();
-
-        normal = normal.scale(-2 * l.dotProduct(normal));
-        l = l.add(normal);
-
-        Vector R = new Vector(l);
-        R = R.normalize();
-
-        point = point.add(normal);
-
-        Ray reflectedRay = new Ray(point, R);
-
-        return reflectedRay;
-    }
 }
 /*
 package renderer;

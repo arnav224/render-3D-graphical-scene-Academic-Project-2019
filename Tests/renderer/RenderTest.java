@@ -58,7 +58,9 @@ class RenderTest {
     public void emmissionTest1() {
         Scene scene = new Scene();
         scene.setScreenDistance(50);
-
+        AmbientLight ambientLight = new AmbientLight();
+        ambientLight.setColor(new Color(255,255,255));
+        scene.setAmbientLight(ambientLight);
         Sphere sphere = new Sphere(50, new Point3D(0.0, 0.0, -50));
         Triangle triangle1 = new Triangle(new Point3D(100, 0, -50),
                 new Point3D(0, 100, -50),
@@ -496,6 +498,7 @@ class RenderTest {
 //        scene.addGeometry(triangle1);
 //        scene.addGeometry(triangle2);
 
+        scene.addLight(new DirectionalLight(new Color(250, 231, 255), new Vector(-10, 2, -1)));
         scene.addLight(new DirectionalLight(new Color(255, 231, 50), new Vector(-10, -2, -1)));
         ImageWriter imageWriter = new ImageWriter("    DirectionalLight_1", 500, 500, 500, 500);
 
