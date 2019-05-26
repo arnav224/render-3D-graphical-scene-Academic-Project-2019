@@ -472,18 +472,20 @@ class RenderTest {
 
         Scene scene = new Scene();
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1500));
-        sphere.setShininess(80);
-        sphere.setEmmission(new Color(143, 45, 15));
-
+        sphere.setShininess(150);
+        sphere.setEmmission(new Color(89, 28, 10));
+        sphere.setKt(0);
+        sphere.setKr(0);
         scene.addGeometry(sphere);
-        Quadrangle quadrangle = new Quadrangle(new Point3D( -2000, -2000, 0),new Point3D( -2000, 2000, 0),
-                new Point3D( -2000, -2000, -2000),new Point3D( -2000, 2000, -2000));
-        quadrangle.setEmmission(new Color(143, 76, 15));
+        Quadrangle quadrangle = new Quadrangle(new Point3D( -1000, 20000, 0),new Point3D( -1000, -20000, 0),
+                new Point3D( -1000, -20000, -20000),new Point3D( -1000, 20000, -20000));
+        quadrangle.setEmmission(new Color(64, 29, 6));
+        quadrangle.setKr(0.1);
         scene.addGeometry(quadrangle);
         Triangle triangle1 = new Triangle(new Point3D(  550,  0, -1500),
                 new Point3D( 450, -200, -900),
                 new Point3D(  450, 300, -850));
-        triangle1.setEmmission(new Color(218, 22, 255));
+        triangle1.setEmmission(new Color(100, 9, 116));
         scene.addGeometry(triangle1);
 
 //        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
@@ -498,8 +500,8 @@ class RenderTest {
 //        scene.addGeometry(triangle1);
 //        scene.addGeometry(triangle2);
 
-        scene.addLight(new DirectionalLight(new Color(250, 231, 255), new Vector(-10, 2, -1)));
-        scene.addLight(new DirectionalLight(new Color(255, 231, 50), new Vector(-10, -2, -1)));
+        //scene.addLight(new DirectionalLight(new Color(165, 228, 202), new Vector(-20, 5, -1)));
+        scene.addLight(new DirectionalLight(new Color(255, 126, 244), new Vector(-20, -5, 1)));
         ImageWriter imageWriter = new ImageWriter("    DirectionalLight_1", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
