@@ -88,6 +88,22 @@ public class Render
                 }
             }
         }
+//        for (int i = 0 ; i < _imageWriter.getWidth(); i++){
+//            for (int j = 0; j < _imageWriter.getHeight(); j++){
+//                Ray ray=_scene.getCamera().constructRayThroughPixel(_imageWriter.getNx(),
+//                        _imageWriter.getNy(),j,i,_scene.getScreenDistance()
+//                        ,_imageWriter.getWidth()
+//                        ,_imageWriter.getHeight());
+//                Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);
+//                if(intersectionPoints.isEmpty()){
+//                    _imageWriter.writePixel(j,i,_scene.getBackground());
+//                }
+//                else{
+//                    Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
+//                    _imageWriter.writePixel(j,i,calcColor(closestPoint.getKey(),closestPoint.getValue().get(0),ray));
+//                }
+//            }
+//        }
     }
 
     //private Entry<Geometry, Point3D> findClosesntIntersection(Ray ray);
@@ -168,7 +184,8 @@ public class Render
     //private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay);
     //private boolean occluded(LightSource light, Point3D point, Geometry geometry);
     private Color calcSpecularComp(double ks, Vector v, Vector normal, Vector l, int shininess, Color lightIntensity){
-        //Vector r = new Vector(normal);
+
+//        Vector r = new Vector(normal);
 //        r = r.scale(-2*normal.dotProduct(l));
 //        r = r.add(l);
 //        r = r.normalize();
@@ -448,7 +465,7 @@ public class Render
             return null;
 
         Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
-        Point3D point3D = closestPoint.getValue().get(0);
+        //Point3D point3D = closestPoint.getValue().get(0);
         Map<Geometry, Point3D> map = new HashMap<Geometry, Point3D>();
         map.put(closestPoint.getKey(),closestPoint.getValue().get(0));
         return map.entrySet().iterator().next(); // new Map.Entry<Geometry, Point3D>(closestPoint.getKey(),closestPoint.getValue().get(0)) ;
@@ -463,13 +480,29 @@ public class Render
      * MEANING
      * This function calculate the reflected ray from the surface
      **************************************************/
-    private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay) {
-        Vector l = inRay.getDirection().normalize();
-        Vector R = new Vector(l).normalize();
-        Ray reflectedRay = new Ray(point.add(normal.scale(-2 * l.dotProduct(normal)).add(normal)), R);
+//    private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay) {
+//        Vector l = inRay.getDirection().normalize();
+//        //Vector R = new Vector(l).normalize();
+//        Ray reflectedRay = new Ray(point.add(normal.scale(-2 * l.dotProduct(normal)).add(normal)), l);
+//        return reflectedRay;
+//    }
+    private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay){
+
+        Vector l = inRay.getDirection();
+        l = l.normalize();
+
+        normal = normal.scale(-2 * l.dotProduct(normal));
+        l = l.add(normal);
+
+        Vector R = new Vector(l);
+        R = R.normalize();
+
+        point = point.add(normal);
+
+        Ray reflectedRay = new Ray(point, R);
+
         return reflectedRay;
     }
-
 }
 /*
 package renderer;
