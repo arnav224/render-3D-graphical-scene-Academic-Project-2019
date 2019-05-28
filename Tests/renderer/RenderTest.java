@@ -11,6 +11,7 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RenderTest {
+/*
     @Test
     public void emmissionTest() {
         Scene scene = new Scene();
@@ -53,6 +54,7 @@ class RenderTest {
         render.printGrid(50);
         render.writeToImage();
     }
+*/
 
     @Test
     public void emmissionTest1() {
@@ -99,6 +101,7 @@ class RenderTest {
         render.writeToImage();
     }
 
+/*
     @Test
     public void emmissionTest1_1() {
         Scene scene = new Scene();
@@ -152,8 +155,8 @@ class RenderTest {
         render.printGrid(50);
         render.writeToImage();
     }
-    @Test
 
+    @Test
     public void directoinaiTest() {
         Scene scene = new Scene();
         scene.setScreenDistance(50);
@@ -268,30 +271,10 @@ class RenderTest {
         render.writeToImage();
 
     }
+*/
 
-
+/*
     @Test
-    public void  spointlight () throws Exception
-    {
-        Scene scene = new Scene();
-        Sphere sphere = new Sphere( 500, new Point3D(0.0, 0.0, -1000));
-        sphere.setEmmission(new Color(241, 6, 151));
-        sphere.setShininess(20);
-        scene.addGeometry(sphere);
-
-        scene.addLight(new SpotLight(new Color(200, 200, 200), new Point3D(-250, -250, -150),
-                new Vector(2, 2, -2), 0.0001, 0.0001,0.0001));
-
-        ImageWriter imageWriter = new ImageWriter("spot tese", 500, 500, 500, 500);
-
-        Render render = new Render(imageWriter, scene);
-
-        render.renderImage();
-        //render.printGrid(50);
-        render.writeToImage();
-
-    }
-
     public void emmissionTest2() {
         Scene scene = new Scene();
         scene.setScreenDistance(50);
@@ -334,7 +317,9 @@ class RenderTest {
         render.writeToImage();
 
     }
+*/
 
+/*
     @Test
     public void emmissionTest2_2() {
         Scene scene = new Scene();
@@ -358,47 +343,8 @@ class RenderTest {
 
 
     }
+*/
 
-    @Test
-    public void emmissionTest3() {
-        Scene scene = new Scene();
-        scene.setScreenDistance(50);
-
-        Triangle triangle1 = new Triangle(new Point3D(50, 0, -100),
-                new Point3D(0, 150, -100),
-                new Point3D(51, 100, -100));
-
-        Triangle triangle2 = new Triangle(new Point3D(50, 0, -100),
-                new Point3D(01, -510, -100),
-                new Point3D(150, -100, -100));
-
-        Triangle triangle3 = new Triangle(new Point3D(-50, 0, -100),
-                new Point3D(0, 120, -100),
-                new Point3D(-101, 100, -100));
-
-        Triangle triangle4 = new Triangle(new Point3D(-50, 0, -100),
-                new Point3D(0, -10, -100),
-                new Point3D(-50, -001, -100));
-
-        ImageWriter imageWriter = new ImageWriter("Emmission test3", 500, 500, 500, 500);
-        triangle1.setEmmission(new Color(38, 26, 255));
-        triangle2.setEmmission(new Color(101, 22, 16));
-        triangle3.setEmmission(new Color(255, 66, 52));
-        triangle4.setEmmission(new Color(6, 91, 34));
-
-        scene.addGeometry(triangle1);
-        scene.addGeometry(triangle2);
-        scene.addGeometry(triangle3);
-        scene.addGeometry(triangle4);
-
-
-        Render render = new Render(imageWriter, scene);
-
-        render.renderImage();
-        render.printGrid(50);
-        render.writeToImage();
-
-    }
 
     @Test
     public void emmissionTest_spotLight() {
