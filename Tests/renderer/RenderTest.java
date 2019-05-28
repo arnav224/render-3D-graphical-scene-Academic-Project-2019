@@ -577,7 +577,6 @@ class RenderTest {
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
         sphere.setShininess(20);
         sphere.setEmmission(new Color(0, 0, 30));
-
         scene.addGeometry(sphere);
 
         Quadrangle quadrangle = new Quadrangle(new Point3D(-550, 700, -1500),
