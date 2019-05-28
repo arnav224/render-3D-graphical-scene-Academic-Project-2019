@@ -13,10 +13,10 @@ public class Material {
     {
         _Kd = 1;
         _Ks = 1;
-        _Kr = 0.5;
+        _Kr = 0.3;
         _Kt = 0;
 //        _n = 1;
-        //_nShininess = 19;
+        _nShininess = 19;
     }
     public Material(Material material){
         _Kd = material.getKd();

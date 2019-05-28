@@ -464,7 +464,7 @@ public class Render
 
         //4. Construct ray from the point back to the light
         Ray lightRay = new Ray(geometryPoint, lightDirection);
-        //5. Get all the intersection between the pint and the light source into a mao
+        //5. Get all the intersection between the point and the light source into a mao
         Map <Geometry,List<Point3D>> intersectionPoint = getSceneRayIntersections(lightRay);
 
         // 5.5 Flat geometry
