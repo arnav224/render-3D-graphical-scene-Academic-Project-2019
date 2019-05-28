@@ -472,18 +472,22 @@ class RenderTest {
 
         Scene scene = new Scene();
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1500));
-        sphere.setShininess(80);
-        sphere.setEmmission(new Color(143, 45, 15));
-
+        sphere.setShininess(50);
+        sphere.setEmmission(new Color(83, 50, 102));
+        sphere.setKt(0);
+        sphere.setKr(0);
         scene.addGeometry(sphere);
-        Quadrangle quadrangle = new Quadrangle(new Point3D( -2000, -2000, 0),new Point3D( -2000, 2000, 0),
-                new Point3D( -2000, -2000, -2000),new Point3D( -2000, 2000, -2000));
-        quadrangle.setEmmission(new Color(143, 76, 15));
+
+        Quadrangle quadrangle = new Quadrangle(new Point3D( -1000, 20000, 0),new Point3D( -1000, -20000, 0),
+                new Point3D( 500, -20000, -20000),new Point3D( 500, 20000, -20000));
+        quadrangle.setEmmission(new Color(35, 64, 7));
+        quadrangle.setKr(0.1);
         scene.addGeometry(quadrangle);
+
         Triangle triangle1 = new Triangle(new Point3D(  550,  0, -1500),
                 new Point3D( 450, -200, -900),
                 new Point3D(  450, 300, -850));
-        triangle1.setEmmission(new Color(218, 22, 255));
+        triangle1.setEmmission(new Color(100, 9, 116));
         scene.addGeometry(triangle1);
 
 //        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
@@ -498,9 +502,65 @@ class RenderTest {
 //        scene.addGeometry(triangle1);
 //        scene.addGeometry(triangle2);
 
-        scene.addLight(new DirectionalLight(new Color(250, 231, 255), new Vector(-10, 2, -1)));
-        scene.addLight(new DirectionalLight(new Color(255, 231, 50), new Vector(-10, -2, -1)));
+        //scene.addLight(new DirectionalLight(new Color(165, 228, 202), new Vector(-20, 5, -1)));
+        scene.addLight(new DirectionalLight(new Color(255, 247, 232), new Vector(-20, 0,0)));
         ImageWriter imageWriter = new ImageWriter("    DirectionalLight_1", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+
+    }
+    @Test
+    public void DirectionalLight2(){
+
+        Scene scene = new Scene();
+        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1500));
+        sphere.setShininess(50);
+        sphere.setEmmission(new Color(255, 123, 182));
+        sphere.setKr(0.1);
+        scene.addGeometry(sphere);
+        scene.setScreenDistance(285);
+
+        Triangle triangle = new Triangle(new Point3D(  -500, 3000, 0),
+                new Point3D( -500,  -3000, 0),
+                new Point3D(  -200,  0, -20000));
+        triangle.setEmmission(new Color(125, 110, 24));
+        triangle.setKr(0.18);
+        scene.addGeometry(triangle);
+
+
+
+        Quadrangle quadrangle = new Quadrangle(new Point3D(  250,  750, -1500),
+                new Point3D( 250, -300, -1400),
+                new Point3D(  250, -250, -900), new Point3D(  250, 600, -850));
+        quadrangle.setEmmission(new Color(191, 94, 136));
+        quadrangle.setKr(0.1);
+        scene.addGeometry(quadrangle);
+
+        Triangle triangle1 = new Triangle(new Point3D(  550,  0, -1500),
+                new Point3D( 450, -200, -700),
+                new Point3D(  450, 300, -750));
+        triangle1.setEmmission(new Color(82, 50, 191));
+        scene.addGeometry(triangle1);
+
+//        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
+//                new Point3D( -3500, -3500, -2000),
+//                new Point3D(  3500, -3500, -2000));
+//
+//        Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -2000),
+//                new Point3D( -3500,  3500, -2000),
+//                new Point3D( -3500, -3500, -2000));
+//        triangle2.setEmmission(new Color(14, 26, 72));
+//        triangle1.setEmmission(new Color(14, 26, 72));
+//        scene.addGeometry(triangle1);
+//        scene.addGeometry(triangle2);
+
+        //scene.addLight(new DirectionalLight(new Color(165, 228, 202), new Vector(-20, 5, -1)));
+        scene.addLight(new DirectionalLight(new Color(59, 255, 214), new Vector(-20, 0,0)));
+        scene.addLight(new DirectionalLight(new Color(255, 145, 127), new Vector(-20, 5,7)));
+        ImageWriter imageWriter = new ImageWriter("DirectionalLight_2", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
 
@@ -756,12 +816,16 @@ class RenderTest {
             sphere.setShininess(20);
             sphere.setEmmission(new Color(0, 0, 100));
             sphere.setKt(0.5);
+            sphere.setKr(0.5);
+            sphere.setShininess(0);
             scene.addGeometry(sphere);
 
             Sphere sphere2 = new Sphere(150, new Point3D(-550, -500, -1000));
             sphere2.setShininess(20);
             sphere2.setEmmission(new Color(100, 20, 20));
             sphere2.setKt(0);
+            sphere2.setKr(0.5);
+            sphere2.setShininess(0);
             scene.addGeometry(sphere2);
 
             Triangle triangle = new Triangle(new Point3D(  1500, -1500, -1500),
@@ -771,7 +835,8 @@ class RenderTest {
             Triangle triangle2 = new Triangle(new Point3D(  1500, -1500, -1500),
                     new Point3D( -1500,  1500, -1500),
                     new Point3D( -1500, -1500, -1500));
-
+            triangle.setShininess(0);
+            triangle2.setShininess(0);
             triangle.setEmmission(new Color(20, 20, 20));
             triangle2.setEmmission(new Color(20, 20, 20));
             triangle.setKr(1);
@@ -839,7 +904,7 @@ class RenderTest {
     public void Point_1(){
 
         Scene scene = new Scene();
-        scene.setScreenDistance(400);
+        scene.setScreenDistance(300);
 
         Sphere sphere = new Sphere(300, new Point3D(0, 0, -1000));
         sphere.setShininess(20);
@@ -853,16 +918,24 @@ class RenderTest {
         sphere2.setKt(0.2);
         scene.addGeometry(sphere2);
 
-//        Sphere sphere3 = new Sphere(1700, new Point3D(-2030, 0, -1000));
-//        sphere3.setShininess(20);
-//        sphere3.setEmmission(new Color(155, 61, 156));
-//        sphere3.setKt(0.59);
-//        scene.addGeometry(sphere3);
+        Sphere sphere3 = new Sphere(100, new Point3D(400, 0, -1000));
+        sphere3.setShininess(20);
+        sphere3.setEmmission(new Color(155, 61, 156));
+        sphere3.setKt(0.59);
+        scene.addGeometry(sphere3);
 
-//        Quadrangle quadrangle = new Quadrangle(new Point3D(550,1000,0),
-//                new Point3D(-50,1000,-2000), new Point3D(550,-1000,0),new Point3D(-50,-1000,-2000));
-//        quadrangle.setEmmission(new Color(121, 104, 116));
-        //scene.addGeometry(quadrangle);
+//        Plane plane = new Plane();
+//        plane.setEmmission(new Color(11, 146, 156));
+//        plane.setNormal(new Vector(0,0,1));
+//        plane.setQ(new Point3D(0, 0, -1500));
+//        scene.addGeometry(plane);
+
+        Quadrangle quadrangle = new Quadrangle(new Point3D(400,-150,-1050),new Point3D(400,150,-1050),
+                                               new Point3D(100,150,-700),new Point3D(100,-150,-700));
+        quadrangle.setEmmission(new Color(255, 115, 22));
+        quadrangle.setKt(0);
+        quadrangle.setKr(0);
+        scene.addGeometry(quadrangle);
 
         Triangle triangle = new Triangle(new Point3D(  -500, 3000, 0),
                 new Point3D( -500,  -3000, 0),
