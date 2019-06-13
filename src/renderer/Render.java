@@ -23,6 +23,7 @@ public class Render
     private Scene _scene; // An object that describes the scene.
     private ImageWriter _imageWriter; // Object to write the image.
     private final int RECURSION_LEVEL = 3;//The amount of recursion.
+    private double reductionThreshold = 0.005;
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
@@ -193,7 +194,7 @@ public class Render
      * This function calculate color for point with his geometry color, by calling the 'calcColor' recursive function.
      **************************************************/
     private Color calcColor(Geometry geometry, Point3D point, Ray ray) {
-        return calcColor(geometry, point, ray, 0);
+        return calcColor(geometry, point, ray, 0, 1);
     }
     /*************************************************
      * FUNCTION
@@ -206,21 +207,16 @@ public class Render
      * MEANING
      * This function calculate color for point with his geometry color
      **************************************************/
-    private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level)
+    private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level, double cumulativeReduction)
     {
-
-        if(RECURSION_LEVEL==level)// Exit conditions from recursion.
-            return new Color(0, 0, 0);
-
         Color AmbientLight = _scene.getAmbientLight().getIntensity(point);// Ambient Light in the point.
         Color emisionLight = geometry.getEmmission();// Emission Light in the point.
+
 
         Iterator<LightSource> lights = _scene.getLightsIterator();//Iterator all lights.
 
         Color diffuseLight = new Color(0, 0, 0);//Diffuse light initialization.
         Color specularLight = new Color(0, 0, 0);//Specular light initialization.
-        Color reflectedLight = new Color(0, 0, 0);//reflectedLight - The effect of reflection.
-        Color refractedLight = new Color(0, 0, 0);//refractedLight - The effect of refraction.
 
         /*Calculates the power of all the lights that come to the point.*/
         while (lights.hasNext()) {
@@ -244,35 +240,46 @@ public class Render
 
         }
 
-        //**// Recursive calls
-
-        // Recursive call for a reflected ray
-        Ray reflectedRay = constructReflectedRay(geometry.getNormal(point), point, inRay);
-        Map.Entry<Geometry, Point3D> reflecteEntry1 = findClosesntIntersection(reflectedRay);
-
-        if (reflecteEntry1 != null) {
-            Color reflectedColor = calcColor(reflecteEntry1.getKey(),
-                    reflecteEntry1.getValue(), reflectedRay,level+1);
-            double kr = geometry.getMaterial().getKr();
-            int reflectR = (int) (kr * reflectedColor.getRed());
-            int reflectG = (int) (kr * reflectedColor.getGreen());
-            int reflectB = (int) (kr * reflectedColor.getBlue());
-            reflectedLight = new Color(reflectR, reflectG, reflectB);
-
+        if(RECURSION_LEVEL == level)// Exit conditions from recursion.
+        {
+            return addColors(addColors(addColors(AmbientLight,emisionLight),diffuseLight),specularLight);
         }
 
-        /* Recursive call for a refracted ray*/
-        Ray refractedRay = constructRefractedRay(geometry, point, inRay);
-        Map.Entry<Geometry, Point3D> refracteEntry1 = findClosesntIntersection(refractedRay);
+        Material material = geometry.getMaterial();
+        //**// Recursive calls
 
-        if (refracteEntry1 != null)
-        {
-            Color refractedColor = calcColor(refracteEntry1.getKey(), refracteEntry1.getValue(), refractedRay,level+1);
-            double kt = geometry.getMaterial().getKt();
-            int refractR = (int) (kt * refractedColor.getRed());
-            int refractG = (int) (kt * refractedColor.getGreen());
-            int refractB = (int) (kt * refractedColor.getBlue());
-            refractedLight = new Color(refractR, refractG, refractB);
+        Color reflectedLight = new Color(0, 0, 0);//reflectedLight - The effect of reflection.
+        Color refractedLight = new Color(0, 0, 0);//refractedLight - The effect of refraction.
+
+        double kr = material.getKr();
+        if (cumulativeReduction * kr > this.reductionThreshold){
+            // Recursive call for a reflected ray
+            Ray reflectedRay = constructReflectedRay(geometry.getNormal(point), point, inRay);
+            Map.Entry<Geometry, Point3D> reflecteEntry1 = findClosesntIntersection(reflectedRay);
+            if (reflecteEntry1 != null) {
+                Color reflectedColor = calcColor(reflecteEntry1.getKey(),
+                        reflecteEntry1.getValue(), reflectedRay,level+1, cumulativeReduction * kr);
+                int reflectR = (int) (kr * reflectedColor.getRed());
+                int reflectG = (int) (kr * reflectedColor.getGreen());
+                int reflectB = (int) (kr * reflectedColor.getBlue());
+                reflectedLight = new Color(reflectR, reflectG, reflectB);
+
+            }
+        }
+
+        double kt = material.getKt();
+        if (cumulativeReduction * kt > this.reductionThreshold){
+            /* Recursive call for a refracted ray*/
+            Ray refractedRay = constructRefractedRay(geometry, point, inRay);
+            Map.Entry<Geometry, Point3D> refracteEntry1 = findClosesntIntersection(refractedRay);
+            if (refracteEntry1 != null)
+            {
+                Color refractedColor = calcColor(refracteEntry1.getKey(), refracteEntry1.getValue(), refractedRay,level+1, cumulativeReduction * kt);
+                int refractR = (int) (kt * refractedColor.getRed());
+                int refractG = (int) (kt * refractedColor.getGreen());
+                int refractB = (int) (kt * refractedColor.getBlue());
+                refractedLight = new Color(refractR, refractG, refractB);
+            }
         }
         //**// End of recursive calls
 
