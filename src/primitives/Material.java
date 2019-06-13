@@ -13,7 +13,7 @@ public class Material {
     {
         _Kd = 1;
         _Ks = 1;
-        _Kr = 0.3;
+        _Kr = 0;
         _Kt = 0;
 //        _n = 1;
         _nShininess = 19;

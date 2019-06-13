@@ -61,7 +61,7 @@ public class Quadrangle extends Geometry implements FlatGeometry{
      * Return the normal to Quadrangle at the point.
      **************************************************/
     public Vector getNormal(Point3D point_NoUse){
-        return _tri1.getNormal(point_NoUse);
+        return _tri2.getNormal(point_NoUse);
     }
 
 
