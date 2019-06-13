@@ -736,8 +736,8 @@ class RenderTest {
 
     }
 
-        @Test
-        public void QuadrangleTest(){
+    @Test
+    public void QuadrangleTest(){
             Scene scene = new Scene();
             scene.setScreenDistance(50);
             Quadrangle quadrangle = new Quadrangle(new Point3D(50,-50,-50),new Point3D(50,50,-50),
@@ -756,8 +756,8 @@ class RenderTest {
             render.writeToImage();
 
         }
-        @Test
-        public void recursiveTest()
+    @Test
+    public void recursiveTest()
         {
             Scene scene = new Scene();
             scene.setScreenDistance(300);
@@ -786,8 +786,8 @@ class RenderTest {
         }
 
 
-        @Test
-        public void recursiveTest2(){
+    @Test
+    public void recursiveTest2(){
 
             Scene scene = new Scene();
             scene.setScreenDistance(300);
@@ -1183,6 +1183,118 @@ public void Point_1(){
         render.renderImage();
         render.writeToImage();
     }
+    @Test
+    public void softShadowTest(){
+
+        Scene scene = new Scene();
+        Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(0, 0, 30));
+        scene.addGeometry(sphere);
+
+        Quadrangle quadrangle = new Quadrangle(new Point3D(-550, 700, -1500),
+                new Point3D(-550, -100,-1500),
+                new Point3D(-550, -100, -420),
+                new Point3D(-550, 700, -420));
+        quadrangle.setEmmission(new Color(47, 17, 54));
+        scene.addGeometry(quadrangle);
+        Quadrangle quadrangle2 = new Quadrangle(new Point3D(-550, 700, -1500),
+                new Point3D(-450, 700,-1500),
+                new Point3D(-450, 700, -420),
+                new Point3D(-550, 700, -420));
+        quadrangle2.setEmmission(new Color(30, 41, 5));
+        scene.addGeometry(quadrangle2);
+        Quadrangle quadrangle3 = new Quadrangle(new Point3D(-450, 700,-1500),
+                new Point3D(-450, 400,-1500),
+                new Point3D(-450, 400, -420),
+                new Point3D(-450, 700, -420));
+        quadrangle3.setEmmission(new Color(38, 41, 6));
+        scene.addGeometry(quadrangle3);
+//        Sphere sphere2 = new Sphere(200, new Point3D(-345.0, 100.0, -520));
+//        sphere2.setShininess(80);
+//        sphere2.setEmmission(new Color(0, 0, 30));
+//
+//        scene.addGeometry(sphere2);
+
+        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
+                new Point3D( -3500, -3500, -1000),
+                new Point3D(  3500, -3500, -2000));
+
+        Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -2000),
+                new Point3D( -3500,  3500, -1000),
+                new Point3D( -3500, -3500, -1000));
+
+        scene.addGeometry(triangle1);
+        scene.addGeometry(triangle2);
+
+        scene.addVolumeLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 200, -100),
+                new Vector(-2, -2, -3), 0, 0.000001, 0.0000005), 20, 12);
+
+        scene.addVolumeLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 350, -100),
+                new Vector(-1, -1, -3), 0, 0.000001, 0.0000005), 20, 12);
+
+        ImageWriter imageWriter = new ImageWriter("Soft Shadow test3", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+
+    }
+    @Test
+    public void softPoint_1(){
+
+        Scene scene = new Scene();
+        scene.setScreenDistance(300);
+
+        Sphere sphere = new Sphere(300, new Point3D(0, 0, -1000));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(120, 47, 90));
+        sphere.setKt(0.8);
+        scene.addGeometry(sphere);
+
+        Sphere sphere2 = new Sphere(1700, new Point3D(-2000, 0, -1000));
+        sphere2.setShininess(25);
+        sphere2.setEmmission(new Color(156, 139, 34));
+        sphere2.setKt(0.2);
+        scene.addGeometry(sphere2);
+
+        Sphere sphere3 = new Sphere(100, new Point3D(400, 0, -1000));
+        sphere3.setShininess(20);
+        sphere3.setEmmission(new Color(155, 61, 156));
+        sphere3.setKt(0.59);
+        scene.addGeometry(sphere3);
+
+//        Plane plane = new Plane();
+//        plane.setEmmission(new Color(11, 146, 156));
+//        plane.setNormal(new Vector(0,0,1));
+//        plane.setQ(new Point3D(0, 0, -1500));
+//        scene.addGeometry(plane);
+
+        Quadrangle quadrangle = new Quadrangle(new Point3D(400,-150,-1050),new Point3D(400,150,-1050),
+                new Point3D(100,150,-700),new Point3D(100,-150,-700));
+        quadrangle.setEmmission(new Color(255, 115, 22));
+        quadrangle.setKt(0);
+        quadrangle.setKr(0);
+        scene.addGeometry(quadrangle);
+
+        Triangle triangle = new Triangle(new Point3D(  -500, 3000, 0),
+                new Point3D( -500,  -3000, 0),
+                new Point3D(  -200,  0, -20000));
 
 
+        triangle.setEmmission(new Color(20, 20, 20));
+        triangle.setKr(1);
+        scene.addGeometry(triangle);
+
+        scene.addVolumeLight(new PointLight(new Color(255, 140, 120), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005),50,8);
+        scene.addVolumeLight(new PointLight(new Color(27, 255, 204), new Point3D(2300, -700, -1500),0.01, 0.00001, 0.000005),50,8);
+
+        ImageWriter imageWriter = new ImageWriter("softPoint_1", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
 }
