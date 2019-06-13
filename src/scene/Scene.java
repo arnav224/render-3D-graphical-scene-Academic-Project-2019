@@ -141,26 +141,20 @@ public class Scene {
             Point3D position = spotLight.get_position();
             Vector direction = spotLight.get_direction();
             Color originalColor = spotLight.getColor();
-            int red = originalColor.getRed()/NumOfLights;
-            int green = originalColor.getGreen()/NumOfLights;
-            int blue = originalColor.getBlue()/NumOfLights;
-            for (int i = 0; i < NumOfLights; i ++){
-                addLight(new SpotLight(new Color(red,green,blue),
+            for (int i = 1; i < NumOfLights; i ++) {
+                addLight(new SpotLight(new Color(originalColor.getRGB()),
                         new Point3D(position.getX().getCoordinate() + (Math.random() * 2 - 1) * radios,
-                        position.getY().getCoordinate() + (Math.random() * 2 - 1) * radios,
-                        position.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios),
-                                direction, spotLight.get_Kc(), spotLight.get_Kl(), spotLight.get_Kq()));
+                                position.getY().getCoordinate() + (Math.random() * 2 - 1) * radios,
+                                position.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios),
+                        direction, spotLight.get_Kc(), spotLight.get_Kl(), spotLight.get_Kq()));
             }
         }
         else if (light instanceof PointLight){
             PointLight pointLight = (PointLight)light;
             Point3D position = pointLight.get_position();
             Color originalColor = pointLight.getColor();
-            int red = originalColor.getRed()/NumOfLights;
-            int green = originalColor.getGreen()/NumOfLights;
-            int blue = originalColor.getBlue()/NumOfLights;
-            for (int i = 0; i < NumOfLights; i ++){
-                addLight(new PointLight(new Color(red,green,blue),
+            for (int i = 1; i < NumOfLights; i ++){
+                addLight(new PointLight(new Color(originalColor.getRGB()),
                         new Point3D(position.getX().getCoordinate() + (Math.random() * 2 - 1) * radios,
                                 position.getY().getCoordinate() + (Math.random() * 2 - 1) * radios,
                                 position.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios),
