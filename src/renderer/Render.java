@@ -23,7 +23,7 @@ public class Render
     private Scene _scene; // An object that describes the scene.
     private ImageWriter _imageWriter; // Object to write the image.
     private final int RECURSION_LEVEL = 3;//The amount of recursion.
-    private double reductionThreshold = 0.005;
+    private double reductionThreshold = 0.01;
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
