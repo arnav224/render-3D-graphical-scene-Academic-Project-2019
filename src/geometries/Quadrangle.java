@@ -63,7 +63,14 @@ public class Quadrangle extends Geometry implements FlatGeometry{
     public Vector getNormal(Point3D point_NoUse){
         return _tri1.getNormal(point_NoUse);
     }
-
+//    Vector p2ToPoint = new Vector(_tri1.getP2(), point_NoUse).normalize();
+//    Vector p2ToP1 = new Vector(_tri1.getP2(), _tri1.getP1()).normalize();
+//    Vector p2ToP3 = new Vector(_tri1.getP2(),_tri1.getP3()).normalize();
+//    double angleCos = p2ToPoint.dotProduct(p2ToP1);
+//    double triangleCos = p2ToP3.dotProduct(p2ToP1);
+//        if (angleCos >= triangleCos)
+//            return _tri1.getNormal(point_NoUse);
+//        return _tri2.getNormal(point_NoUse);
 
     /*************************************************
      * FUNCTION
