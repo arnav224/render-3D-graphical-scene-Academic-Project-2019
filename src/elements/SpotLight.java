@@ -42,6 +42,10 @@ public class SpotLight extends PointLight{
 
     }
 
+    public Vector get_direction(){
+        return new Vector(_direction);
+    }
+
     @Override
     public Vector getL(Point3D point){
         return new Vector(this._position, point);

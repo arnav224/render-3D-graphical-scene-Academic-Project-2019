@@ -5,6 +5,22 @@ import primitives.*;
 import java.awt.*;
 
 public class PointLight extends Light implements LightSource {
+    public Point3D get_position() {
+        return new Point3D(_position);
+    }
+
+    public double get_Kc() {
+        return _Kc;
+    }
+
+    public double get_Kl() {
+        return _Kl;
+    }
+
+    public double get_Kq() {
+        return _Kq;
+    }
+
     Point3D _position;
     double _Kc, _Kl, _Kq;
     // ***************** Constructors ********************** //

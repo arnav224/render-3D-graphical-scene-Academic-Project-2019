@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-
-import elements.AmbientLight;
-import elements.Camera;
-import elements.LightSource;
+//import java.util.*;
+import elements.*;
 import geometries.Geometry;
+import primitives.Point3D;
+import primitives.Vector;
+
 public class Scene {
     private Color _background;
     private AmbientLight _ambientLight; // ambient Light
@@ -133,6 +134,42 @@ public class Scene {
     }
 
     public void addLight(LightSource light){this._lights.add(light);}
+
+    public void addVolumeLight(LightSource light, double radios, int NumOfLights){
+        if (light instanceof SpotLight){
+            SpotLight spotLight = (SpotLight)light;
+            Point3D position = spotLight.get_position();
+            Vector direction = spotLight.get_direction();
+            Color originalColor = spotLight.getColor();
+            int red = originalColor.getRed()/NumOfLights;
+            int green = originalColor.getGreen()/NumOfLights;
+            int blue = originalColor.getBlue()/NumOfLights;
+            for (int i = 0; i < NumOfLights; i ++){
+                addLight(new SpotLight(new Color(red,green,blue),
+                        new Point3D(position.getX().getCoordinate() + (Math.random() * 2 - 1) * radios,
+                        position.getY().getCoordinate() + (Math.random() * 2 - 1) * radios,
+                        position.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios),
+                                direction, spotLight.get_Kc(), spotLight.get_Kl(), spotLight.get_Kq()));
+            }
+        }
+        else if (light instanceof PointLight){
+            PointLight pointLight = (PointLight)light;
+            Point3D position = pointLight.get_position();
+            Color originalColor = pointLight.getColor();
+            int red = originalColor.getRed()/NumOfLights;
+            int green = originalColor.getGreen()/NumOfLights;
+            int blue = originalColor.getBlue()/NumOfLights;
+            for (int i = 0; i < NumOfLights; i ++){
+                addLight(new PointLight(new Color(red,green,blue),
+                        new Point3D(position.getX().getCoordinate() + (Math.random() * 2 - 1) * radios,
+                                position.getY().getCoordinate() + (Math.random() * 2 - 1) * radios,
+                                position.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios),
+                                    pointLight.get_Kc(), pointLight.get_Kl(), pointLight.get_Kq()));
+            }
+        }
+        else
+            this._lights.add(light);
+    }
 
     public Iterator<LightSource> getLightsIterator() { return this._lights.iterator(); }
 
