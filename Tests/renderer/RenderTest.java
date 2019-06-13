@@ -496,10 +496,33 @@ class RenderTest {
 
         Scene scene = new Scene();
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
-        sphere.setShininess(80);
+        sphere.setShininess(20);
         sphere.setEmmission(new Color(0, 0, 30));
-
         scene.addGeometry(sphere);
+
+        Quadrangle quadrangle = new Quadrangle(new Point3D(-550, 700, -1500),
+                new Point3D(-550, -100,-1500),
+                new Point3D(-550, -100, -420),
+                new Point3D(-550, 700, -420));
+        quadrangle.setEmmission(new Color(47, 17, 54));
+        scene.addGeometry(quadrangle);
+        Quadrangle quadrangle2 = new Quadrangle(new Point3D(-550, 700, -1500),
+                new Point3D(-450, 700,-1500),
+                new Point3D(-450, 700, -420),
+                new Point3D(-550, 700, -420));
+        quadrangle2.setEmmission(new Color(30, 41, 5));
+        scene.addGeometry(quadrangle2);
+        Quadrangle quadrangle3 = new Quadrangle(new Point3D(-450, 700,-1500),
+                new Point3D(-450, 400,-1500),
+                new Point3D(-450, 400, -420),
+                new Point3D(-450, 700, -420));
+        quadrangle3.setEmmission(new Color(38, 41, 6));
+        scene.addGeometry(quadrangle3);
+//        Sphere sphere2 = new Sphere(200, new Point3D(-345.0, 100.0, -520));
+//        sphere2.setShininess(80);
+//        sphere2.setEmmission(new Color(0, 0, 30));
+//
+//        scene.addGeometry(sphere2);
 
         Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
                 new Point3D( -3500, -3500, -1000),
@@ -515,6 +538,8 @@ class RenderTest {
         scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 200, -100),
                 new Vector(-2, -2, -3), 0, 0.000001, 0.0000005));
 
+        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 350, -100),
+                new Vector(-1, -1, -3), 0, 0.000001, 0.0000005));
 
         ImageWriter imageWriter = new ImageWriter("Shadow testold", 500, 500, 500, 500);
 
