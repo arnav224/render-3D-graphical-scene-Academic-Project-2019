@@ -194,7 +194,7 @@ public class Render
      * This function calculate color for point with his geometry color, by calling the 'calcColor' recursive function.
      **************************************************/
     private Color calcColor(Geometry geometry, Point3D point, Ray ray) {
-        return calcColor(geometry, point, ray, 0, 1);
+        return calcColor(geometry, point, ray, 1, 1);
     }
     /*************************************************
      * FUNCTION
@@ -240,7 +240,7 @@ public class Render
 
         }
 
-        if(RECURSION_LEVEL == level)// Exit conditions from recursion.
+        if(RECURSION_LEVEL <= level)// Exit conditions from recursion.
         {
             return addColors(addColors(addColors(AmbientLight,emisionLight),diffuseLight),specularLight);
         }
