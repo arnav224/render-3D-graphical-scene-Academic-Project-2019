@@ -1,7 +1,6 @@
 package renderer;
         import java.awt.Color;
         import java.util.*;
-        import java.util.function.Function;
         import java.util.function.IntFunction;
 /*import java.util.Iterator;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.Map.Entry;*/
         import primitives.Vector;
         import scene.Scene;
 
-        import static javafx.scene.input.KeyCode.R;
         import static sun.nio.ch.IOStatus.normalize;
 
 public class Render
@@ -151,6 +149,7 @@ public class Render
      * MEANING
      * Calculates the point's color.
      **************************************************/
+/*
     private Color calcColor(Geometry geometry, Point3D point) {
         Color ambientLight = _scene.getAmbientLight().getIntensity(point);// Ambient Light in the point.
         Color emissionLight = geometry.get_emmission(); // Emission Light in the point.
@@ -159,20 +158,26 @@ public class Render
         Color diffuseLight = new Color(0,0,0);//Diffuse light initialization.
         Color specularLight = new Color(0,0,0);//Specular light initialization.
 
-        /*Calculates the power of all the lights that come to the point.*/
+        */
+/*Calculates the power of all the lights that come to the point.*//*
+
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
 
             if ( !occluded(lightSource, point, geometry)) { // The light is not blocked.
-                /*Add diffuse light*/
+                */
+/*Add diffuse light*//*
+
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
-                        geometry.getNormal(point),
+                        geometry.getNormal(point, ),
                         lightSource.getL(point),
                         lightSource.getIntensity(point)), diffuseLight);
-                /*Add specular light*/
+                */
+/*Add specular light*//*
+
                 specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
                         new Vector(point, _scene.getCamera().getP0()),
-                        geometry.getNormal(point),
+                        geometry.getNormal(point, ),
                         lightSource.getL(point),
                         geometry.getMaterial().getShininess(),
                         lightSource.getIntensity(point)), specularLight);
@@ -180,9 +185,12 @@ public class Render
             }
         }
 
-        /* Connect all colors */
+        */
+/* Connect all colors *//*
+
         return addColors(addColors(ambientLight, emissionLight), addColors(diffuseLight, specularLight)) ;
     }
+*/
     /*************************************************
      * FUNCTION
      * calcColor
@@ -219,21 +227,23 @@ public class Render
         Color specularLight = new Color(0, 0, 0);//Specular light initialization.
 
         /*Calculates the power of all the lights that come to the point.*/
+        Vector normal = geometry.getNormal(point, inRay.getDirection());
+        int sininess = geometry.getMaterial().getShininess();
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
 
             if ( !occluded(lightSource, point, geometry)) {// The light is not blocked.
                 /*Add diffuse light*/
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
-                        geometry.getNormal(point),
+                        normal,
                         lightSource.getL(point),
                         lightSource.getIntensity(point)), diffuseLight);
                 /*Add specular light*/
                 specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
                         new Vector(point, _scene.getCamera().getP0()),
-                        geometry.getNormal(point),
+                        normal,
                         lightSource.getL(point),
-                        geometry.getMaterial().getShininess(),
+                        sininess,
                         lightSource.getIntensity(point)), specularLight);
 
             }
@@ -254,7 +264,7 @@ public class Render
         double kr = material.getKr();
         if (cumulativeReduction * kr > this.reductionThreshold){
             // Recursive call for a reflected ray
-            Ray reflectedRay = constructReflectedRay(geometry.getNormal(point), point, inRay);
+            Ray reflectedRay = constructReflectedRay(geometry, point, inRay);
             Map.Entry<Geometry, Point3D> reflecteEntry1 = findClosesntIntersection(reflectedRay);
             if (reflecteEntry1 != null) {
                 Color reflectedColor = calcColor(reflecteEntry1.getKey(),
@@ -466,7 +476,7 @@ public class Render
 
         //3. the point that send the ray back
         //3.5 Floating point corecction
-        Vector epsVector = new Vector(geometry.getNormal(point)).scale(0.005);
+        Vector epsVector = new Vector(geometry.getNormal(point, lightDirection)).scale(-0.005);
         Point3D geometryPoint = new Point3D(point).add(epsVector);
 
         //4. Construct ray from the point back to the light
@@ -494,8 +504,8 @@ public class Render
      * MEANING
      * This function calculate the reflected ray from the surface
      **************************************************/
-    private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay){
-
+    private Ray constructReflectedRay(Geometry geometry, Point3D point, Ray inRay){
+        Vector normal = geometry.getNormal(point, inRay.getDirection());
         Vector l = inRay.getDirection();
         l = l.normalize();
 
@@ -523,15 +533,30 @@ public class Render
      **************************************************/
     private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay){
 
-        Vector normal = geometry.getNormal(point);
-
+        Vector direction = inRay.getDirection();
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         if (geometry instanceof FlatGeometry){
-            return new Ray (point.add(normal.scale(-2)), inRay.getDirection());
+            return new Ray (point.add(normalEpsilon), direction);
         } else {
-            return new Ray (point.add(normal.scale(-2)), inRay.getDirection());
+            return new Ray (point.add(normalEpsilon), direction);
         }
 
     }
+    private List<Ray> constructRefractedRays(Geometry geometry, Point3D point, Ray inRay){
+        List<Ray> result = new ArrayList<>(5);
+        Vector direction = inRay.getDirection();
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
+        if (geometry instanceof FlatGeometry)
+            result.add(new Ray (point.add(normalEpsilon), direction));
+        else
+            result.add(new Ray (point.add(normalEpsilon), direction));
+
+        return result;
+    }
+
+
+
+
 //    private Map.Entry<Geometry, List<Point3D>> findClosesntIntersection(Ray ray){
 //        Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);
 //

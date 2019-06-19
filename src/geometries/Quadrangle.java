@@ -23,7 +23,7 @@ public class Quadrangle extends Geometry implements FlatGeometry{
     public Quadrangle(Point3D p1, Point3D p2, Point3D p3, Point3D p4) {
         _tri1 = new Triangle(p1, p2, p4);
         _tri2 = new Triangle(p2, p3, p4);
-        if (_tri1.getNormal(null).crossProduct((_tri2.getNormal(null))).length() != 0)
+        if (_tri1.getNormal(null, null).crossProduct((_tri2.getNormal(null, null))).length() != 0)
             throw new ExceptionInInitializerError("The four points are not on the same plane");
     }
 
@@ -60,8 +60,8 @@ public class Quadrangle extends Geometry implements FlatGeometry{
      * MEANING
      * Return the normal to Quadrangle at the point.
      **************************************************/
-    public Vector getNormal(Point3D point_NoUse){
-        return _tri2.getNormal(point_NoUse);
+    public Vector getNormal(Point3D point_NoUse, Vector direction){
+        return _tri2.getNormal(point_NoUse, direction);
     }
 //    Vector p2ToPoint = new Vector(_tri1.getP2(), point_NoUse).normalize();
 //    Vector p2ToP1 = new Vector(_tri1.getP2(), _tri1.getP1()).normalize();

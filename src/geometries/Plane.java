@@ -48,9 +48,6 @@ public class Plane extends Geometry implements FlatGeometry{
     }
 
     // ***************** Getters/Setters ********************** //
-    public Vector getNormal() {
-        return new Vector(_normal);
-    }
     public Plane setNormal(Vector _normal) {
         this._normal = new Vector(_normal);
         return this;
@@ -75,9 +72,12 @@ public class Plane extends Geometry implements FlatGeometry{
      * finding the Normal from the Plane.
      **************************************************/
     @Override
-    public Vector getNormal(Point3D pointNoUse) {
-        return new Vector(_normal);
+    public Vector getNormal(Point3D pointNoUse, Vector direction) {
+        if (direction != null && direction.dotProduct(_normal) > 0 )
+            return new Vector(_normal.scale(-1));
+        else return new Vector(_normal);
     }
+
     /*************************************************
      * FUNCTION
      * FindIntersections
@@ -93,7 +93,7 @@ public class Plane extends Geometry implements FlatGeometry{
         List<Point3D> intersectionPointsPlane = new ArrayList<Point3D>();
         Point3D P0 = ray.getPOO(); // The beginning of the ray.
         Point3D Q0 = this.getQ();
-        Vector N = this.getNormal(null);
+        Vector N = this.getNormal(null, ray.getDirection());//todo
         Vector V = ray.getDirection();
         Vector v = new Vector(Q0, P0);
 

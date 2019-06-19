@@ -785,6 +785,40 @@ class RenderTest {
             render.writeToImage();
         }
 
+    @Test
+    public void refructedTest(){
+        Scene scene = new Scene();
+        scene.setScreenDistance(300);
+
+        Triangle triangle = new Triangle(
+                new Point3D( -1500,  1500, -1000),new Point3D(  1500, -1500, -1000),
+                new Point3D(  1500,  1500, -1000));
+
+        Triangle triangle2 = new Triangle(new Point3D(  200, -800, -1500),
+                new Point3D( -800,  200, -1500),
+                new Point3D( 500, 500, -1500));
+        triangle.setShininess(0);
+        triangle2.setShininess(0);
+        triangle.setEmmission(new Color(255, 105, 0));
+        triangle2.setEmmission(new Color(0, 150, 255));
+
+        triangle.setKt(0.8);
+        triangle2.setKt(0);
+        scene.addGeometry(triangle);
+        scene.addGeometry(triangle2);
+
+        scene.addLight(new SpotLight(new Color(255, 100, 100),  new Point3D(200, 200, -150),
+                new Vector(-2, -2, -3), 0, 0.00001, 0.000005));
+
+        ImageWriter imageWriter = new ImageWriter("refructedTest1", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+
+
+    }
 
     @Test
     public void recursiveTest2(){

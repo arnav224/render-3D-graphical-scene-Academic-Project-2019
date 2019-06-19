@@ -115,7 +115,7 @@ public class Hemisphere extends RadialGeometry {
      * Return the normal to Hemisphere at the point.
      **************************************************/
     @Override
-    public Vector getNormal(Point3D point) {
+    public Vector getNormal(Point3D point, Vector direction) {
         double d = this._center.distance(point);
         if (usubtract(getRadius(),d) == 0)
             return point.subtract(this._center).normalize();

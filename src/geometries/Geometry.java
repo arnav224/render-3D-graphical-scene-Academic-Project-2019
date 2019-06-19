@@ -28,7 +28,7 @@ public abstract class Geometry implements Intersectable{
      * MEANING
      * An abstract function for finding the Normal from any geometry
      **************************************************/
-    public abstract Vector getNormal(Point3D point);
+    public abstract Vector getNormal(Point3D point, Vector direction);
     /*************************************************
      * FUNCTION
      * get_emmission

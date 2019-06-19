@@ -97,7 +97,7 @@ public class Triangle extends Geometry implements FlatGeometry{
      * Return the normal to Triangle at the point.
      **************************************************/
     @Override
-    public Vector getNormal(Point3D point_NoUse) {
+    public Vector getNormal(Point3D point_NoUse, Vector direction) {
         return (((this._p2.subtract(this._p1))
                 .crossProduct(this._p3.subtract(this._p1))) // A cross product of 2 sides returns the normal.
                 .normalize())
@@ -119,7 +119,7 @@ public class Triangle extends Geometry implements FlatGeometry{
         Vector N;
         try
         {
-            N = this.getNormal(null);
+            N = this.getNormal(null, ray.getDirection());
         }
         catch ( ArithmeticException e) // Catches a zero vector.
         {

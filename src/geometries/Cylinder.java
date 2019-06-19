@@ -52,7 +52,7 @@ public class Cylinder extends RadialGeometry {
     }
     //todo
     @Override
-    public Vector getNormal(Point3D point){
+    public Vector getNormal(Point3D point, Vector direction){
         return null;
     }
 }
