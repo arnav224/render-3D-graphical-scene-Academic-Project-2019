@@ -142,7 +142,8 @@ public final class Coordinate implements Comparable<Coordinate> {
      * uscale method in Unil class.
      **************************************************/
     public Coordinate scale(double num) {
-        return new Coordinate(uscale(_coord, num));
+        return new Coordinate(_coord * num);
+        //return new Coordinate(uscale(_coord, num));
     }
 
 /*

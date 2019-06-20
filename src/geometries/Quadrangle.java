@@ -61,6 +61,7 @@ public class Quadrangle extends Geometry implements FlatGeometry{
      * Return the normal to Quadrangle at the point.
      **************************************************/
     public Vector getNormal(Point3D point_NoUse, Vector direction){
+
         return _tri2.getNormal(point_NoUse, direction);
     }
 //    Vector p2ToPoint = new Vector(_tri1.getP2(), point_NoUse).normalize();
@@ -97,9 +98,9 @@ public class Quadrangle extends Geometry implements FlatGeometry{
                 get_tri2().equals(that.get_tri2());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(get_tri1(), get_tri2());
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(get_tri1(), get_tri2());
+//    }
 }
 

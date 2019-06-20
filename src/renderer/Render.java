@@ -20,7 +20,7 @@ public class Render
 
     private Scene _scene; // An object that describes the scene.
     private ImageWriter _imageWriter; // Object to write the image.
-    private final int RECURSION_LEVEL = 3;//The amount of recursion.
+    private final int RECURSION_LEVEL = 4;//The amount of recursion.
     private double reductionThreshold = 0.01;
     // ***************** Constructors ********************** //
     /*************************************************
@@ -231,8 +231,7 @@ public class Render
         int sininess = geometry.getMaterial().getShininess();
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
-
-            if ( !occluded(lightSource, point, geometry)) {// The light is not blocked.
+            if (!occluded(lightSource, point, geometry)) {// The light is not blocked.
                 /*Add diffuse light*/
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
                         normal,
@@ -476,7 +475,7 @@ public class Render
 
         //3. the point that send the ray back
         //3.5 Floating point corecction
-        Vector epsVector = new Vector(geometry.getNormal(point, lightDirection)).scale(-0.005);
+        Vector epsVector = new Vector(geometry.getNormal(point, lightDirection)).scale(0.0005);
         Point3D geometryPoint = new Point3D(point).add(epsVector);
 
         //4. Construct ray from the point back to the light
@@ -485,12 +484,13 @@ public class Render
         Map <Geometry,List<Point3D>> intersectionPoint = getSceneRayIntersections(lightRay);
 
         // 5.5 Flat geometry
-        if (geometry instanceof FlatGeometry){
+        if (geometry instanceof Quadrangle || geometry instanceof FlatGeometry){
             intersectionPoint.remove(geometry);
         }
 
         //6. If the map is empty - the light goes directly to the point
         //   Otherwise - there's something between them
+
         return !intersectionPoint.isEmpty();
     }
 
@@ -534,7 +534,7 @@ public class Render
     private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay){
 
         Vector direction = inRay.getDirection();
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.1);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.0005);
         if (geometry instanceof FlatGeometry){
             return new Ray (point.add(normalEpsilon), direction);
         } else {

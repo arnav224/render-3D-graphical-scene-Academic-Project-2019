@@ -610,73 +610,73 @@ class RenderTest {
 
     }
 
-//    @Test
-//    public void shadowTestA(){
-//
-//        Scene scene = new Scene();
-//        Sphere sphere = new Sphere(50, new Point3D(170.0, -30.0, -680));
-//        sphere.setShininess(20);
-//        sphere.setEmmission(new Color(20, 30, 21));
-//
-//        //scene.addGeometry(sphere);
-//
-//        Sphere sphere2 = new Sphere(50, new Point3D(-20.0, -160.0, -680));
-//        sphere2.setShininess(20);
-//        sphere2.setEmmission(new Color(30, 8, 8));
-//
-//        //scene.addGeometry(sphere2);
-//
-//        Sphere sphere3 = new Sphere(20, new Point3D(-100.0, 20.0, -680));
-//        sphere3.setShininess(20);
-//        sphere3.setEmmission(new Color(4, 28, 30));
-//
-//        //scene.addGeometry(sphere3);
-//
-//        Sphere sphere4 = new Sphere(50, new Point3D(30.0, -260.0, -680));
-//        sphere4.setShininess(20);
-//        sphere4.setEmmission(new Color(4, 5, 30));
-//
-//        //scene.addGeometry(sphere4);
-//
-//        Sphere sphere5 = new Sphere(50, new Point3D(260.0, -120.0, -680));
-//        sphere5.setShininess(20);
-//        sphere5.setEmmission(new Color(3, 30, 8));
-//
-//        //scene.addGeometry(sphere5);
-//
-//        Hemisphere hemisphere = new Hemisphere(650, new Point3D(-0.0, -0.0, -750), new Vector(13.0, 2.0, 1.5));
-//        hemisphere.setShininess(20);
-//        hemisphere.setEmmission(new Color(0, 10, 30));
-//        scene.addGeometry(hemisphere);
-//
-////        Hemisphere2 hemisphere2 = new Hemisphere2(505, new Point3D(0.0, -0.0, -650), new Vector(3.0, 2.5, 8.5));
-////        hemisphere2.setShininess(20);
-////        hemisphere2.setEmmission(new Color(0, 10, 30));
-////        scene.addGeometry(hemisphere2);
-//
-//        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
-//                new Point3D( -3500, -3500, -1000),
-//                new Point3D(  3500, -3500, -2000));
-//
-//        Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -2000),
-//                new Point3D( -3500,  3500, -1000),
-//                new Point3D( -3500, -3500, -1000));
-//
-//        //scene.addGeometry(triangle1);
-//        //scene.addGeometry(triangle2);
-//
-//        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 200, -100),
-//                new Vector(-2, -2, -3), 0, 0.000001, 0.0000005));
-//        //scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(0.0, 0.0, -300),0, 0.000001, 0.0000005));
-//
-//        ImageWriter imageWriter = new ImageWriter("Shadow test A", 500, 500, 500, 500);
-//
-//        Render render = new Render(imageWriter, scene);
-//
-//        render.renderImage();
-//        render.writeToImage();
-//
-//    }
+    @Test
+    public void shadowTestA(){
+
+        Scene scene = new Scene();
+        Sphere sphere = new Sphere(50, new Point3D(170.0, -30.0, -680));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(20, 30, 21));
+
+        //scene.addGeometry(sphere);
+
+        Sphere sphere2 = new Sphere(50, new Point3D(-20.0, -160.0, -680));
+        sphere2.setShininess(20);
+        sphere2.setEmmission(new Color(30, 8, 8));
+
+        //scene.addGeometry(sphere2);
+
+        Sphere sphere3 = new Sphere(20, new Point3D(-100.0, 20.0, -680));
+        sphere3.setShininess(20);
+        sphere3.setEmmission(new Color(4, 28, 30));
+
+        //scene.addGeometry(sphere3);
+
+        Sphere sphere4 = new Sphere(50, new Point3D(30.0, -260.0, -680));
+        sphere4.setShininess(20);
+        sphere4.setEmmission(new Color(4, 5, 30));
+
+        //scene.addGeometry(sphere4);
+
+        Sphere sphere5 = new Sphere(50, new Point3D(260.0, -120.0, -680));
+        sphere5.setShininess(20);
+        sphere5.setEmmission(new Color(3, 30, 8));
+
+        //scene.addGeometry(sphere5);
+
+        Hemisphere hemisphere = new Hemisphere(650, new Point3D(-0.0, -0.0, -750), new Vector(13.0, 2.0, 1.5));
+        hemisphere.setShininess(20);
+        hemisphere.setEmmission(new Color(0, 10, 30));
+        scene.addGeometry(hemisphere);
+
+//        Hemisphere2 hemisphere2 = new Hemisphere2(505, new Point3D(0.0, -0.0, -650), new Vector(3.0, 2.5, 8.5));
+//        hemisphere2.setShininess(20);
+//        hemisphere2.setEmmission(new Color(0, 10, 30));
+//        scene.addGeometry(hemisphere2);
+
+        Triangle triangle1 = new Triangle(new Point3D(  3500,  3500, -2000),
+                new Point3D( -3500, -3500, -1000),
+                new Point3D(  3500, -3500, -2000));
+
+        Triangle triangle2 = new Triangle(new Point3D(  3500,  3500, -2000),
+                new Point3D( -3500,  3500, -1000),
+                new Point3D( -3500, -3500, -1000));
+
+        //scene.addGeometry(triangle1);
+        //scene.addGeometry(triangle2);
+
+        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 200, -100),
+                new Vector(-2, -2, -3), 0, 0.000001, 0.0000005));
+        //scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(0.0, 0.0, -300),0, 0.000001, 0.0000005));
+
+        ImageWriter imageWriter = new ImageWriter("Shadow test A", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+
+    }
 
     @Test
     public void basicRendering() {
