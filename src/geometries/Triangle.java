@@ -11,8 +11,13 @@ public class Triangle extends Geometry implements FlatGeometry{
     private Point3D _p1;
     private Point3D _p2;
     private Point3D _p3;
+    private Plane plane;
 
     // ***************** Constructors ********************** //
+    private void buildPlane() {// A cross product of 2 sides returns the normal.
+        plane = new Plane(((this._p2.subtract(this._p1)).crossProduct(this._p3.subtract(this._p1))).normalize(), _p1);
+    }
+
     /*************************************************
      * FUNCTION
      * Triangle
@@ -23,6 +28,7 @@ public class Triangle extends Geometry implements FlatGeometry{
         this._p1 = new Point3D();
         this._p2 = new Point3D();
         this._p3 = new Point3D();
+        buildPlane();
     }
     /*************************************************
      * FUNCTION
@@ -36,6 +42,7 @@ public class Triangle extends Geometry implements FlatGeometry{
         this._p1 = triangle._p1;
         this._p2 = triangle._p2;
         this._p3 = triangle._p3;
+        buildPlane();
     }
     /*************************************************
      * FUNCTION
@@ -49,6 +56,7 @@ public class Triangle extends Geometry implements FlatGeometry{
         this._p1 = _p1;
         this._p2 = _p2;
         this._p3 = _p3;
+        buildPlane();
     }
     /*************************************************
      * FUNCTION
@@ -98,10 +106,17 @@ public class Triangle extends Geometry implements FlatGeometry{
      **************************************************/
     @Override
     public Vector getNormal(Point3D point_NoUse, Vector direction) {
-        return (((this._p2.subtract(this._p1))
+        return this.plane.getNormal(point_NoUse, direction);
+/*
+//todo delete
+        Vector result =((this._p2.subtract(this._p1))
                 .crossProduct(this._p3.subtract(this._p1))) // A cross product of 2 sides returns the normal.
-                .normalize())
-                .scale(-1);
+                .normalize();
+        if (direction != null && direction.dotProduct(result) > 0)
+            return result.scale(-1);
+        else return result;
+*/
+
     }
     /*************************************************
      * FUNCTION
@@ -125,7 +140,7 @@ public class Triangle extends Geometry implements FlatGeometry{
         {
             return new ArrayList<>();
         }
-        Plane plane = new Plane(N, this.getP3());
+//todo delete        Plane plane = new Plane(N, this.getP3());
         //Find the intersection point with a plane containing the triangle.
         List<Point3D> intersections = plane.FindIntersections(ray);
         if (intersections.size() == 0) // No intersection point found.

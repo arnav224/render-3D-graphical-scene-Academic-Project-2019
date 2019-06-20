@@ -534,7 +534,7 @@ public class Render
     private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay){
 
         Vector direction = inRay.getDirection();
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.1);
         if (geometry instanceof FlatGeometry){
             return new Ray (point.add(normalEpsilon), direction);
         } else {
@@ -545,7 +545,7 @@ public class Render
     private List<Ray> constructRefractedRays(Geometry geometry, Point3D point, Ray inRay){
         List<Ray> result = new ArrayList<>(5);
         Vector direction = inRay.getDirection();
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.00001);
         if (geometry instanceof FlatGeometry)
             result.add(new Ray (point.add(normalEpsilon), direction));
         else

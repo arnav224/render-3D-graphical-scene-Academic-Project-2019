@@ -73,7 +73,7 @@ public class Plane extends Geometry implements FlatGeometry{
      **************************************************/
     @Override
     public Vector getNormal(Point3D pointNoUse, Vector direction) {
-        if (direction != null && direction.dotProduct(_normal) > 0 )
+        if (direction != null && direction.dotProduct(_normal) > 0)
             return new Vector(_normal.scale(-1));
         else return new Vector(_normal);
     }
