@@ -138,27 +138,34 @@ public class Scene {
     public void addVolumeLight(LightSource light, double radios, int NumOfLights){
         if (light instanceof SpotLight){
             SpotLight spotLight = (SpotLight)light;
-            Point3D position = spotLight.get_position();
-            Vector direction = spotLight.get_direction();
-            Color originalColor = spotLight.getColor();
-            for (int i = 1; i < NumOfLights; i ++) {
-                addLight(new SpotLight(new Color(originalColor.getRGB()),
-                        new Point3D(position.getX().getCoordinate() + (Math.random() * 2 - 1) * radios,
-                                position.getY().getCoordinate() + (Math.random() * 2 - 1) * radios,
-                                position.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios),
-                        direction, spotLight.get_Kc(), spotLight.get_Kl(), spotLight.get_Kq()));
+            Point3D originalPosition = spotLight.get_position();
+            for (int i = 0; i < NumOfLights; i ++) {
+                Point3D position;
+                do {
+                    double xRandom = originalPosition.getX().getCoordinate() + (Math.random() * 2 - 1) * radios;
+                    double yRandom = originalPosition.getY().getCoordinate() + (Math.random() * 2 - 1) * radios;
+                    double zRandom = originalPosition.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios;
+                    position = new Point3D(xRandom,yRandom,zRandom);
+                } while (position.distance(originalPosition) > radios);
+
+                addLight(new SpotLight(new Color(spotLight.getColor().getRGB()), position,
+                        spotLight.get_direction(), spotLight.get_Kc(), spotLight.get_Kl(), spotLight.get_Kq()));
             }
         }
         else if (light instanceof PointLight){
             PointLight pointLight = (PointLight)light;
-            Point3D position = pointLight.get_position();
-            Color originalColor = pointLight.getColor();
-            for (int i = 1; i < NumOfLights; i ++){
-                addLight(new PointLight(new Color(originalColor.getRGB()),
-                        new Point3D(position.getX().getCoordinate() + (Math.random() * 2 - 1) * radios,
-                                position.getY().getCoordinate() + (Math.random() * 2 - 1) * radios,
-                                position.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios),
-                                    pointLight.get_Kc(), pointLight.get_Kl(), pointLight.get_Kq()));
+            Point3D originalPosition = pointLight.get_position();
+            for (int i = 0; i < NumOfLights; i ++){
+                Point3D position;
+                do {
+                    double xRandom = originalPosition.getX().getCoordinate() + (Math.random() * 2 - 1) * radios;
+                    double yRandom = originalPosition.getY().getCoordinate() + (Math.random() * 2 - 1) * radios;
+                    double zRandom = originalPosition.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios;
+                    position = new Point3D(xRandom,yRandom,zRandom);
+                } while (position.distance(originalPosition) > radios);
+
+                addLight(new PointLight(new Color(pointLight.getColor().getRGB()), position,
+                                        pointLight.get_Kc(), pointLight.get_Kl(), pointLight.get_Kq()));
             }
         }
         else
