@@ -1267,7 +1267,7 @@ public void Point_1(){
         scene.addVolumeLight(new SpotLight(new Color(26, 10, 10), new Point3D(200, 350, -100),
                 new Vector(-1, -1, -3), 0, 0.000001, 0.0000005), 100, 10);
 
-        ImageWriter imageWriter = new ImageWriter("Soft Shadow test6", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("Soft Shadow test7", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
 
@@ -1321,10 +1321,10 @@ public void Point_1(){
         triangle.setKr(1);
         scene.addGeometry(triangle);
 
-        scene.addVolumeLight(new PointLight(new Color(25, 14, 12), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005),100,20);
+        scene.addVolumeLight(new PointLight(new Color(25, 14, 12), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005),200,20);
         //scene.addVolumeLight(new PointLight(new Color(27, 255, 204), new Point3D(2300, -700, -1500),0.01, 0.00001, 0.000005),50,8);
 
-        ImageWriter imageWriter = new ImageWriter("softPoint_1", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("softPoint_4", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
 
