@@ -217,6 +217,7 @@ public class Render
      **************************************************/
     private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level, double cumulativeReduction)
     {
+        Vector direction = inRay.getDirection();
         Color AmbientLight = _scene.getAmbientLight().getIntensity(point);// Ambient Light in the point.
         Color emisionLight = geometry.getEmmission();// Emission Light in the point.
 
@@ -227,11 +228,11 @@ public class Render
         Color specularLight = new Color(0, 0, 0);//Specular light initialization.
 
         /*Calculates the power of all the lights that come to the point.*/
-        Vector normal = geometry.getNormal(point, inRay.getDirection());
+        Vector normal = geometry.getNormal(point, direction);
         int sininess = geometry.getMaterial().getShininess();
         while (lights.hasNext()) {
             LightSource lightSource = lights.next();
-            if (!occluded(lightSource, point, geometry)) {// The light is not blocked.
+            if (!occluded(lightSource, point, geometry, direction)) {// The light is not blocked.
                 /*Add diffuse light*/
                 diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
                         normal,
@@ -460,7 +461,7 @@ public class Render
      * This function check for specific point if thers more then one object how stand in fron of him,
      * and return true only if we have the frontal point
      **************************************************/
-    private boolean occluded(LightSource light, Point3D point, Geometry geometry) {
+    private boolean occluded(LightSource light, Point3D point, Geometry geometry, Vector direction) {
         //1. Connect the point to the light source
         //2. Reverse the vector to point backward to the light source
         Vector lightDirection = light.getL(point).scale(-1);//.scale(-1);
@@ -475,7 +476,7 @@ public class Render
 
         //3. the point that send the ray back
         //3.5 Floating point corecction
-        Vector epsVector = new Vector(geometry.getNormal(point, lightDirection)).scale(0.0005);
+        Vector epsVector = new Vector(geometry.getNormal(point, direction)).scale(0.0005);
         Point3D geometryPoint = new Point3D(point).add(epsVector);
 
         //4. Construct ray from the point back to the light
