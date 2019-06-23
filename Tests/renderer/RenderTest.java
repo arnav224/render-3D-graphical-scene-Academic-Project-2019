@@ -624,19 +624,19 @@ class RenderTest {
         sphere2.setShininess(20);
         sphere2.setEmmission(new Color(30, 8, 8));
 
-        //scene.addGeometry(sphere2);
+        scene.addGeometry(sphere2);
 
         Sphere sphere3 = new Sphere(20, new Point3D(-100.0, 20.0, -680));
         sphere3.setShininess(20);
         sphere3.setEmmission(new Color(4, 28, 30));
 
-        //scene.addGeometry(sphere3);
+        scene.addGeometry(sphere3);
 
         Sphere sphere4 = new Sphere(50, new Point3D(30.0, -260.0, -680));
         sphere4.setShininess(20);
         sphere4.setEmmission(new Color(4, 5, 30));
 
-        //scene.addGeometry(sphere4);
+        scene.addGeometry(sphere4);
 
         Sphere sphere5 = new Sphere(50, new Point3D(260.0, -120.0, -680));
         sphere5.setShininess(20);
@@ -644,12 +644,12 @@ class RenderTest {
 
         //scene.addGeometry(sphere5);
 
-        Hemisphere hemisphere = new Hemisphere(650, new Point3D(-0.0, -0.0, -750), new Vector(13.0, 2.0, 1.5));
+        Hemisphere2 hemisphere = new Hemisphere2(650, new Point3D(-100.0, -0.0, -750), new Vector(13.0, 2.0, 1.5));
         hemisphere.setShininess(20);
         hemisphere.setEmmission(new Color(0, 10, 30));
         scene.addGeometry(hemisphere);
 
-//        Hemisphere2 hemisphere2 = new Hemisphere2(505, new Point3D(0.0, -0.0, -650), new Vector(3.0, 2.5, 8.5));
+//        Hemisphere22 hemisphere2 = new Hemisphere22(505, new Point3D(0.0, -0.0, -650), new Vector(3.0, 2.5, 8.5));
 //        hemisphere2.setShininess(20);
 //        hemisphere2.setEmmission(new Color(0, 10, 30));
 //        scene.addGeometry(hemisphere2);
@@ -662,10 +662,10 @@ class RenderTest {
                 new Point3D( -3500,  3500, -1000),
                 new Point3D( -3500, -3500, -1000));
 
-        //scene.addGeometry(triangle1);
-        //scene.addGeometry(triangle2);
+        scene.addGeometry(triangle1);
+        scene.addGeometry(triangle2);
 
-        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(200, 200, -100),
+        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(700, 200, 200),
                 new Vector(-2, -2, -3), 0, 0.000001, 0.0000005));
         //scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(0.0, 0.0, -300),0, 0.000001, 0.0000005));
 
