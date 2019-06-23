@@ -78,7 +78,11 @@ public class Sphere extends RadialGeometry {
      **************************************************/
     @Override
     public Vector getNormal(Point3D point, Vector direction) {
-        return point.subtract(this._center).normalize();
+        Vector normal = point.subtract(this._center).normalize();
+        if (direction != null && direction.dotProduct(normal) > 0)
+            return normal.scale(-1);
+        else
+            return normal;
     }
     /*************************************************
      * FUNCTION

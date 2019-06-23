@@ -677,6 +677,23 @@ class RenderTest {
         render.writeToImage();
 
     }
+    @Test
+    public void directionTest() {
+        Scene scene = new Scene();
+        scene.setScreenDistance(50);
+        Plane plane = new Plane(new Vector(0,0,-1), new Point3D(0,0,-200));
+        scene.addGeometry(plane);
+        scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(0,0,-300),0, 0.000001, 0.0000005));
+
+        ImageWriter imageWriter = new ImageWriter("directionTest", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+
 
     @Test
     public void basicRendering() {

@@ -476,18 +476,18 @@ public class Render
 
         //3. the point that send the ray back
         //3.5 Floating point corecction
-        Vector epsVector = new Vector(geometry.getNormal(point, direction)).scale(0.0005);
-        Point3D geometryPoint = new Point3D(point).add(epsVector);
+        Vector epsVector = new Vector(geometry.getNormal(point, direction)).scale(0.005);
+        Point3D geometryPoint = point.add(epsVector);
 
         //4. Construct ray from the point back to the light
         Ray lightRay = new Ray(geometryPoint, lightDirection);
         //5. Get all the intersection between the point and the light source into a mao
         Map <Geometry,List<Point3D>> intersectionPoint = getSceneRayIntersections(lightRay);
 
-        // 5.5 Flat geometry
-        if (geometry instanceof Quadrangle || geometry instanceof FlatGeometry){
-            intersectionPoint.remove(geometry);
-        }
+//        // 5.5 Flat geometry
+//        if (geometry instanceof Quadrangle || geometry instanceof FlatGeometry){
+//            intersectionPoint.remove(geometry);
+//        }
 
         //6. If the map is empty - the light goes directly to the point
         //   Otherwise - there's something between them

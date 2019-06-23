@@ -88,10 +88,17 @@ public class Hemisphere2 extends RadialGeometry {
      **************************************************/
     @Override
     public Vector getNormal(Point3D point, Vector direction) {
-        Vector normal = new Vector(point.subtract(this._center).normalize());
+        Vector normal = point.subtract(this._center).normalize();
         if (direction != null && direction.dotProduct(normal) > 0)
-            return new Vector(normal);
-        else return new Vector(normal.scale(-1).normalize());
+            return normal.scale(-1);
+        else
+            return normal;
+
+//        Vector normal = new Vector(point.subtract(this._center).normalize());
+//        if (direction != null && direction.dotProduct(normal) > 0)
+//            return normal;
+//        else
+//            return normal.scale(-1);
     }
     /*************************************************
      * FUNCTION
