@@ -7,6 +7,8 @@ public class Material {
     private double _Kt; // Refraction coefficient (1 for transparent)
     //private double _n; // Refraction index
     private int _nShininess; // Sheen coefficient
+    private double _reflectionAngel;
+    private int _NumOfReflectionRays;
 
     // ***************** Constructors ********************** //
     public Material()
@@ -17,6 +19,8 @@ public class Material {
         _Kt = 0;
 //        _n = 1;
         _nShininess = 19;
+        _reflectionAngel = 0;
+        _NumOfReflectionRays = 0;
     }
     public Material(Material material){
         _Kd = material.getKd();
@@ -24,7 +28,9 @@ public class Material {
         _Kr = material.getKr();
         _Kt = material.getKt();
 //        _n = material.getN();
+        _reflectionAngel = material.getReflectionSharpness();
         _nShininess = material.getShininess();
+        _NumOfReflectionRays = material._NumOfReflectionRays;
     }
 
 
@@ -63,7 +69,22 @@ public class Material {
         this._Kt = _Kt;
     }
 
-//    public double getN() {
+    public double getReflectionSharpness() {
+        return _reflectionAngel;
+    }
+
+    public void setReflectionSharpness(double reflectionSharpness) {
+        this._reflectionAngel = reflectionSharpness;
+    }
+
+    public int get_NumOfReflectionRays() {
+        return _NumOfReflectionRays;
+    }
+
+    public void set_NumOfReflectionRays(int NumOfReflectionRays) {
+        this._NumOfReflectionRays = NumOfReflectionRays;
+    }
+    //    public double getN() {
 //        return _n;
 //    }
 //

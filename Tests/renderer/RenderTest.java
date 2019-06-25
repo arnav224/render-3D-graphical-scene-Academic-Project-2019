@@ -443,10 +443,23 @@ class RenderTest {
         scene.addGeometry(sphere);
         scene.setScreenDistance(285);
 
+        Plane plane = new Plane(new Vector(0,0,-1), new Point3D(0,0,-300));
+        plane.setKt(1);
+        Material material = plane.getMaterial();
+        material.set_NumOfReflectionRays(0);
+        material.setReflectionSharpness(0.0004);
+        plane.setMaterial(material);
+        //scene.addGeometry(plane);
+
+
         Triangle triangle = new Triangle(new Point3D(  -500, 3000, 0),
                 new Point3D( -500,  -3000, 0),
                 new Point3D(  -200,  0, -20000));
         triangle.setEmmission(new Color(125, 110, 24));
+        material = triangle.getMaterial();
+        material.set_NumOfReflectionRays(20);
+        material.setReflectionSharpness(0.00001);
+        triangle.setMaterial(material);
         triangle.setKr(0.18);
         scene.addGeometry(triangle);
 
@@ -665,7 +678,7 @@ class RenderTest {
         scene.addGeometry(triangle1);
         scene.addGeometry(triangle2);
 
-        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(700, 200, 200),
+        scene.addLight(new SpotLight(new Color(255, 100, 100), new Point3D(300, 200, 200),
                 new Vector(-2, -2, -3), 0, 0.000001, 0.0000005));
         //scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(0.0, 0.0, -300),0, 0.000001, 0.0000005));
 
@@ -1342,6 +1355,53 @@ public void Point_1(){
         //scene.addVolumeLight(new PointLight(new Color(27, 255, 204), new Point3D(2300, -700, -1500),0.01, 0.00001, 0.000005),50,8);
 
         ImageWriter imageWriter = new ImageWriter("softPoint_4", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    @Test
+    void CylinderTest(){
+        Scene scene = new Scene();
+        scene.setScreenDistance(200);
+        Cylinder cylinder = new Cylinder(50, new Point3D( 0,  0, -500), new Vector(1,0,0));
+        cylinder.setEmmission(new Color(255, 134, 42));
+        scene.addGeometry(cylinder);
+        scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
+        ImageWriter imageWriter = new ImageWriter("CylinderTest", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    @Test
+    void reflectedTest(){
+        Scene scene = new Scene();
+        scene.setScreenDistance(200);
+        Plane plane = new Plane(new Vector(1,0, 0), new Point3D(-500,0, 0));
+        plane.setEmmission(new Color(20, 120, 93));
+        plane.setKr(0.95);
+        Material material = plane.getMaterial();
+        material.set_NumOfReflectionRays(20);
+        material.setReflectionSharpness(0.004);
+        plane.setMaterial(material);
+
+        scene.addGeometry(plane);
+
+        Sphere sphere = new Sphere(300, new Point3D(-200, 0, -1000));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(120, 47, 90));
+        sphere.setKt(0.5);
+
+        scene.addGeometry(sphere);
+
+
+        scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
+        ImageWriter imageWriter = new ImageWriter("reflectedTest", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
 
