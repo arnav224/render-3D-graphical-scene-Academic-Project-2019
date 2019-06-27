@@ -1381,7 +1381,8 @@ public void Point_1(){
         render.writeToImage();
     }
 
-    @Test
+  
+      @Test
     void reflectedTest(){
         Scene scene = new Scene();
         scene.setScreenDistance(200);
@@ -1441,7 +1442,7 @@ public void Point_1(){
         sphere.setKt(0.5);
         scene.addGeometry(sphere);
 
-        Sphere sphere2 = new Sphere(300, new Point3D(100, -450, -1000));
+        Sphere sphere2 = new Sphere(300, new Point3D(-150, -450, -1000));
         sphere2.setShininess(20);
         sphere2.setEmmission(new Color(39, 120, 64));
         sphere2.setKt(0.6);
@@ -1450,6 +1451,118 @@ public void Point_1(){
         scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
 //        scene.addLight(new DirectionalLight(new Color(255, 140, 120), new Vector(-10, -1, -2)));
         ImageWriter imageWriter = new ImageWriter("reflectedTest2", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+  
+  
+ 
+    @Test
+    void ourSceneTest(){
+        Scene scene = new Scene();
+        scene.setScreenDistance(500);
+//        Plane plane = new Plane(new Vector(1,0, 0), new Point3D(-500,0, 0));
+//        plane.setEmmission(new Color(20, 120, 93));
+//        plane.setKr(0.95);
+//        Material material = plane.getMaterial();
+//        material.set_NumOfReflectionRays(5);
+//        material.setReflectionSharpness(0.004);
+//        plane.setMaterial(material);
+//
+//        scene.addGeometry(plane);
+        Triangle triangle1 = new Triangle(new Point3D(  1050,  3500, 1000),
+                new Point3D( 1050,  50, 1000),
+                new Point3D(  1050, 50, -7000));
+        triangle1.setShininess(20);
+        triangle1.setEmmission(new Color(100,10,10));
+        triangle1.setKt(0.1);
+        triangle1.setKr(0.1);
+        Triangle triangle2 = new Triangle(new Point3D(  1050,  -3500, 1000),
+                new Point3D( 1050,  -50, 1000),
+                new Point3D(  1050, -50, -7000));
+        triangle2.setShininess(20);
+        triangle2.setEmmission(new Color(100,10,10));
+        triangle2.setKt(0.1);
+        triangle2.setKr(0.1);
+        scene.addGeometry(triangle1);
+        scene.addGeometry(triangle2);
+        Triangle triangle3 = new Triangle(new Point3D(  -1050,  3500, 1000),
+                new Point3D( -1050,  50, 1000),
+                new Point3D(  -1050, 50, -7000));
+        triangle3.setShininess(20);
+        triangle3.setEmmission(new Color(100,10,10));
+        triangle3.setKt(0.1);
+        triangle3.setKr(0.1);
+        Triangle triangle4 = new Triangle(new Point3D(  -1050,  -3500, 1000),
+                new Point3D( -1050,  -50, 1000),
+                new Point3D(  -1050, -50, -7000));
+        triangle4.setShininess(20);
+        triangle4.setEmmission(new Color(100,10,10));
+        triangle4.setKt(0.1);
+        triangle4.setKr(0.1);
+        scene.addGeometry(triangle3);
+        scene.addGeometry(triangle4);
+        Quadrangle quadrangle1 = new Quadrangle(new Point3D(  -1000,  -3500, 1000),
+                new Point3D(  1000,  -3500, 1000),
+                new Point3D(  1000, -50, -7000),
+                new Point3D(  -1000, -50, -7000));
+        quadrangle1.setShininess(20);
+        quadrangle1.setKt(0.5);
+        quadrangle1.setKr(0.5);
+        scene.addGeometry(quadrangle1);
+        Quadrangle quadrangle2 = new Quadrangle(new Point3D(  -1000,  3500, 1000),
+                new Point3D(  1000,  3500, 1000),
+                new Point3D(  1000, 50, -7000),
+                new Point3D(  -1000, 50, -7000));
+        quadrangle2.setShininess(20);
+        quadrangle2.setKt(0.5);
+        quadrangle2.setKr(0.5);
+        scene.addGeometry(quadrangle2);
+//        Plane plane1 = new Plane(new Vector(0,69/160,1), new Point3D(  -1050, 50, -7000));
+//        plane1.setShininess(20);
+//        plane1.setKt(0.5);
+//        plane1.setKr(0.5);
+//        scene.addGeometry(plane1);
+
+        Sphere sphere1 = new Sphere(200, new Point3D(0, 0, -2500));
+        sphere1.setShininess(20);
+        sphere1.setEmmission(new Color(0, 0, 0));
+        sphere1.setKt(0.1);
+        sphere1.setKr(0.9);
+        scene.addGeometry(sphere1);
+        Hemisphere2 hemisphere22 = new Hemisphere2(150, new Point3D(700, 500, -4000), new Vector(1,0,0));
+        hemisphere22.setShininess(20);
+        hemisphere22.setEmmission(new Color(10, 200, 24));
+        hemisphere22.setKt(0.1);
+        hemisphere22.setKr(0.1);
+        scene.addGeometry(hemisphere22);
+//        Hemisphere2 hemisphere23 = new Hemisphere2(300, new Point3D(0, 700, -2500), new Vector(0,-2,1));
+//        hemisphere23.setShininess(20);
+//        hemisphere23.setEmmission(new Color(22, 25, 188));
+//        hemisphere23.setKt(0.1);
+//        hemisphere23.setKr(0.1);
+//        scene.addGeometry(hemisphere23);
+//        Hemisphere2 hemisphere24 = new Hemisphere2(300, new Point3D(-700, 0, -2500), new Vector(2,0,1));
+//        hemisphere24.setShininess(20);
+//        hemisphere24.setEmmission(new Color(175, 173, 10));
+//        hemisphere24.setKt(0.1);
+//        hemisphere24.setKr(0.1);
+//        scene.addGeometry(hemisphere24);
+//        Hemisphere2 hemisphere25 = new Hemisphere2(300, new Point3D(0, -700, -2500), new Vector(0,2,1));
+//        hemisphere25.setShininess(20);
+//        hemisphere25.setEmmission(new Color(188, 31, 188));
+//        hemisphere25.setKt(0.1);
+//        hemisphere25.setKr(0.1);
+//        scene.addGeometry(hemisphere25);
+        scene.addVolumeLight(new SpotLight(new Color(105, 105, 105), new Point3D(400, 800, 50),
+                new Vector(-2, -2, -3), 0, 0.000001, 0.0000005),5,5);
+        scene.addLight(new PointLight(new Color(255, 255, 255), new Point3D(705, 500, -4000),
+                0, 0.000001, 0.0000005));
+        ImageWriter imageWriter = new ImageWriter("ourSceneTest1", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
 

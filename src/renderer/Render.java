@@ -268,6 +268,7 @@ public class Render
             /* Recursive call for a refracted ray*/
             //Ray refractedRay = constructRefractedRay(geometry, point, inRay);
             List<Ray> reflectedRays = constructReflectedRays(geometry, point, inRay);
+
             double reflectR = 0, reflectG = 0, reflectB = 0;
             for (Ray reflectedRay:reflectedRays) {
                 Map.Entry<Geometry, Point3D> reflecteEntry1 = findClosesntIntersection(reflectedRay);
@@ -287,16 +288,19 @@ public class Render
             /* Recursive call for a refracted ray*/
             //Ray refractedRay = constructRefractedRay(geometry, point, inRay);
             List<Ray> refractedRays = constructRefractedRays(geometry, point, inRay);
+
             double refractR = 0, refractG = 0, refractB = 0;
             for (Ray refractedRay:refractedRays) {
                 Map.Entry<Geometry, Point3D> refracteEntry1 = findClosesntIntersection(refractedRay);
                 if (refracteEntry1 != null) {
+                    n++;
                     Color refractedColor = calcColor(refracteEntry1.getKey(), refracteEntry1.getValue(), refractedRay,level+1, cumulativeReduction * kt);
                     refractR += kt * refractedColor.getRed();
                     refractG += kt * refractedColor.getGreen();
                     refractB += kt * refractedColor.getBlue();
                 }
             }
+
             int n = refractedRays.size();
             refractedLight = new Color((int)(refractR / n), (int)(refractG / n), (int)(refractB / n));
         }
@@ -540,6 +544,7 @@ public class Render
         double reflectionSharpness = material.getBlurring();
         Ray centerRay = constructReflectedRay(geometry, point, inRay);
         Vector direction = centerRay.getDirection();
+
         Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         point = point.add(normalEpsilon);
         List<Ray> result;
@@ -588,6 +593,7 @@ public class Render
         double reflectionSharpness = material.getBlurring();
         Ray centerRay = constructRefractedRay(geometry, point, inRay);
         Vector direction = centerRay.getDirection();
+
         Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         point = point.add(normalEpsilon);
         List<Ray> result;
