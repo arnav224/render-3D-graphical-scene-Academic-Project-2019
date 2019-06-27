@@ -16,6 +16,7 @@ import java.util.Map.Entry;*/
 
 public class Render
 {
+    Random random = new Random();
     IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
 
     private Scene _scene; // An object that describes the scene.
@@ -267,18 +268,18 @@ public class Render
             /* Recursive call for a refracted ray*/
             //Ray refractedRay = constructRefractedRay(geometry, point, inRay);
             List<Ray> reflectedRays = constructReflectedRays(geometry, point, inRay);
-            int reflectR = 0, reflectG = 0, reflectB = 0;
+            double reflectR = 0, reflectG = 0, reflectB = 0;
             for (Ray reflectedRay:reflectedRays) {
                 Map.Entry<Geometry, Point3D> reflecteEntry1 = findClosesntIntersection(reflectedRay);
                 if (reflecteEntry1 != null) {
-                    Color refractedColor = calcColor(reflecteEntry1.getKey(), reflecteEntry1.getValue(), reflectedRay,level+1, cumulativeReduction * kr);
-                    reflectR += (int) (kr * refractedColor.getRed());
-                    reflectG += (int) (kr * refractedColor.getGreen());
-                    reflectB += (int) (kr * refractedColor.getBlue());
+                    Color reflectedColor = calcColor(reflecteEntry1.getKey(), reflecteEntry1.getValue(), reflectedRay,level+1, cumulativeReduction * kr);
+                    reflectR += kr * reflectedColor.getRed();
+                    reflectG += kr * reflectedColor.getGreen();
+                    reflectB += kr * reflectedColor.getBlue();
                 }
             }
             int n = reflectedRays.size();
-            reflectedLight = new Color(reflectR / n, reflectG / n, reflectB / n);
+            reflectedLight = new Color((int)(reflectR / n), (int)(reflectG / n), (int)(reflectB / n));
         }
 
         double kt = material.getKt();
@@ -286,18 +287,18 @@ public class Render
             /* Recursive call for a refracted ray*/
             //Ray refractedRay = constructRefractedRay(geometry, point, inRay);
             List<Ray> refractedRays = constructRefractedRays(geometry, point, inRay);
-            int refractR = 0, refractG = 0, refractB = 0;
+            double refractR = 0, refractG = 0, refractB = 0;
             for (Ray refractedRay:refractedRays) {
                 Map.Entry<Geometry, Point3D> refracteEntry1 = findClosesntIntersection(refractedRay);
                 if (refracteEntry1 != null) {
                     Color refractedColor = calcColor(refracteEntry1.getKey(), refracteEntry1.getValue(), refractedRay,level+1, cumulativeReduction * kt);
-                    refractR += (int) (kt * refractedColor.getRed());
-                    refractG += (int) (kt * refractedColor.getGreen());
-                    refractB += (int) (kt * refractedColor.getBlue());
+                    refractR += kt * refractedColor.getRed();
+                    refractG += kt * refractedColor.getGreen();
+                    refractB += kt * refractedColor.getBlue();
                 }
             }
             int n = refractedRays.size();
-            refractedLight = new Color(refractR / n, refractG / n, refractB / n);
+            refractedLight = new Color((int)(refractR / n), (int)(refractG / n), (int)(refractB / n));
         }
         //**// End of recursive calls
 
@@ -515,23 +516,34 @@ public class Render
      **************************************************/
     private Ray constructReflectedRay(Geometry geometry, Point3D point, Ray inRay){
         Vector normal = geometry.getNormal(point, inRay.getDirection());
-        Vector l = inRay.getDirection().normalize();
 
-        normal = normal.scale(-2 * l.dotProduct(normal));
-        l = l.add(normal);
+        double scale = 2 * inRay.getDirection().dotProduct(normal);
+        Vector temp = new Vector(normal).scale(scale);
+        Vector R = new Vector(inRay.getDirection()).subtract(temp);
 
-        Vector R = new Vector(l).normalize();
-        return new Ray(point.add(normal), R);
+        Vector normalEpsilon = normal.scale(0.005);
+        return new Ray (point.add(normalEpsilon), R);
+
+
+
+//        Vector normal = geometry.getNormal(point, inRay.getDirection());
+//        Vector l = inRay.getDirection().normalize();
+//
+//        normal = normal.scale(-2 * l.dotProduct(normal));
+//        l = l.add(normal);
+//
+//        Vector R = new Vector(l).normalize();
+//        return new Ray(point.add(normal), R);
     }
     private List<Ray> constructReflectedRays(Geometry geometry, Point3D point, Ray inRay){
         Material material = geometry.getMaterial();
-        double reflectionSharpness = material.getReflectionSharpness();
+        double reflectionSharpness = material.getBlurring();
         Ray centerRay = constructReflectedRay(geometry, point, inRay);
         Vector direction = centerRay.getDirection();
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(0.0005);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         point = point.add(normalEpsilon);
         List<Ray> result;
-        if (reflectionSharpness == 0)
+        if (reflectionSharpness == 0 || material.get_NumOfReflectionRays() == 0)
         {
             result = new ArrayList<>(1);
             result.add(centerRay);
@@ -540,15 +552,15 @@ public class Render
         else
         {
             result = new ArrayList<>(material.get_NumOfReflectionRays());
-            result.add(centerRay);
+            //todo result.add(centerRay);
         }
         for (int i = 0; i < material.get_NumOfReflectionRays(); i++ )
         {
-            Vector newDirection = new Vector(direction);
-            newDirection.setHead(new Point3D(
+            //Vector newDirection = new Vector(direction);
+            Vector newDirection = new Vector(
                     direction.getHead().getX().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness,
                     direction.getHead().getY().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness,
-                    direction.getHead().getZ().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness));
+                    direction.getHead().getZ().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness);
 
             result.add(new Ray(point, newDirection));
         }
@@ -567,16 +579,16 @@ public class Render
     private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay){
 
         Vector direction = inRay.getDirection();
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.0005);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         return new Ray (point.add(normalEpsilon), direction);
     }
 
     private List<Ray> constructRefractedRays(Geometry geometry, Point3D point, Ray inRay){
         Material material = geometry.getMaterial();
-        double reflectionSharpness = material.getReflectionSharpness();
+        double reflectionSharpness = material.getBlurring();
         Ray centerRay = constructRefractedRay(geometry, point, inRay);
         Vector direction = centerRay.getDirection();
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.0005);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         point = point.add(normalEpsilon);
         List<Ray> result;
         if (reflectionSharpness == 0)
@@ -590,15 +602,15 @@ public class Render
             result = new ArrayList<>(material.get_NumOfReflectionRays());
             result.add(centerRay);
         }
-        for (int i = 0; i < material.get_NumOfReflectionRays(); i++ )
+        for (int i = 1; i < material.get_NumOfReflectionRays(); i++ )
         {
             Vector newDirection = new Vector(direction);
             newDirection.setHead(new Point3D(
-                    direction.getHead().getX().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness,
-                    direction.getHead().getY().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness,
-                    direction.getHead().getZ().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness));
+                    direction.getHead().getX().getCoordinate() + (random.nextDouble() * 2 - 1) * reflectionSharpness,
+                    direction.getHead().getY().getCoordinate() + (random.nextDouble() * 2 - 1) * reflectionSharpness,
+                    direction.getHead().getZ().getCoordinate() + (random.nextDouble() * 2 - 1) * reflectionSharpness));
 
-            result.add(new Ray(point, newDirection));
+            result.add(new Ray(point, newDirection.normalize()));
         }
         return result;
     }

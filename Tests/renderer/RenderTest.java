@@ -8,8 +8,6 @@ import elements.*;
 
 import java.awt.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class RenderTest {
 /*
     @Test
@@ -447,7 +445,7 @@ class RenderTest {
         plane.setKt(1);
         Material material = plane.getMaterial();
         material.set_NumOfReflectionRays(0);
-        material.setReflectionSharpness(0.0004);
+        material.setBlurring(0.0004);
         plane.setMaterial(material);
         //scene.addGeometry(plane);
 
@@ -458,7 +456,7 @@ class RenderTest {
         triangle.setEmmission(new Color(125, 110, 24));
         material = triangle.getMaterial();
         material.set_NumOfReflectionRays(20);
-        material.setReflectionSharpness(0.00001);
+        material.setBlurring(0.00001);
         triangle.setMaterial(material);
         triangle.setKr(0.18);
         scene.addGeometry(triangle);
@@ -875,8 +873,13 @@ class RenderTest {
             Triangle triangle = new Triangle(new Point3D(  1500, -1500, -1500),
                     new Point3D( -1500,  1500, -1500),
                     new Point3D(  200,  200, -375));
+            Material material = triangle.getMaterial();
+            material.set_NumOfReflectionRays(5);
+            material.setBlurring(0.0005);
+            triangle.setMaterial(material);
 
-            Triangle triangle2 = new Triangle(new Point3D(  1500, -1500, -1500),
+
+        Triangle triangle2 = new Triangle(new Point3D(  1500, -1500, -1500),
                     new Point3D( -1500,  1500, -1500),
                     new Point3D( -1500, -1500, -1500));
             triangle.setShininess(0);
@@ -1383,25 +1386,70 @@ public void Point_1(){
         Scene scene = new Scene();
         scene.setScreenDistance(200);
         Plane plane = new Plane(new Vector(1,0, 0), new Point3D(-500,0, 0));
-        plane.setEmmission(new Color(20, 120, 93));
-        plane.setKr(0.95);
+        plane.setEmmission(new Color(43, 43, 43));
+        plane.setKr(0.9995);
         Material material = plane.getMaterial();
-        material.set_NumOfReflectionRays(20);
-        material.setReflectionSharpness(0.004);
+        material.set_NumOfReflectionRays(10);
+        material.setBlurring(0.05);
         plane.setMaterial(material);
-
         scene.addGeometry(plane);
+
+        Plane plane2 = new Plane(new Vector(0,0, -1), new Point3D(0,0, -10000));
+        plane2.setEmmission(new Color(255, 104, 104));
+        //scene.addGeometry(plane2);
 
         Sphere sphere = new Sphere(300, new Point3D(-200, 0, -1000));
         sphere.setShininess(20);
         sphere.setEmmission(new Color(120, 47, 90));
-        sphere.setKt(0.5);
-
         scene.addGeometry(sphere);
 
 
         scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
+//        scene.addLight(new DirectionalLight(new Color(255, 140, 120), new Vector(-10, -1, -2)));
         ImageWriter imageWriter = new ImageWriter("reflectedTest", 500, 500, 500, 500);
+
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    @Test
+    void reflectedTest2()
+    {
+        Scene scene = new Scene();
+        scene.setScreenDistance(200);
+
+        Quadrangle baseQuadrangle = new Quadrangle(new Point3D(-400, -500, 0),
+                new Point3D(-400, -5000, -100000), new Point3D(-400, 5000, -100000), new Point3D(-400, 500, 0));
+        baseQuadrangle.setEmmission(new Color(20, 41, 30));
+        Material material = baseQuadrangle.getMaterial();
+        material.set_NumOfReflectionRays(20);
+        material.setBlurring(0.04);
+        baseQuadrangle.setMaterial(material);
+        baseQuadrangle.setKr(0.8);
+        scene.addGeometry(baseQuadrangle);
+
+        Sphere sphere = new Sphere(300, new Point3D(-200, 0, -1000));
+        sphere.setShininess(20);
+        sphere.setEmmission(new Color(120, 47, 90));
+        material = sphere.getMaterial();
+        material.set_NumOfReflectionRays(10);
+        material.setBlurring(0.007);
+        sphere.setMaterial(material);
+        sphere.setKr(0.7);
+        sphere.setKt(0.5);
+        scene.addGeometry(sphere);
+
+        Sphere sphere2 = new Sphere(300, new Point3D(100, -450, -1000));
+        sphere2.setShininess(20);
+        sphere2.setEmmission(new Color(39, 120, 64));
+        sphere2.setKt(0.6);
+        scene.addGeometry(sphere2);
+
+        scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
+//        scene.addLight(new DirectionalLight(new Color(255, 140, 120), new Vector(-10, -1, -2)));
+        ImageWriter imageWriter = new ImageWriter("reflectedTest2", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
 
