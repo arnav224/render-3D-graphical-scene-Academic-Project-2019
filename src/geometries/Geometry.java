@@ -77,10 +77,10 @@ public abstract class Geometry implements Intersectable{
     public void setKd(double kd){
         this._material.setKd(kd);
     }
-    public void setKr(double Kr){
+    public void setKr(double Kr) throws Exception{
         this._material.setKr(Kr);
     }
-    public void setKt(double Kt){
+    public void setKt(double Kt) throws Exception{
         this._material.setKt(Kt);
     }
 }

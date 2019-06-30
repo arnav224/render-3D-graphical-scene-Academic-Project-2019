@@ -57,7 +57,9 @@ public class Material {
         return _Kr;
     }
 
-    public void setKr(double _Kr) {
+    public void setKr(double _Kr) throws Exception{
+        if (this._Kt + _Kr > 1)
+            throw new Exception("(Kt + Kr) should be less than 1");
         this._Kr = _Kr;
     }
 
@@ -65,7 +67,9 @@ public class Material {
         return _Kt;
     }
 
-    public void setKt(double _Kt) {
+    public void setKt(double _Kt) throws Exception{
+        if (this._Kr + _Kt > 1)
+            throw new Exception("(Kt + Kr) should be less than 1");
         this._Kt = _Kt;
     }
 
