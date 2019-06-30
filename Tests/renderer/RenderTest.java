@@ -431,7 +431,7 @@ class RenderTest {
     }
 */
     @Test
-    public void DirectionalLight2(){
+    public void DirectionalLight2() throws Exception {
 
         Scene scene = new Scene();
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1500));
@@ -503,7 +503,7 @@ class RenderTest {
 
 /*
     @Test
-    public void shadowTestold(){
+    public void shadowTestold() throws Exception {
 
         Scene scene = new Scene();
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
@@ -563,7 +563,7 @@ class RenderTest {
 */
 
     @Test
-    public void shadowTest(){
+    public void shadowTest() throws Exception {
 
         Scene scene = new Scene();
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
@@ -622,7 +622,7 @@ class RenderTest {
     }
 
     @Test
-    public void shadowTestA(){
+    public void shadowTestA() throws Exception {
 
         Scene scene = new Scene();
         Sphere sphere = new Sphere(50, new Point3D(170.0, -30.0, -680));
@@ -765,7 +765,7 @@ class RenderTest {
     }
 
     @Test
-    public void QuadrangleTest(){
+    public void QuadrangleTest() throws Exception {
             Scene scene = new Scene();
             scene.setScreenDistance(50);
             Quadrangle quadrangle = new Quadrangle(new Point3D(50,-50,-50),new Point3D(50,50,-50),
@@ -785,7 +785,7 @@ class RenderTest {
 
         }
     @Test
-    public void recursiveTest()
+    public void recursiveTest() throws Exception
         {
             Scene scene = new Scene();
             scene.setScreenDistance(300);
@@ -814,7 +814,7 @@ class RenderTest {
         }
 
     @Test
-    public void refructedTest(){
+    public void refructedTest() throws Exception {
         Scene scene = new Scene();
         scene.setScreenDistance(300);
 
@@ -849,7 +849,7 @@ class RenderTest {
     }
 
     @Test
-    public void recursiveTest2(){
+    public void recursiveTest2() throws Exception {
 
             Scene scene = new Scene();
             scene.setScreenDistance(300);
@@ -904,7 +904,7 @@ class RenderTest {
         }
 
     @Test
-    public void recursiveTest3(){
+    public void recursiveTest3() throws Exception {
 
         Scene scene = new Scene();
         scene.setScreenDistance(300);
@@ -949,7 +949,7 @@ class RenderTest {
 
 /*
     @Test
-    public void Point_1(){
+    public void Point_1() throws Exception {
 
         Scene scene = new Scene();
         scene.setScreenDistance(300);
@@ -1006,7 +1006,7 @@ class RenderTest {
     }
 */
 @Test
-public void Point_1(){
+public void Point_1() throws Exception {
 
     Scene scene = new Scene();
     scene.setScreenDistance(300);
@@ -1065,7 +1065,7 @@ public void Point_1(){
 
 
     @Test
-    public void aaaaaatest(){
+    public void aaaaaatest() throws Exception {
 
         Scene scene = new Scene();
         scene.setScreenDistance(400);
@@ -1251,7 +1251,7 @@ public void Point_1(){
         render.writeToImage();
     }
     @Test
-    public void softShadowTest(){
+    public void softShadowTest() throws Exception {
 
         Scene scene = new Scene();
         Sphere sphere = new Sphere(500, new Point3D(0.0, 0.0, -1000));
@@ -1309,7 +1309,7 @@ public void Point_1(){
 
     }
     @Test
-    public void softPoint_1(){
+    public void softPoint_1() throws Exception {
 
         Scene scene = new Scene();
         scene.setScreenDistance(300);
@@ -1366,7 +1366,7 @@ public void Point_1(){
     }
 
     @Test
-    void CylinderTest(){
+    void CylinderTest() throws Exception {
         Scene scene = new Scene();
         scene.setScreenDistance(200);
         Cylinder cylinder = new Cylinder(50, new Point3D( 0,  0, -500), new Vector(1,0,0));
@@ -1381,11 +1381,10 @@ public void Point_1(){
         render.writeToImage();
     }
 
-  
-      @Test
-    void reflectedTest(){
+    @Test
+    void reflectedTest() throws Exception {
         Scene scene = new Scene();
-        scene.setScreenDistance(200);
+        scene.setScreenDistance(220);
         Plane plane = new Plane(new Vector(1,0, 0), new Point3D(-500,0, 0));
         plane.setEmmission(new Color(43, 43, 43));
         plane.setKr(0.9995);
@@ -1416,39 +1415,73 @@ public void Point_1(){
     }
 
     @Test
-    void reflectedTest2()
+    void reflectedTest2() throws Exception
     {
         Scene scene = new Scene();
         scene.setScreenDistance(200);
 
-        Quadrangle baseQuadrangle = new Quadrangle(new Point3D(-400, -500, 0),
-                new Point3D(-400, -5000, -100000), new Point3D(-400, 5000, -100000), new Point3D(-400, 500, 0));
-        baseQuadrangle.setEmmission(new Color(20, 41, 30));
-        Material material = baseQuadrangle.getMaterial();
+        Plane backgroundPlain1 = new Plane(new Vector(3,0, -10), new Point3D(3000,0, -10000));
+        backgroundPlain1.setEmmission(new Color(125, 71, 114));
+        backgroundPlain1.setKt(0.5);
+        scene.addGeometry(backgroundPlain1);
+
+        Plane backgroundPlain2 = new Plane(new Vector(4,0, -10), new Point3D(7000,0, -10000));
+        backgroundPlain2.setEmmission(new Color(125, 79, 69));
+        backgroundPlain2.setKt(0.5);
+        scene.addGeometry(backgroundPlain2);
+
+        Plane backgroundPlain3 = new Plane(new Vector(2,0, -10), new Point3D(1000,0, -10000));
+        backgroundPlain3.setEmmission(new Color(125, 25, 35));
+        backgroundPlain3.setKt(0.5);
+        scene.addGeometry(backgroundPlain3);
+
+        Plane basePlain2 = new Plane(new Vector(1,0,0), new Point3D(-400,0,0));
+//        Quadrangle baseQuadrangle = new Quadrangle(new Point3D(-400, -5000, 0),
+//                new Point3D(-400, -50000, -100000), new Point3D(-400, 50000, -100000), new Point3D(-400, 5000, 0));
+        basePlain2.setEmmission(new Color(27, 22, 10));
+        Material material = basePlain2.getMaterial();
         material.set_NumOfReflectionRays(20);
         material.setBlurring(0.04);
-        baseQuadrangle.setMaterial(material);
-        baseQuadrangle.setKr(0.8);
-        scene.addGeometry(baseQuadrangle);
+        basePlain2.setMaterial(material);
+        basePlain2.setKr(0.8);
+        scene.addGeometry(basePlain2);
 
-        Sphere sphere = new Sphere(300, new Point3D(-200, 0, -1000));
+        Quadrangle mirrorQuadrangle = new Quadrangle(new Point3D(-400, 380, -2000), new Point3D(-400, 700, -300),
+                 new Point3D(350, 750, -350), new Point3D(350, 430, -2050));
+        mirrorQuadrangle.setEmmission(new Color(233, 228, 217));
+        material = mirrorQuadrangle.getMaterial();
+        material.set_NumOfReflectionRays(20);
+        material.setBlurring(0.04);
+        mirrorQuadrangle.setMaterial(material);
+        mirrorQuadrangle.setKr(0.8);
+        scene.addGeometry(mirrorQuadrangle);
+
+        Sphere sphere = new Sphere(300, new Point3D(-100, 150, -1000));
         sphere.setShininess(20);
-        sphere.setEmmission(new Color(120, 47, 90));
+        sphere.setEmmission(new Color(207, 80, 157));
         material = sphere.getMaterial();
         material.set_NumOfReflectionRays(10);
         material.setBlurring(0.007);
         sphere.setMaterial(material);
-        sphere.setKr(0.7);
-        sphere.setKt(0.5);
+        sphere.setKr(0.5);
+        sphere.setKt(0.05);
         scene.addGeometry(sphere);
 
-        Sphere sphere2 = new Sphere(300, new Point3D(-150, -450, -1000));
+        Sphere sphere2 = new Sphere(200, new Point3D(-200, -450, -1000));
         sphere2.setShininess(20);
-        sphere2.setEmmission(new Color(39, 120, 64));
-        sphere2.setKt(0.6);
+        sphere2.setEmmission(new Color(69, 98, 206));
+        sphere2.setKt(0);
+        sphere2.setKr(0.55);
         scene.addGeometry(sphere2);
 
-        scene.addLight(new PointLight(new Color(255, 140, 120), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
+        Sphere sphere3 = new Sphere(100, new Point3D(-300, -200, -750));
+        sphere3.setShininess(25);
+        sphere3.setEmmission(new Color(250, 246, 56));
+        sphere3.setKr(0.2);
+        scene.addGeometry(sphere3);
+
+        scene.addLight(new PointLight(new Color(245, 175, 64), new Point3D(-300, -200, -750),0.01, 0.04, 0.07)); //inside the yelow sphare
+        scene.addLight(new PointLight(new Color(231, 224, 255), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
 //        scene.addLight(new DirectionalLight(new Color(255, 140, 120), new Vector(-10, -1, -2)));
         ImageWriter imageWriter = new ImageWriter("reflectedTest2", 500, 500, 500, 500);
 
@@ -1458,11 +1491,11 @@ public void Point_1(){
         render.writeToImage();
     }
 
-  
-  
- 
+
+
+
     @Test
-    void ourSceneTest(){
+    void ourSceneTest() throws Exception {
         Scene scene = new Scene();
         scene.setScreenDistance(500);
 //        Plane plane = new Plane(new Vector(1,0, 0), new Point3D(-500,0, 0));
