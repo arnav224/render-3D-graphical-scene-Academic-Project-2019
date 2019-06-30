@@ -67,10 +67,13 @@ public class Render
      * This function operates the rendering of the image. Calculates each pixel in the image.
      **************************************************/
     public void renderImage(){
-        int height = _imageWriter.getHeight(), width = _imageWriter.getWidth();
-        for (int i = 0; i < height; i++){
-            for (int j = 0; j < width; j++){
 
+        for (int i = 0; i < _imageWriter.getHeight(); i++){
+            for (int j = 0; j < _imageWriter.getWidth(); j++){
+                //System.console().writer().println();
+
+
+                System.out.println((i*_imageWriter.getHeight() + (j+1))*100/(_imageWriter.getHeight()*_imageWriter.getWidth())+"%");
                 /* Receiving the ray that crosses the pixel */
                 Ray ray = _scene.getCamera().constructRayThroughPixel(_imageWriter.getNx(),
                         _imageWriter.getNy(), i, j,_scene.getScreenDistance(), _imageWriter.getWidth(),
@@ -302,10 +305,12 @@ public class Render
             for (Ray refractedRay:refractedRays) {
                 Map.Entry<Geometry, Point3D> refracteEntry1 = findClosesntIntersection(refractedRay);
                 if (refracteEntry1 != null) {
+
                     Color refractedColor = calcColor(refracteEntry1.getKey(), refracteEntry1.getValue(), refractedRay,level + 1, cumulativeReduction * kt);
                     refractR += refractedColor.getRed();
                     refractG += refractedColor.getGreen();
                     refractB += refractedColor.getBlue();
+
                 }
             }
             int n = refractedRays.size();
