@@ -1415,7 +1415,7 @@ public void Point_1() throws Exception {
     }
 
     @Test
-    void reflectedTest2() throws Exception
+    void reflectedTest1_5() throws Exception
     {
         Scene scene = new Scene();
         scene.setScreenDistance(200);
@@ -1448,7 +1448,7 @@ public void Point_1() throws Exception {
 
         Quadrangle mirrorQuadrangle = new Quadrangle(new Point3D(-400, 380, -2000), new Point3D(-400, 700, -300),
                  new Point3D(350, 750, -350), new Point3D(350, 430, -2050));
-        mirrorQuadrangle.setEmmission(new Color(233, 228, 217));
+        mirrorQuadrangle.setEmmission(new Color(52, 51, 48));
         material = mirrorQuadrangle.getMaterial();
         material.set_NumOfReflectionRays(20);
         material.setBlurring(0.04);
@@ -1483,7 +1483,7 @@ public void Point_1() throws Exception {
         scene.addLight(new PointLight(new Color(245, 175, 64), new Point3D(-300, -200, -750),0.01, 0.04, 0.07)); //inside the yelow sphare
         scene.addLight(new PointLight(new Color(231, 224, 255), new Point3D(2500, 350, -900),0, 0.000001, 0.0000005));
 //        scene.addLight(new DirectionalLight(new Color(255, 140, 120), new Vector(-10, -1, -2)));
-        ImageWriter imageWriter = new ImageWriter("reflectedTest2", 500, 500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("reflectedTest1_5", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
 
@@ -1607,7 +1607,7 @@ public void Point_1() throws Exception {
         render.writeToImage();
     }
     @Test
-    void ourSceneTest2(){
+    void ourSceneTest2() throws Exception {
         Scene scene = new Scene();
         scene.setScreenDistance(500);
 

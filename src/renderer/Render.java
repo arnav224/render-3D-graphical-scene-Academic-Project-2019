@@ -21,7 +21,7 @@ public class Render
 
     private Scene _scene; // An object that describes the scene.
     private ImageWriter _imageWriter; // Object to write the image.
-    private final int RECURSION_LEVEL = 2;//The amount of recursion.
+    private final int RECURSION_LEVEL = 4;//The amount of recursion.
     private double reductionThreshold = 0.001;
     // ***************** Constructors ********************** //
     /*************************************************
@@ -69,6 +69,7 @@ public class Render
     public void renderImage(){
 
         for (int i = 0; i < _imageWriter.getHeight(); i++){
+
             for (int j = 0; j < _imageWriter.getWidth(); j++){
                 //System.console().writer().println();
 
