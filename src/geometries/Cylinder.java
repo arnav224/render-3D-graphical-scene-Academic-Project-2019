@@ -56,7 +56,7 @@ public class Cylinder extends RadialGeometry {
      * RETURN VALUE
      * List<Point3D>
      * MEANING
-     * An abstract function for finding intersections with any Geometry.
+     * An function for finding intersections with Cylinder.
      *************************************************
      * @param ray*/
 
@@ -112,7 +112,17 @@ public class Cylinder extends RadialGeometry {
         return list;
 
     }
-
+    /*************************************************
+     * FUNCTION
+     * getNormal
+     * PARAMETERS
+     * Point3D
+     * Vector - direction of ray to the point.
+     * RETURN VALUE
+     * Vector
+     * MEANING
+     * An function for finding the Normal from Cylinder toward the vector.
+     **************************************************/
     //todo
     @Override
     public Vector getNormal(Point3D point, Vector direction){

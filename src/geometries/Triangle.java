@@ -99,24 +99,15 @@ public class Triangle extends Geometry implements FlatGeometry{
      * getNormal
      * PARAMETERS
      * Point3D - point on the Triangle.
+     * Vector - direction of ray to the point.
      * RETURN VALUE
      * Vector - is the normal.
      * MEANING
-     * Return the normal to Triangle at the point.
+     * Return the normal to Triangle at the point toward the vector.
      **************************************************/
     @Override
     public Vector getNormal(Point3D point_NoUse, Vector direction) {
         return this.plane.getNormal(point_NoUse, direction);
-/*
-//todo delete
-        Vector result =((this._p2.subtract(this._p1))
-                .crossProduct(this._p3.subtract(this._p1))) // A cross product of 2 sides returns the normal.
-                .normalize();
-        if (direction != null && direction.dotProduct(result) > 0)
-            return result.scale(-1);
-        else return result;
-*/
-
     }
     /*************************************************
      * FUNCTION

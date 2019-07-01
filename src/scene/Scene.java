@@ -132,21 +132,37 @@ public class Scene {
     public Iterator<Geometry> getGeometriesIterator(){
         return this._geometries.iterator();
     }
-
+    /*************************************************
+     * FUNCTION
+     * addLight
+     * PARAMETERS
+     * LightSource
+     * MEANING
+     * add a light to the list.
+     **************************************************/
     public void addLight(LightSource light){this._lights.add(light);}
-
+    /*************************************************
+     * FUNCTION
+     * addLight
+     * PARAMETERS
+     * LightSource
+     * double - radios of the light.
+     * int - Num of lights inside the radius.
+     * MEANING
+     * add a light to the list.
+     **************************************************/
     public void addVolumeLight(LightSource light, double radios, int NumOfLights){
         if (light instanceof SpotLight){
             SpotLight spotLight = (SpotLight)light;
             Point3D originalPosition = spotLight.get_position();
-            for (int i = 0; i < NumOfLights; i ++) {
+            for (int i = 0; i < NumOfLights; i ++) {//add random lights.
                 Point3D position;
                 do {
                     double xRandom = originalPosition.getX().getCoordinate() + (Math.random() * 2 - 1) * radios;
                     double yRandom = originalPosition.getY().getCoordinate() + (Math.random() * 2 - 1) * radios;
                     double zRandom = originalPosition.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios;
                     position = new Point3D(xRandom,yRandom,zRandom);
-                } while (position.distance(originalPosition) > radios);
+                } while (position.distance(originalPosition) > radios);//if distance > radios so replace the light.
 
                 addLight(new SpotLight(new Color(spotLight.getColor().getRGB()), position,
                         spotLight.get_direction(), spotLight.get_Kc(), spotLight.get_Kl(), spotLight.get_Kq()));
@@ -155,20 +171,20 @@ public class Scene {
         else if (light instanceof PointLight){
             PointLight pointLight = (PointLight)light;
             Point3D originalPosition = pointLight.get_position();
-            for (int i = 0; i < NumOfLights; i ++){
+            for (int i = 0; i < NumOfLights; i ++){//add random lights.
                 Point3D position;
                 do {
                     double xRandom = originalPosition.getX().getCoordinate() + (Math.random() * 2 - 1) * radios;
                     double yRandom = originalPosition.getY().getCoordinate() + (Math.random() * 2 - 1) * radios;
                     double zRandom = originalPosition.getZ().getCoordinate() + (Math.random() * 2 - 1) * radios;
                     position = new Point3D(xRandom,yRandom,zRandom);
-                } while (position.distance(originalPosition) > radios);
+                } while (position.distance(originalPosition) > radios);//if distance > radios so replace the light.
 
                 addLight(new PointLight(new Color(pointLight.getColor().getRGB()), position,
                                         pointLight.get_Kc(), pointLight.get_Kl(), pointLight.get_Kq()));
             }
         }
-        else
+        else //other type of light.
             this._lights.add(light);
     }
 

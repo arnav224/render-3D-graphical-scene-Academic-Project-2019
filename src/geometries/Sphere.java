@@ -71,14 +71,16 @@ public class Sphere extends RadialGeometry {
      * getNormal
      * PARAMETERS
      * Point3D - point on the Sphere.
+     * Vector - direction of ray to the point.
      * RETURN VALUE
      * Vector - is the normal.
      * MEANING
-     * Return the normal to Sphere at the point.
+     * Return the normal to Sphere at the point toward the vector.
      **************************************************/
     @Override
     public Vector getNormal(Point3D point, Vector direction) {
         Vector normal = point.subtract(this._center).normalize();
+        //Checks whether the direction of the norm is toward the vector.
         if (direction != null && direction.dotProduct(normal) > 0)
             return normal.scale(-1);
         else
