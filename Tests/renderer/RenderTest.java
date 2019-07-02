@@ -655,7 +655,7 @@ class RenderTest {
 
         //scene.addGeometry(sphere5);
 
-        Hemisphere2 hemisphere = new Hemisphere2(650, new Point3D(-100.0, -0.0, -750), new Vector(13.0, 2.0, 1.5));
+        Hemisphere hemisphere = new Hemisphere(650, new Point3D(-100.0, -0.0, -750), new Vector(13.0, 2.0, 1.5));
         hemisphere.setShininess(20);
         hemisphere.setEmmission(new Color(0, 10, 30));
         scene.addGeometry(hemisphere);
@@ -1490,7 +1490,7 @@ public void Point_1() throws Exception {
         sphere3.setKr(0.5);
         scene.addGeometry(sphere3);
 
-        Hemisphere2 hemisphere = new Hemisphere2(150, new Point3D(-250, 100, -450), new Vector(2,0,1));
+        Hemisphere hemisphere = new Hemisphere(150, new Point3D(-250, 100, -450), new Vector(2,0,1));
         hemisphere.setShininess(20);
         hemisphere.setEmmission(new Color(14, 114, 13));
         material = hemisphere.getMaterial();
@@ -1621,25 +1621,25 @@ public void Point_1() throws Exception {
 
         scene.addGeometry(sphere3);
 
-        Hemisphere2 hemisphere22 = new Hemisphere2(150, new Point3D(1050, 600, -4000), new Vector(1,0,0));
+        Hemisphere hemisphere22 = new Hemisphere(150, new Point3D(1050, 600, -4000), new Vector(1,0,0));
         hemisphere22.setShininess(20);
         hemisphere22.setEmmission(new Color(14, 150, 12));
         hemisphere22.setKt(0.1);
         hemisphere22.setKr(0.1);
         scene.addGeometry(hemisphere22);
-        Hemisphere2 hemisphere23 = new Hemisphere2(150, new Point3D(1050, 900, -3000), new Vector(1,0,0));
+        Hemisphere hemisphere23 = new Hemisphere(150, new Point3D(1050, 900, -3000), new Vector(1,0,0));
         hemisphere23.setShininess(20);
         hemisphere23.setEmmission(new Color(14, 150, 12));
         hemisphere23.setKt(0.1);
         hemisphere23.setKr(0.1);
         scene.addGeometry(hemisphere23);
-        Hemisphere2 hemisphere24 = new Hemisphere2(300, new Point3D(1050, 800, -2500), new Vector(1,0,0));
+        Hemisphere hemisphere24 = new Hemisphere(300, new Point3D(1050, 800, -2500), new Vector(1,0,0));
         hemisphere24.setShininess(20);
         hemisphere24.setEmmission(new Color(14, 150, 12));
         hemisphere24.setKt(0.1);
         hemisphere24.setKr(0.1);
         //scene.addGeometry(hemisphere24);
-//        Hemisphere2 hemisphere25 = new Hemisphere2(300, new Point3D(0, -700, -2500), new Vector(0,2,1));
+//        Hemisphere hemisphere25 = new Hemisphere(300, new Point3D(0, -700, -2500), new Vector(0,2,1));
 //        hemisphere25.setShininess(20);
 //        hemisphere25.setEmmission(new Color(188, 31, 188));
 //        hemisphere25.setKt(0.1);
