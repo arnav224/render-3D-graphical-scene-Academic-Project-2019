@@ -21,8 +21,10 @@ public class Render
 
     private Scene _scene; // An object that describes the scene.
     private ImageWriter _imageWriter; // Object to write the image.
+
     private final int RECURSION_LEVEL = 5;//The amount of recursion.
     private double reductionThreshold = 0.001;
+
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
@@ -229,8 +231,9 @@ public class Render
         Material material = geometry.getMaterial();
         double kr = material.getKr();
         double kt = material.getKt();
-        //double K_current = 1 - kr - kt;
-        double K_current = 1;
+        // When enabled K_current = 1 - kr - kt, K_current is the remainder from kr and kt and so the color will be real.
+        double K_current = 1 - kr - kt;
+        //double K_current = 1;
 
         Vector direction = inRay.getDirection();
         Color AmbientLight = _scene.getAmbientLight().getIntensity(point);// Ambient Light in the point.
@@ -278,7 +281,7 @@ public class Render
         Color refractedLight = new Color(0, 0, 0);//refractedLight - The effect of refraction.
 
 
-        if (cumulativeReduction * kr > this.reductionThreshold){
+        if (cumulativeReduction * kr > this.reductionThreshold){//A reduction threshold is till high.
             /* Recursive call for a refracted ray*/
             //Ray refractedRay = constructRefractedRay(geometry, point, inRay);
             List<Ray> reflectedRays = constructReflectedRays(geometry, point, inRay);
@@ -373,25 +376,7 @@ public class Render
         return new Color(MyNormalize.apply((int)(k * lightIntensity.getRed())),
                 MyNormalize.apply((int)(k * lightIntensity.getGreen())),
                 MyNormalize.apply((int)(k * lightIntensity.getBlue())));
-
-//        Vector r = new Vector(normal);
-//        r = r.scale(-2*normal.dotProduct(l));
-//        r = r.add(l);
-//        r = r.normalize();
-//        v = v.normalize();
-//        double specular = ks*Math.pow(r.dotProduct(v),shininess);
-//        if(specular < 0)
-//        {specular *= -1;}
-//        return new Color((int)(lightIntensity.getRed()* specular)%256 ,
-//                (int)(lightIntensity.getGreen()*specular)%256,
-//                (int)(lightIntensity.getBlue()*specular)%256);
-//        return new Color(k * lightIntensity.getRed()%256, k* lightIntensity.getBlue()%256, k * lightIntensity.getGreen()%256);
-
-
     }
-
-    //private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints);
-
     /*************************************************
      * FUNCTION
      * getClosestPoint
@@ -501,7 +486,7 @@ public class Render
 
 
         //3. the point that send the ray back
-        //3.5 Floating point corecction
+        //3.5 Floating point correction
         Vector epsVector = new Vector(geometry.getNormal(point, direction)).scale(0.001);
         Point3D geometryPoint = point.add(epsVector);
 
@@ -540,28 +525,27 @@ public class Render
 
         Vector normalEpsilon = normal.scale(0.005);
         return new Ray (point.add(normalEpsilon), R);
-
-
-
-//        Vector normal = geometry.getNormal(point, inRay.getDirection());
-//        Vector l = inRay.getDirection().normalize();
-//
-//        normal = normal.scale(-2 * l.dotProduct(normal));
-//        l = l.add(normal);
-//
-//        Vector R = new Vector(l).normalize();
-//        return new Ray(point.add(normal), R);
     }
+    /*************************************************
+     * FUNCTION
+     * constructReflectedRays
+     * PARAMETERS
+     * Vector, point3d, Ray
+     * RETURN VALUE
+     * List<Ray>
+     * MEANING
+     * This function calculate the reflected rays from the surface
+     **************************************************/
     private List<Ray> constructReflectedRays(Geometry geometry, Point3D point, Ray inRay){
         Material material = geometry.getMaterial();
-        double reflectionSharpness = material.getBlurring();
+        double blurring = material.getBlurring();
         Ray centerRay = constructReflectedRay(geometry, point, inRay);
         Vector direction = centerRay.getDirection();
-
+        //Floating point correction.
         Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         point = point.add(normalEpsilon);
         List<Ray> result;
-        if (reflectionSharpness == 0 || material.get_NumOfReflectionRays() == 0)
+        if (blurring == 0 || material.get_NumOfReflectionRays() == 0)//No blurring or one ray.
         {
             result = new ArrayList<>(1);
             result.add(centerRay);
@@ -570,15 +554,15 @@ public class Render
         else
         {
             result = new ArrayList<>(material.get_NumOfReflectionRays());
-            //todo result.add(centerRay);
+            result.add(centerRay);
         }
-        for (int i = 0; i < material.get_NumOfReflectionRays(); i++ )
+        for (int i = 0; i < material.get_NumOfReflectionRays(); i++ )//enter rays
         {
             //Vector newDirection = new Vector(direction);
             Vector newDirection = new Vector(
-                    direction.getHead().getX().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness,
-                    direction.getHead().getY().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness,
-                    direction.getHead().getZ().getCoordinate() + (Math.random() * 2 - 1) * reflectionSharpness);
+                    direction.getHead().getX().getCoordinate() + (Math.random() * 2 - 1) * blurring,
+                    direction.getHead().getY().getCoordinate() + (Math.random() * 2 - 1) * blurring,
+                    direction.getHead().getZ().getCoordinate() + (Math.random() * 2 - 1) * blurring);
 
             result.add(new Ray(point, newDirection));
         }
@@ -600,17 +584,26 @@ public class Render
         Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         return new Ray (point.add(normalEpsilon), direction);
     }
-
+    /*************************************************
+     * FUNCTION
+     * constructRefractedRays
+     * PARAMETERS
+     * Geometry, Point3D, Ray
+     * RETURN VALUE
+     * List<Ray>
+     * MEANING
+     * This function calculate the refracted rays towards the next object
+     **************************************************/
     private List<Ray> constructRefractedRays(Geometry geometry, Point3D point, Ray inRay){
         Material material = geometry.getMaterial();
-        double reflectionSharpness = material.getBlurring();
+        double blurring = material.getBlurring();
         Ray centerRay = constructRefractedRay(geometry, point, inRay);
         Vector direction = centerRay.getDirection();
-
+        //Floating point correction.
         Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
         point = point.add(normalEpsilon);
         List<Ray> result;
-        if (reflectionSharpness == 0)
+        if (blurring == 0)//No blurring.
         {
             result = new ArrayList<>(1);
             result.add(centerRay);
@@ -621,32 +614,18 @@ public class Render
             result = new ArrayList<>(material.get_NumOfReflectionRays());
             result.add(centerRay);
         }
-        for (int i = 1; i < material.get_NumOfReflectionRays(); i++ )
+        for (int i = 1; i < material.get_NumOfReflectionRays(); i++ )//enter rays
         {
             Vector newDirection = new Vector(direction);
             newDirection.setHead(new Point3D(
-                    direction.getHead().getX().getCoordinate() + (random.nextDouble() * 2 - 1) * reflectionSharpness,
-                    direction.getHead().getY().getCoordinate() + (random.nextDouble() * 2 - 1) * reflectionSharpness,
-                    direction.getHead().getZ().getCoordinate() + (random.nextDouble() * 2 - 1) * reflectionSharpness));
+                    direction.getHead().getX().getCoordinate() + (random.nextDouble() * 2 - 1) * blurring,
+                    direction.getHead().getY().getCoordinate() + (random.nextDouble() * 2 - 1) * blurring,
+                    direction.getHead().getZ().getCoordinate() + (random.nextDouble() * 2 - 1) * blurring));
 
             result.add(new Ray(point, newDirection.normalize()));
         }
         return result;
     }
-
-
-
-
-//    private Map.Entry<Geometry, List<Point3D>> findClosesntIntersection(Ray ray){
-//        Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);
-//
-//        if (intersectionPoints.size() == 0)
-//            return null;
-//
-//        Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
-//        //Map.Entry<Geometry, Point3D> entry = closestPoint.entrySet().iterator().next();
-//        return closestPoint /*entry*/;
-//    }
 
     /*************************************************
      * FUNCTION
@@ -674,126 +653,4 @@ public class Render
     }
 
 }
-/*
-package renderer;
-        import java.awt.Color;
-        import java.util.*;
-*/
-/*import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;*//*
-
-        import elements.LightSource;
-        import geometries.FlatGeometry;
-        import geometries.Geometry;
-        import primitives.Point3D;
-        import primitives.Ray;
-        import primitives.Vector;
-        import scene.Scene;
-public class Render
-{
-    private Scene _scene;
-    private ImageWriter _imageWriter;
-    private final int RECURSION_LEVEL = 3;
-    // ***************** Constructors ********************** //
-    public Render(ImageWriter imageWriter, Scene scene){
-        set_imageWriter(imageWriter);
-        set_scene(scene);
-    }
-    // ***************** Getters/Setters ********************** //
-
-    public Scene get_scene() {
-        return new Scene(_scene);
-    }
-
-    public void set_scene(Scene _scene) {
-        this._scene = new Scene(_scene);
-    }
-
-    public ImageWriter get_imageWriter() {
-        return new ImageWriter(_imageWriter);
-    }
-
-    public void set_imageWriter(ImageWriter _imageWriter) {
-        this._imageWriter = new ImageWriter(_imageWriter);
-    }
-
-    public int getRECURSION_LEVEL() {
-        return RECURSION_LEVEL;
-    }
-
-    // ***************** Operations ******************** //
-    // Based on the 4-5 Recitations presentation of Elishai//
-
-    public void renderImage(){
-        for (int i = 0; i < _imageWriter.getHeight(); i++){
-            for (int j = 0; j < _imageWriter.getWidth(); j++){
-                Ray ray = _scene.getCamera().constructRayThroughPixel(_imageWriter.getNx(),
-                        _imageWriter.getNy(), i, j,_scene.getScreenDistance(), _imageWriter.getWidth(),
-                        _imageWriter.getHeight());
-                List<Point3D> intersectionPoints = getSceneRayIntersections(ray);
-                if (intersectionPoints.isEmpty())
-                    _imageWriter.writePixel(i, j, _scene.getBackground());
-                else{
-                    Point3D closestPoint = getClosestPoint(intersectionPoints);
-                    _imageWriter.writePixel(i, j, calcColor(closestPoint));
-                }
-            }
-        }
-    }
-    //private Entry<Geometry, Point3D> findClosesntIntersection(Ray ray);
-    public void printGrid(int interval){
-
-    }
-    //public void writeToImage();
-    //private Color calcColor(Geometry geometry, Point3D point, Ray ray);
-    //private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level); // Recursive
-
-    private Color calcColor(Point3D point) {
-        return _scene.getAmbientLight().getIntensity();
-    }
-    //private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay);
-    //private Ray constructReflectedRay(Vector normal, Point3D point, Ray inRay);
-    //private boolean occluded(LightSource light, Point3D point, Geometry geometry);
-    //private Color calcSpecularComp(double ks, Vector v, Vector normal, Vector l, double shininess, Color lightIntensity);
-    //private Color calcDiffusiveComp(double kd, Vector normal, Vector l, Color lightIntensity);
-    //private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> intersectionPoints);
-    private Point3D getClosestPoint(List<Point3D> intersectionPoints) {
-        double distance = Double.MAX_VALUE;
-        Point3D P0 = _scene.getCamera().getP0();
-        Point3D minDistancePoint = null;
-        for (Point3D point: intersectionPoints) {
-            if (P0.distance(point) < distance) {
-                minDistancePoint = new Point3D(point);
-                distance = P0.distance(point);
-            }
-        }
-        return minDistancePoint;
-    }
-
-    private List<Point3D> getSceneRayIntersections(Ray ray){
-        Iterator<Geometry> geometries = _scene.getGeometriesIterator();
-        List<Point3D> intersectionPoints = new ArrayList<Point3D>();
-        while (geometries.hasNext()){
-            Geometry geometry = geometries.next();
-            List<Point3D> geometryIntersectionPoints = geometry.FindIntersections(ray);
-            intersectionPoints.addAll(geometryIntersectionPoints);
-        }
-        return intersectionPoints;
-    }
-
-    //private Color addColors(Color a, Color b);
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public String toString() {
-        return "scene: " + _scene.toString() + "imageWriter: " + _imageWriter.toString();
-    }
-}
-*/
 

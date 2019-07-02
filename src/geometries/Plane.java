@@ -66,13 +66,15 @@ public class Plane extends Geometry implements FlatGeometry{
      * getNormal
      * PARAMETERS
      * Point3D
+     * Vector - direction of ray to the point.
      * RETURN VALUE
-     * Vector
+     * Vector - is the normal.
      * MEANING
-     * finding the Normal from the Plane.
+     * Return the normal to Plane at the point toward the vector.
      **************************************************/
     @Override
     public Vector getNormal(Point3D pointNoUse, Vector direction) {
+        //Checks whether the direction of the norm is toward the vector
         if (direction != null && direction.dotProduct(_normal) > 0)
             return new Vector(_normal.scale(-1));
         else return new Vector(_normal);

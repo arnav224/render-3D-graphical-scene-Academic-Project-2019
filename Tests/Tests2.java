@@ -18,6 +18,7 @@
 //        import geometries.Plane;
 //        import geometries.Sphere;
 //        import geometries.Triangle;
+
 //        import primitives.Material;
 //        import primitives.Point3D;
 //        import primitives.Vector;
@@ -36,7 +37,9 @@
 //    @Test
 //    public void Test_finalMat() throws Exception {
 //        Scene scene = new Scene("dark room");
+
 //        scene.setScreenDistance(5500);
+
 //        scene.setAmbientLight(new AmbientLight(new Color(), 0));
 //
 //        Sphere sphere = new Sphere(200, new Point3D(1200, -400, 0), new Color(0, 0, 50),
@@ -209,7 +212,9 @@
 //
 //
 //
+
 //		/*Triangle triangle= new Triangle(new Point3D(0, 200,-1000),new Point3D(-100, 0,-1000),new Point3D(100, 0,-1000), new Color(50,0,0),new Material(0.1,5,29,0,0.5,1,0));
+
 //		scene.addGeometry(triangle);
 //		triangle= new Triangle(new Point3D(-100, 0,-1000),new Point3D(100, 0,-1000),new Point3D(0, -200,-1000),new Color(0,50,0),new Material(0.1,5,29,0,0.5,1,0.5));
 //		scene.addGeometry(triangle);

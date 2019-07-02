@@ -55,13 +55,13 @@ public class Quadrangle extends Geometry implements FlatGeometry{
      * getNormal
      * PARAMETERS
      * Point3D - point on the Quadrangle.
+     * Vector - direction of ray to the point.
      * RETURN VALUE
      * Vector - is the normal.
      * MEANING
-     * Return the normal to Quadrangle at the point.
+     * Return the normal to Quadrangle at the point toward the vector.
      **************************************************/
     public Vector getNormal(Point3D point_NoUse, Vector direction){
-
         return _tri2.getNormal(point_NoUse, direction);
     }
 //    Vector p2ToPoint = new Vector(_tri1.getP2(), point_NoUse).normalize();

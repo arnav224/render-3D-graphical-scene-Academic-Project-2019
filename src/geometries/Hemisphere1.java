@@ -1,15 +1,20 @@
 package geometries;
+
 import primitives.*;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
-public class Hemisphere extends RadialGeometry {
+import static primitives.Util.usubtract;
+
+public class Hemisphere1 extends RadialGeometry {
+
 
     private Point3D _center; //A center of Hemisphere1.
     private Point3D _bottom; //A bottom of Hemisphere1.
-
+    private Point3D _innerBottom;
+    private double _innerRadius;
+    private final int WITHDRAWAL_SIZE = 10;
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
@@ -17,10 +22,12 @@ public class Hemisphere extends RadialGeometry {
      * MEANING
      * default Constructor
      **************************************************/
-    public Hemisphere() {
+    public Hemisphere1() {
         super(0);
+        this._innerRadius = this._radius;
         this._center = new Point3D();
         this._bottom = new Point3D();
+        this._innerBottom = new Point3D();
     }
     /*************************************************
      * FUNCTION
@@ -30,11 +37,15 @@ public class Hemisphere extends RadialGeometry {
      * MEANING
      * copy Constructor
      **************************************************/
-    public Hemisphere(Hemisphere hemisphere){
-        super(hemisphere.getRadius());
-        this._center = new Point3D(hemisphere.getCenter());
-        this._bottom = new Point3D(hemisphere.getBottom());
+    public Hemisphere1(Hemisphere1 hemisphere1){
+        super(hemisphere1.getRadius());
+        this._innerRadius = hemisphere1.getInnerRadius();
+        this._center = new Point3D(hemisphere1.getCenter());
+        this._bottom = new Point3D(hemisphere1.getBottom());
+        this._innerBottom = new Point3D(hemisphere1.getInnerBottom());
     }
+
+
     /*************************************************
      * FUNCTION
      * Hemisphere1
@@ -43,22 +54,34 @@ public class Hemisphere extends RadialGeometry {
      * MEANING
      * Initializing fields.
      **************************************************/
-    public Hemisphere(double _radius, Point3D _center, Vector _vBottom) {
+    public Hemisphere1(double _radius, Point3D _center, Vector _vBottom) {
         super(_radius);
+        this._innerRadius = this._radius -WITHDRAWAL_SIZE;
         this._center = new Point3D(_center);
         this._bottom = new Point3D(this._center.subtract(_vBottom.normalize().scale(this.getRadius())));
+        this._innerBottom = new Point3D(this._center.subtract(_vBottom.normalize().scale(this.getInnerRadius())));
     }
 
 
 
 //    public Hemisphere1();
-//    public Hemisphere1 (Hemisphere1 sphere);
+//    public Hemisphere1 (Hemisphere1 Hemisphere1);
 //    public Hemisphere1(double radius, Point3D center);
 //    public Hemisphere1(Map<String, String> attributes);
 
     // ***************** Getters/Setters ********************** //
 //    public Point3D getCenter();
 //    public void setCenter(Point3D center);
+
+    public Point3D getCenter() {
+        return _center;
+    }
+
+    public Hemisphere1 set_center(Point3D _center) {
+        this._center = _center;
+        return this;
+    }
+
     public void set_bottom(Point3D _bottom) {
         this._bottom = new Point3D(_bottom);
     }
@@ -66,15 +89,20 @@ public class Hemisphere extends RadialGeometry {
     public Point3D getBottom() {
         return new Point3D(_bottom);
     }
-    public Point3D getCenter() {
-        return _center;
+    private double getInnerRadius() {
+        return _innerRadius;
     }
 
-    public Hemisphere set_center(Point3D _center) {
-        this._center = _center;
-        return this;
+    public void set_innerRadius(double _innerRadius) {
+        this._innerRadius = _innerRadius;
+    }
+    private Point3D getInnerBottom() {
+        return new Point3D(_innerBottom);
     }
 
+    public void set_innerBottom(Point3D _innerBottom) {
+        this._innerBottom = new Point3D(_innerBottom);
+    }
     // ***************** Operations ******************** //
     /*************************************************
      * FUNCTION
@@ -89,18 +117,15 @@ public class Hemisphere extends RadialGeometry {
      **************************************************/
     @Override
     public Vector getNormal(Point3D point, Vector direction) {
-        Vector normal = point.subtract(this._center).normalize();
+        Vector normal = new Vector(point.subtract(this._center).normalize());
         //Checks whether the direction of the norm is toward the vector.
         if (direction != null && direction.dotProduct(normal) > 0)
-            return normal.scale(-1);
-        else
-            return normal;
-
-//        Vector normal = new Vector(point.subtract(this._center).normalize());
-//        if (direction != null && direction.dotProduct(normal) > 0)
-//            return normal;
-//        else
-//            return normal.scale(-1);
+            return new Vector(normal);
+        else return new Vector(normal.scale(-1).normalize());
+//        double d = this._center.distance(point);
+//        if (usubtract(getRadius(),d) == 0)
+//            return point.subtract(this._center).normalize();
+//        return this._center.subtract(point).normalize();
     }
     /*************************************************
      * FUNCTION
@@ -123,6 +148,7 @@ public class Hemisphere extends RadialGeometry {
         //'d' is the distance between 'tm' and the center of Hemisphere1.
         double d = Math.sqrt(Math.pow(L.length(),2) - Math.pow(tm,2));
         double r = this.getRadius();
+        double ir = this.getInnerRadius();
 
         if (d > r) // If d > r then the ray does not pass through Hemisphere1.
             return hemisphereIntersectionPoints;
@@ -133,13 +159,14 @@ public class Hemisphere extends RadialGeometry {
         double t1 = tm - th;
         double t2 = tm + th;
 
+
         if (t1 >= 0) // if t1 > / = 0 then the intersection point is visible from the camera's view.
         {
             Point3D pointT1 = new Point3D(P0.add(V.scale(t1)));
             if (pointT1.distance(_bottom) <= Math.sqrt(Math.pow(r,2) + Math.pow(r,2)))// the ray passes through Hemisphere1.
                 hemisphereIntersectionPoints.add(pointT1);
         }
-        if (d==r) // if d = r then there is only one intersection point.
+        if (usubtract(d,r) == 0) // if d = r then there is only one intersection point.
             return hemisphereIntersectionPoints;
         if (t2 >= 0) // if t2 > / = 0 then the intersection point is visible from the camera's view.
         {
@@ -147,6 +174,29 @@ public class Hemisphere extends RadialGeometry {
             if (pointT2.distance(_bottom) <= Math.sqrt(Math.pow(r,2) + Math.pow(r,2)))// the ray passes through Hemisphere1.
                 hemisphereIntersectionPoints.add(pointT2);
         }
+
+        if (d > ir) // If d > ir then the ray does not pass through inner Hemisphere1.
+            return hemisphereIntersectionPoints;
+
+        double ith = Math.sqrt(Math.pow(ir,2) - Math.pow(d,2));
+        double it1 = tm - ith;
+        double it2 = tm + ith;
+
+        if (it1 >= 0) // if it1 > / = 0 then the intersection point is visible from the camera's view.
+        {
+            Point3D pointiT1 = new Point3D(P0.add(V.scale(it1)));
+            if (pointiT1.distance(_innerBottom) <= Math.sqrt(2 * Math.pow(ir,2)))// the ray passes through Hemisphere1.
+                hemisphereIntersectionPoints.add(pointiT1);
+        }
+        if (usubtract(d, ir) == 0) // if d = ir then there are three intersection point.
+            return hemisphereIntersectionPoints;
+        if (it2 >= 0) // if it2 > / = 0 then the intersection point is visible from the camera's view.
+        {
+            Point3D pointiT2 = new Point3D(P0.add(V.scale(it2)));
+            if (pointiT2.distance(_innerBottom) <= Math.sqrt(2 * Math.pow(ir,2)))// the ray passes through Hemisphere1.
+                hemisphereIntersectionPoints.add(pointiT2);
+        }
+
         return hemisphereIntersectionPoints;
     }
 }

@@ -7,6 +7,8 @@ public abstract class Geometry implements Intersectable{
     private Material _material = new Material();
     //private double _nShininess = 1;
     private Color _emmission = new Color(0, 0, 0);
+
+    // ***************** Operations ******************** //
     /*************************************************
      * FUNCTION
      * FindIntersections
@@ -23,12 +25,15 @@ public abstract class Geometry implements Intersectable{
      * getNormal
      * PARAMETERS
      * Point3D
+     * Vector - direction of ray to the point.
      * RETURN VALUE
      * Vector
      * MEANING
-     * An abstract function for finding the Normal from any geometry
+     * An abstract function for finding the Normal from any geometry toward the vector.
      **************************************************/
     public abstract Vector getNormal(Point3D point, Vector direction);
+
+    // ***************** Getters/Setters ********************** //
     /*************************************************
      * FUNCTION
      * get_emmission
