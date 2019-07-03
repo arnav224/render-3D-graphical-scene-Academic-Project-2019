@@ -1078,24 +1078,24 @@ public void Point_1() throws Exception {
         Plane backgroundPlain1 = new Plane(new Vector(3,0, -10), new Point3D(3000,0, -10000));
         backgroundPlain1.setEmmission(new Color(125, 71, 114));
         backgroundPlain1.setKt(0.5);
-        //scene.addGeometry(backgroundPlain1);
+        scene.addGeometry(backgroundPlain1);
 
         Plane backgroundPlain2 = new Plane(new Vector(4,0, -10), new Point3D(7000,0, -10000));
         backgroundPlain2.setEmmission(new Color(125, 79, 69));
         backgroundPlain2.setKt(0.5);
-        //scene.addGeometry(backgroundPlain2);
+        scene.addGeometry(backgroundPlain2);
 
         Plane backgroundPlain3 = new Plane(new Vector(2,0, -10), new Point3D(1000,0, -10000));
         backgroundPlain3.setEmmission(new Color(125, 25, 35));
         backgroundPlain3.setKt(0.5);
-        //scene.addGeometry(backgroundPlain3);
+        scene.addGeometry(backgroundPlain3);
 
         Plane basePlain2 = new Plane(new Vector(1,0,0), new Point3D(-400,0,0));
 //        Quadrangle baseQuadrangle = new Quadrangle(new Point3D(-400, -5000, 0),
 //                new Point3D(-400, -50000, -100000), new Point3D(-400, 50000, -100000), new Point3D(-400, 5000, 0));
         basePlain2.setEmmission(new Color(0, 0, 0));
         Material material = basePlain2.getMaterial();
-        material.set_NumOfReflectionRays(40);
+        material.set_NumOfReflectionRays(0);
         material.setBlurring(0.04);
         basePlain2.setMaterial(material);
         basePlain2.setKr(0.8);
@@ -1105,7 +1105,7 @@ public void Point_1() throws Exception {
                 new Point3D(350, 750, -350), new Point3D(350, 430, -2050));
         mirrorQuadrangle.setEmmission(new Color(233, 228, 217));
         material = mirrorQuadrangle.getMaterial();
-        material.set_NumOfReflectionRays(45);
+        material.set_NumOfReflectionRays(0);
         material.setBlurring(0.04);
         mirrorQuadrangle.setMaterial(material);
         mirrorQuadrangle.setKr(0.8);
@@ -1163,9 +1163,9 @@ public void Point_1() throws Exception {
         sphere03.setKt(0);
         sphere03.setKr(0.9);
         //scene.addGeometry(sphere03);
-        //scene.addLight(new PointLight(new Color(245, 175, 64), new Point3D(-300, -200, -750),0.01, 0.04, 0.07)); //inside the yelow sphare
+        scene.addLight(new PointLight(new Color(245, 175, 64), new Point3D(-300, -200, -750),0.01, 0.04, 0.07)); //inside the yelow sphare
         scene.addLight(new PointLight(new Color(233, 203, 232), new Point3D(2500, 350, -900),0, 0.0000001, 0.00000005));
-//        scene.addLight(new DirectionalLight(new Color(255, 140, 120), new Vector(-10, -1, -2)));
+        scene.addLight(new DirectionalLight(new Color(255, 140, 120), new Vector(-10, -1, -2)));
         ImageWriter imageWriter = new ImageWriter("reflectedTest2_2", 500, 500, 500, 500);
 
         Render render = new Render(imageWriter, scene);
