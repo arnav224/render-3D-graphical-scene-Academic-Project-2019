@@ -71,11 +71,7 @@ public class Render
     public void renderImage(){
 
         for (int i = 0; i < _imageWriter.getHeight(); i++){
-
             for (int j = 0; j < _imageWriter.getWidth(); j++){
-                //System.console().writer().println();
-
-
                 System.out.println((i*_imageWriter.getHeight() + (j+1))*100/(_imageWriter.getHeight()*_imageWriter.getWidth())+"%");
                 /* Receiving the ray that crosses the pixel */
                 Ray ray = _scene.getCamera().constructRayThroughPixel(_imageWriter.getNx(),
@@ -93,27 +89,9 @@ public class Render
                     if (closestPoint != null)
                         _imageWriter.writePixel(i, j, calcColor(closestPoint.getKey(), closestPoint.getValue().get(0), ray));
                 }
-//                System.out.flush();
-//                System.out.println(i);
 
             }
         }
-//        for (int i = 0 ; i < _imageWriter.getWidth(); i++){
-//            for (int j = 0; j < _imageWriter.getHeight(); j++){
-//                Ray ray=_scene.getCamera().constructRayThroughPixel(_imageWriter.getNx(),
-//                        _imageWriter.getNy(),j,i,_scene.getScreenDistance()
-//                        ,_imageWriter.getWidth()
-//                        ,_imageWriter.getHeight());
-//                Map<Geometry, List<Point3D>> intersectionPoints = getSceneRayIntersections(ray);
-//                if(intersectionPoints.isEmpty()){
-//                    _imageWriter.writePixel(j,i,_scene.getBackground());
-//                }
-//                else{
-//                    Map.Entry<Geometry, List<Point3D>> closestPoint = getClosestPoint(intersectionPoints);
-//                    _imageWriter.writePixel(j,i,calcColor(closestPoint.getKey(),closestPoint.getValue().get(0),ray));
-//                }
-//            }
-//        }
     }
 
     //private Entry<Geometry, Point3D> findClosesntIntersection(Ray ray);
@@ -148,60 +126,6 @@ public class Render
         this._imageWriter.writeToimage();
     }
 
-    //private Color calcColor(Geometry geometry, Point3D point, Ray ray);
-    //private Color calcColor(Geometry geometry, Point3D point, Ray inRay, int level); // Recursive
-    /*************************************************
-     * FUNCTION
-     * calcColor
-     * PARAMETERS
-     * Geometry, Point3D.
-     * RETURN VALUE
-     * Color - the color of the point.
-     * MEANING
-     * Calculates the point's color.
-     **************************************************/
-/*
-    private Color calcColor(Geometry geometry, Point3D point) {
-        Color ambientLight = _scene.getAmbientLight().getIntensity(point);// Ambient Light in the point.
-        Color emissionLight = geometry.get_emmission(); // Emission Light in the point.
-        //IntFunction<Integer> MyNormalize = x -> x > 255 ? 255 : x; // Lambda to normalize the color.
-        Iterator<LightSource> lights = _scene.getLightsIterator();//Iterator all lights.
-        Color diffuseLight = new Color(0,0,0);//Diffuse light initialization.
-        Color specularLight = new Color(0,0,0);//Specular light initialization.
-
-        */
-/*Calculates the power of all the lights that come to the point.*//*
-
-        while (lights.hasNext()) {
-            LightSource lightSource = lights.next();
-
-            if ( !occluded(lightSource, point, geometry)) { // The light is not blocked.
-                */
-/*Add diffuse light*//*
-
-                diffuseLight = addColors(calcDiffusiveComp(geometry.getMaterial().getKd(),
-                        geometry.getNormal(point, ),
-                        lightSource.getL(point),
-                        lightSource.getIntensity(point)), diffuseLight);
-                */
-/*Add specular light*//*
-
-                specularLight = addColors(calcSpecularComp(geometry.getMaterial().getKs(),
-                        new Vector(point, _scene.getCamera().getP0()),
-                        geometry.getNormal(point, ),
-                        lightSource.getL(point),
-                        geometry.getMaterial().getShininess(),
-                        lightSource.getIntensity(point)), specularLight);
-
-            }
-        }
-
-        */
-/* Connect all colors *//*
-
-        return addColors(addColors(ambientLight, emissionLight), addColors(diffuseLight, specularLight)) ;
-    }
-*/
     /*************************************************
      * FUNCTION
      * calcColor
@@ -232,8 +156,8 @@ public class Render
         double kr = material.getKr();
         double kt = material.getKt();
         // When enabled K_current = 1 - kr - kt, K_current is the remainder from kr and kt and so the color will be real.
-        double K_current = 1 - kr - kt;
-        //double K_current = 1;
+        //double K_current = 1 - kr - kt;
+        double K_current = 1;
 
         Vector direction = inRay.getDirection();
         Color AmbientLight = _scene.getAmbientLight().getIntensity(point);// Ambient Light in the point.
@@ -478,16 +402,9 @@ public class Render
         Vector lightDirection = light.getL(point).scale(-1);//.scale(-1);
 
 
-        //Point3D geometryPoint = new Point3D(point);
-
-        //Vector epsVector = new Vector(0.0000001,0.0000001,0.0000001);
-//        Vector normal = geometry.getNormal(point);
-//        normal.scale(normal.length())
-
-
         //3. the point that send the ray back
         //3.5 Floating point correction
-        Vector epsVector = new Vector(geometry.getNormal(point, direction)).scale(0.001);
+        Vector epsVector = new Vector(geometry.getNormal(point, direction)).scale(0.000001);
         Point3D geometryPoint = point.add(epsVector);
 
         //4. Construct ray from the point back to the light
@@ -495,13 +412,6 @@ public class Render
         //5. Get all the intersection between the point and the light source into a mao
         Map <Geometry,List<Point3D>> intersectionPoint = getSceneRayIntersections(lightRay);
 
-//        // 5.5 Flat geometry
-//        if (geometry instanceof Quadrangle || geometry instanceof FlatGeometry){
-//            intersectionPoint.remove(geometry);
-//        }
-
-        //6. If the map is empty - the light goes directly to the point
-        //   Otherwise - there's something between them
 
         return !intersectionPoint.isEmpty();
     }
@@ -523,7 +433,7 @@ public class Render
         Vector temp = new Vector(normal).scale(scale);
         Vector R = new Vector(inRay.getDirection()).subtract(temp);
 
-        Vector normalEpsilon = normal.scale(0.005);
+        Vector normalEpsilon = normal.scale(0.00005);
         return new Ray (point.add(normalEpsilon), R);
     }
     /*************************************************
@@ -536,13 +446,13 @@ public class Render
      * MEANING
      * This function calculate the reflected rays from the surface
      **************************************************/
-    private List<Ray> constructReflectedRays(Geometry geometry, Point3D point, Ray inRay){
+    private List<Ray> constructReflectedRays(Geometry geometry, Point3D point, Ray inRay) {
         Material material = geometry.getMaterial();
         double blurring = material.getBlurring();
         Ray centerRay = constructReflectedRay(geometry, point, inRay);
         Vector direction = centerRay.getDirection();
         //Floating point correction.
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.00005);
         point = point.add(normalEpsilon);
         List<Ray> result;
         if (blurring == 0 || material.get_NumOfReflectionRays() == 0)//No blurring or one ray.
@@ -550,15 +460,12 @@ public class Render
             result = new ArrayList<>(1);
             result.add(centerRay);
             return result;
-        }
-        else
-        {
+        } else {
             result = new ArrayList<>(material.get_NumOfReflectionRays());
             result.add(centerRay);
         }
-        for (int i = 0; i < material.get_NumOfReflectionRays(); i++ )//enter rays
+        for (int i = 0; i < material.get_NumOfReflectionRays(); i++)//enter rays
         {
-            //Vector newDirection = new Vector(direction);
             Vector newDirection = new Vector(
                     direction.getHead().getX().getCoordinate() + (Math.random() * 2 - 1) * blurring,
                     direction.getHead().getY().getCoordinate() + (Math.random() * 2 - 1) * blurring,
@@ -566,6 +473,31 @@ public class Render
 
             result.add(new Ray(point, newDirection));
         }
+                                                                                                                                                                                                                                            /*        Point3D cebter = centerRay.getPOO();
+                                                                                                                                                                                                                                                Point3D newPoint;
+                                                                                                                                                                                                                                                for (int i = 0; i < material.get_NumOfReflectionRays(); i++ )//enter rays
+                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                    do {
+                                                                                                                                                                                                                                                        newPoint = new Point3D(
+                                                                                                                                                                                                                                                                direction.getHead().getX().getCoordinate() + (Math.random() * 2 - 1) * blurring,
+                                                                                                                                                                                                                                                                direction.getHead().getY().getCoordinate() + (Math.random() * 2 - 1) * blurring,
+                                                                                                                                                                                                                                                                direction.getHead().getZ().getCoordinate() + (Math.random() * 2 - 1) * blurring);
+                                                                                                                                                                                                                                                    } while (false || newPoint.distance(cebter) > blurring);//if distance > radios so replace the light.
+
+                                                                                                                                                                                                                                        //            newPoint = new Point3D((
+                                                                                                                                                                                                                                        //                    direction.getHead().getX().getCoordinate() + (Math.random() * 2 - 1) * blurring,
+                                                                                                                                                                                                                                        //                    direction.getHead().getY().getCoordinate() + (Math.random() * 2 - 1) * blurring,
+                                                                                                                                                                                                                                        //                    direction.getHead().getZ().getCoordinate() + (Math.random() * 2 - 1) * blurring);
+
+
+                                                                                                                                                                                                                                        //            Vector newDirection = new Vector(
+                                                                                                                                                                                                                                        //                    direction.getHead().getX().getCoordinate() + (Math.random() * 2 - 1) * blurring,
+                                                                                                                                                                                                                                        //                    direction.getHead().getY().getCoordinate() + (Math.random() * 2 - 1) * blurring,
+                                                                                                                                                                                                                                        //                    direction.getHead().getZ().getCoordinate() + (Math.random() * 2 - 1) * blurring);
+
+                                                                                                                                                                                                                                                    result.add(new Ray(point, new Vector(newPoint)));
+                                                                                                                                                                                                                                        */
+
         return result;
     }
     /*************************************************
@@ -581,7 +513,7 @@ public class Render
     private Ray constructRefractedRay(Geometry geometry, Point3D point, Ray inRay){
 
         Vector direction = inRay.getDirection();
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.00005);
         return new Ray (point.add(normalEpsilon), direction);
     }
     /*************************************************
@@ -600,7 +532,7 @@ public class Render
         Ray centerRay = constructRefractedRay(geometry, point, inRay);
         Vector direction = centerRay.getDirection();
         //Floating point correction.
-        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.005);
+        Vector normalEpsilon = geometry.getNormal(point, direction).scale(-0.00005);
         point = point.add(normalEpsilon);
         List<Ray> result;
         if (blurring == 0)//No blurring.

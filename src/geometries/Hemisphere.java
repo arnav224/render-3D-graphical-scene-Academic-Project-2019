@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Hemisphere extends RadialGeometry {
 
-    private Point3D _center; //A center of Hemisphere1.
-    private Point3D _bottom; //A bottom of Hemisphere1.
+    private Point3D _center; //A center of Hemisphere.
+    private Point3D _bottom; //A bottom of Hemisphere.
 
     // ***************** Constructors ********************** //
     /*************************************************
      * FUNCTION
-     * Hemisphere1
+     * Hemisphere
      * MEANING
      * default Constructor
      **************************************************/
@@ -24,9 +24,9 @@ public class Hemisphere extends RadialGeometry {
     }
     /*************************************************
      * FUNCTION
-     * Hemisphere1
+     * Hemisphere
      * PARAMETERS
-     * Hemisphere1
+     * Hemisphere
      * MEANING
      * copy Constructor
      **************************************************/
@@ -37,7 +37,7 @@ public class Hemisphere extends RadialGeometry {
     }
     /*************************************************
      * FUNCTION
-     * Hemisphere1
+     * Hemisphere
      * PARAMETERS
      * double - radius, Point3D - center.
      * MEANING
@@ -51,10 +51,6 @@ public class Hemisphere extends RadialGeometry {
 
 
 
-//    public Hemisphere1();
-//    public Hemisphere1 (Hemisphere1 sphere);
-//    public Hemisphere1(double radius, Point3D center);
-//    public Hemisphere1(Map<String, String> attributes);
 
     // ***************** Getters/Setters ********************** //
 //    public Point3D getCenter();
@@ -80,12 +76,12 @@ public class Hemisphere extends RadialGeometry {
      * FUNCTION
      * getNormal
      * PARAMETERS
-     * Point3D - point on the Hemisphere1.
+     * Point3D - point on the Hemisphere.
      * Vector - direction of ray to the point.
      * RETURN VALUE
      * Vector - is the normal.
      * MEANING
-     * Return the normal to Hemisphere1 at the point toward the vector.
+     * Return the normal to Hemisphere at the point toward the vector.
      **************************************************/
     @Override
     public Vector getNormal(Point3D point, Vector direction) {
@@ -110,7 +106,7 @@ public class Hemisphere extends RadialGeometry {
      * RETURN VALUE
      * List<Point3D> - The intersection points.
      * MEANING
-     * Finding intersection points with the Hemisphere1.
+     * Finding intersection points with the Hemisphere.
      **************************************************/
     @Override
     public List<Point3D> FindIntersections(Ray ray) {
@@ -118,13 +114,13 @@ public class Hemisphere extends RadialGeometry {
 
         Point3D P0 = ray.getPOO(); // The beginning of the ray.
         Vector V = ray.getDirection();
-        Vector L = this._center.subtract(P0); // 'L' is the distance from P0 to the center of the Hemisphere1.
+        Vector L = this._center.subtract(P0); // 'L' is the distance from P0 to the center of the Hemisphere.
         double tm = L.dotProduct(V); // 'tm' is the projection of L on the ray.
-        //'d' is the distance between 'tm' and the center of Hemisphere1.
+        //'d' is the distance between 'tm' and the center of Hemisphere.
         double d = Math.sqrt(Math.pow(L.length(),2) - Math.pow(tm,2));
         double r = this.getRadius();
 
-        if (d > r) // If d > r then the ray does not pass through Hemisphere1.
+        if (d > r) // If d > r then the ray does not pass through Hemisphere.
             return hemisphereIntersectionPoints;
 
         // 't1' and 't2': The distance of the normalized ray from the intersection points.
@@ -136,7 +132,7 @@ public class Hemisphere extends RadialGeometry {
         if (t1 >= 0) // if t1 > / = 0 then the intersection point is visible from the camera's view.
         {
             Point3D pointT1 = new Point3D(P0.add(V.scale(t1)));
-            if (pointT1.distance(_bottom) <= Math.sqrt(Math.pow(r,2) + Math.pow(r,2)))// the ray passes through Hemisphere1.
+            if (pointT1.distance(_bottom) <= Math.sqrt(Math.pow(r,2) + Math.pow(r,2)))// the ray passes through Hemisphere.
                 hemisphereIntersectionPoints.add(pointT1);
         }
         if (d==r) // if d = r then there is only one intersection point.
@@ -144,7 +140,7 @@ public class Hemisphere extends RadialGeometry {
         if (t2 >= 0) // if t2 > / = 0 then the intersection point is visible from the camera's view.
         {
             Point3D pointT2 = new Point3D(P0.add(V.scale(t2)));
-            if (pointT2.distance(_bottom) <= Math.sqrt(Math.pow(r,2) + Math.pow(r,2)))// the ray passes through Hemisphere1.
+            if (pointT2.distance(_bottom) <= Math.sqrt(Math.pow(r,2) + Math.pow(r,2)))// the ray passes through Hemisphere.
                 hemisphereIntersectionPoints.add(pointT2);
         }
         return hemisphereIntersectionPoints;

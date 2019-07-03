@@ -34,7 +34,8 @@ public class PointLight extends Light implements LightSource {
     }
 
     // ***************** Getters/Setters ********************** //
-    public Color getIntensity(Point3D point){
+    @Override
+    public Color getIntensity(Point3D point) {
         double d = point.distance(_position);
 
         /*Calculation of attenuation coefficients*/
