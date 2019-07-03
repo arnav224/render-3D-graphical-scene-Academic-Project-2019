@@ -131,7 +131,6 @@ public class Triangle extends Geometry implements FlatGeometry{
         {
             return new ArrayList<>();
         }
-//todo delete        Plane plane = new Plane(N, this.getP3());
         //Find the intersection point with a plane containing the triangle.
         List<Point3D> intersections = plane.FindIntersections(ray);
         if (intersections.size() == 0) // No intersection point found.
@@ -143,15 +142,6 @@ public class Triangle extends Geometry implements FlatGeometry{
         Vector P2_P0 = _p2.subtract(P0);
         Vector P3_P0 = _p3.subtract(P0);
 
-/*
-        boolean sign1 = P_P0.dotProduct(P1_P0.crossProduct(P2_P0)) > 0;
-        boolean sign2 = P_P0.dotProduct(P2_P0.crossProduct(P3_P0)) > 0;
-        boolean sign3 = P_P0.dotProduct(P3_P0.crossProduct(P1_P0)) > 0;
-        if ((sign1 && sign2 && sign3) || !(sign1 || sign2 || sign3))
-            return intersections;
-        intersections.clear();
-        return intersections;
-*/
 
         if (P_P0.length() == 0) // if length = 0 then it causes unexpected result.
         {
@@ -168,8 +158,6 @@ public class Triangle extends Geometry implements FlatGeometry{
                 && (sign2 == sign3 || sign2 == 0 || sign3==0)
                 && (sign1 == sign3 || sign1 == 0 || sign3==0))
             return intersections;
-//        if (sign1 == sign2 && sign2 == sign3)
-//            return intersections;
         intersections.clear(); // If we got here, the point on the plane but not on the triangle.
         return intersections;
 

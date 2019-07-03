@@ -47,14 +47,8 @@ public class Sphere extends RadialGeometry {
 
 
 
-//    public Sphere();
-//    public Sphere (Sphere sphere);
-//    public Sphere(double radius, Point3D center);
-//    public Sphere(Map<String, String> attributes);
 
      // ***************** Getters/Setters ********************** //
-//    public Point3D getCenter();
-//    public void setCenter(Point3D center);
 
     public Point3D getCenter() {
         return _center;

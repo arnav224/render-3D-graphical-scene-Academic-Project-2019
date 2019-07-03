@@ -21,10 +21,6 @@ public class Vector implements Comparable<Vector>{
     public Vector(double xHead, double yHead, double zHead){
         this._head = new Point3D(xHead, yHead, zHead);
     }
-/*    public Vector(Point3D p1, Point3D p2){
-        this._head = new Point3D(p1);
-        this._head.subtract(new Vector(p2));
-    }*/
     public Vector(Point3D p1, Point3D p2){
         this._head = new Point3D(p2.getX().subtract(p1.getX()),
                 p2.getY().subtract(p1.getY()),
@@ -75,12 +71,6 @@ public class Vector implements Comparable<Vector>{
      * SEE ALSO
      * add method in Point3D class.
      **************************************************/
-
-/*
-    public void add (Vector vector ) {
-        this._head.add(vector);// = this._head.add(vector);
-    }
-*/
     public Vector add (Vector vector ){
         return new Vector(this._head.add(vector));
     }
@@ -95,9 +85,6 @@ public class Vector implements Comparable<Vector>{
      * SEE ALSO
      * subtract method in Point3D class.
      **************************************************/
-    /*public void subtract (Vector vector){
-        this._head.subtract(vector);
-    }*/
     public Vector subtract (Vector vector){
         return new Vector(this._head.subtract(vector));
     }
@@ -112,11 +99,6 @@ public class Vector implements Comparable<Vector>{
      * SEE ALSO
      * scale method in Coordinate class.
      **************************************************/
-    /*public void scale(double scalingFactor){
-        this._head = new Point3D(uscale(_head.getX().getCoordinate(), scalingFactor),
-                uscale(_head.getY().getCoordinate(), scalingFactor),
-                uscale(_head.getZ().getCoordinate(), scalingFactor));
-    }*/
     public Vector scale(double scalingFactor){
         return new Vector(new Point3D(_head.getX().scale(scalingFactor),
                 _head.getY().scale(scalingFactor),
@@ -134,11 +116,6 @@ public class Vector implements Comparable<Vector>{
      * SEE ALSO
      * usubtract, uscale in Util class.
      **************************************************/
-    /*public Vector crossProduct(Vector vector){
-        return new Vector(usubtract(uscale(this._head.getY().getCoordinate(), (vector._head.getZ().getCoordinate())), uscale(this._head.getZ().getCoordinate(), (vector._head.getY().getCoordinate()))),
-                usubtract(uscale(this._head.getZ().getCoordinate(), (vector._head.getX().getCoordinate())), uscale(this._head.getX().getCoordinate(), (vector._head.getZ().getCoordinate()))),
-                usubtract(uscale(this._head.getX().getCoordinate(), (vector._head.getY().getCoordinate())), uscale(this._head.getY().getCoordinate(), (vector._head.getX().getCoordinate()))));
-    }*/
     public Vector crossProduct(Vector vector){
         return new Vector(this._head.getY().multiply(vector._head.getZ()).subtract(this._head.getZ().multiply(vector._head.getY())).getCoordinate(),
                 this._head.getZ().multiply(vector._head.getX()).subtract(this._head.getX().multiply(vector._head.getZ())).getCoordinate(),
@@ -161,11 +138,6 @@ public class Vector implements Comparable<Vector>{
      * MEANING
      * Normalizes the vector.
      **************************************************/
-    /*public void normalize() {
-        if (primitives.Util.isZero(this.length()))
-            throw new ArithmeticException();
-        this.scale(1 / this.length());
-    }*/
     public Vector normalize() {
         if (primitives.Util.isZero(this.length()))
             throw new ArithmeticException();

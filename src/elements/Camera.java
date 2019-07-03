@@ -140,7 +140,6 @@ public class Camera {
 
         // the current pixel on the viewPlane
         Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx )).subtract(_vUp.scale((y-Ny/2)*Ry));
-                                                                                                                                                                                                //Point3D pixel = Pc.add(_vRight.scale((x-Nx/2)*Rx + Rx/2)).subtract(_vUp.scale((y-Ny/2)*Ry + Ry/2)); //this is the original formula
         if (Nx % 2 == 0)
             pixel = pixel.add(new Vector(Rx/2,0,0));
         if (Ny % 2 == 0)

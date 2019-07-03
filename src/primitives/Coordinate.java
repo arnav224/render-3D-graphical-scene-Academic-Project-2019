@@ -85,27 +85,7 @@ public final class Coordinate implements Comparable<Coordinate> {
         return new Coordinate(usubtract(_coord, other._coord));
     }
 
-/*todo
-    */
 /*************************************************
-     * FUNCTION
-     * subtract
-     * PARAMETERS
-     * Coordinate
-     * MEANING
-     * Subtracts a coordinate to the current coordinate.
-     * SEE ALSO
-     * subtract method in Unil class.
-     **************************************************//*
-*/
-/*
-
-    public void subtract(Coordinate other) {
-        this._coord = (usubtract(_coord, other._coord));
-    }
-*//*
-
-
 
     /*************************************************
      * FUNCTION
@@ -124,11 +104,6 @@ public final class Coordinate implements Comparable<Coordinate> {
         return new Coordinate(uadd(this._coord, other._coord));
     }
 
-/*
-    public void add(Coordinate other) {
-        this._coord = (uadd(_coord, other._coord));
-    }
-*/
     /*************************************************
      * FUNCTION
      * scale
@@ -145,11 +120,6 @@ public final class Coordinate implements Comparable<Coordinate> {
         return new Coordinate(uscale(_coord, num));
     }
 
-/*
-    public void scale(double num) {
-        this._coord = uscale(_coord, num);
-    }
-*/
 
     /*************************************************
      * FUNCTION
@@ -168,11 +138,6 @@ public final class Coordinate implements Comparable<Coordinate> {
     }
 
 
-/*
-    public void multiply(Coordinate other) {
-        this._coord = uscale(_coord, other._coord);
-    }
-*/
 
 
 }

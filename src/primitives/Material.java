@@ -17,7 +17,6 @@ public class Material {
         _Ks = 1;
         _Kr = 0;
         _Kt = 0;
-//        _n = 1;
         _nShininess = 19;
         _blurring = 0;
         _NumOfReflectionRays = 0;
@@ -88,13 +87,6 @@ public class Material {
     public void set_NumOfReflectionRays(int NumOfReflectionRays) {
         this._NumOfReflectionRays = NumOfReflectionRays;
     }
-    //    public double getN() {
-//        return _n;
-//    }
-//
-//    public void setN(double _n) {
-//        this._n = _n;
-//    }
 
     public int getShininess() { return _nShininess;  }
 

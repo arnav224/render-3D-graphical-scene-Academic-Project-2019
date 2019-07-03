@@ -53,8 +53,6 @@ public class Hemisphere extends RadialGeometry {
 
 
     // ***************** Getters/Setters ********************** //
-//    public Point3D getCenter();
-//    public void setCenter(Point3D center);
     public void set_bottom(Point3D _bottom) {
         this._bottom = new Point3D(_bottom);
     }
@@ -91,12 +89,6 @@ public class Hemisphere extends RadialGeometry {
             return normal.scale(-1);
         else
             return normal;
-
-//        Vector normal = new Vector(point.subtract(this._center).normalize());
-//        if (direction != null && direction.dotProduct(normal) > 0)
-//            return normal;
-//        else
-//            return normal.scale(-1);
     }
     /*************************************************
      * FUNCTION

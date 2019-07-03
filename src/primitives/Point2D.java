@@ -45,14 +45,6 @@ public class Point2D implements Comparable<Point2D>{
     }
 
     // ***************** Administration ******************** //
-    /*todo*********************************
-     * FUNCTION
-     * compareTo, Compare the distance from the zero point.
-     * PARAMETERS
-     * the other point to compare
-     * RETURN VALUE
-     * int. 0 if equal. 1 if this grater. -1 if this smaller.
-     ***********************************/
 
     /**********************************
      * FUNCTION
@@ -66,11 +58,6 @@ public class Point2D implements Comparable<Point2D>{
     public int compareTo(Point2D o) {
         return this.equals(o) ? 0 : 1;
 
-/* todo Remember to ask: Does it exceed the habit of compareTo?
-        if (this.equals(o) || isZero(this.distance() - o.distance()))
-            return 0;
-        return (this.distance() - o.distance() > 0) ? 1 : -1;
-*/
     }
 
     /**********************************
@@ -103,12 +90,6 @@ public class Point2D implements Comparable<Point2D>{
      * RETURN VALUE
      *  double - the distance  between the tow points.
      ***********************************/
-/*
-    public double distance(Point2D point2D){
-        return   Math.sqrt(Math.pow(usubtract(this.getX().getCoordinate(), point2D.getX().getCoordinate()), 2)
-                + Math.sqrt(Math.pow(usubtract(this.getY().getCoordinate(), point2D.getY().getCoordinate()), 2)));
-    }
-*/
     public double distance(Point2D point2D){
         return Math.sqrt(Math.pow(this._x.subtract(point2D._x).getCoordinate(), 2) + Math.pow(this._y.subtract(point2D._y).getCoordinate(), 2));
     }

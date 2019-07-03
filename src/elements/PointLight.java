@@ -39,7 +39,6 @@ public class PointLight extends Light implements LightSource {
         double d = point.distance(_position);
 
         /*Calculation of attenuation coefficients*/
-//        double coefficient = 1/(_Kc * (_Kl * d) * (_Kq*Math.pow(d,2)));
         double coefficient = 1 / (_Kc + _Kl * d + _Kq * Math.pow(d,2)); //Calculation of attenuation coefficients
         if(coefficient > 1) { coefficient = 1; }
 

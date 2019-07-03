@@ -15,7 +15,6 @@ public class Plane extends Geometry implements FlatGeometry{
      * MEANING
      * Initializing fields
      **************************************************/
-    //todo Why need?
     public Plane() {
         this._normal = new Vector();
         this._Q = new Point3D();
@@ -29,7 +28,6 @@ public class Plane extends Geometry implements FlatGeometry{
      * copy Constructor
      **************************************************/
     public Plane(Plane plane){
-        //todo zero-chack?
         this._normal = new Vector(plane._normal);
         this._Q = new Point3D(plane._Q);
     }
@@ -41,9 +39,8 @@ public class Plane extends Geometry implements FlatGeometry{
      * MEANING
      * Initializing fields
      **************************************************/
-    public Plane(Vector _normal, Point3D _Q) {
-        //todo zero-chack?
-        this._normal = new Vector(_normal);
+    public Plane(Vector _normal, Point3D _Q)  {
+        this._normal = _normal.normalize();
         this._Q = new Point3D(_Q);
     }
 
@@ -103,32 +100,9 @@ public class Plane extends Geometry implements FlatGeometry{
         double t = -N.dotProduct(v)/(N.dotProduct(V));  //-1 * N.dotProduct(v) / N.dotProduct(v);
 
         if (t >= 0) { // if t > / = 0 then the intersection point is visible from the camera's view.
-//            V.scale(t);
-//            P0.add(V);
             intersectionPointsPlane.add(P0.add(V.scale(t)));
         }
         return intersectionPointsPlane;
 
-
-/*
-        List<Point3D> point3DS = new ArrayList<>();
-        Point3D P0 = ray.getPOO();
-        Vector V = ray.getDirection();
-        Vector v = this._Q.subtract(P0); //added according to the instructions.
-        double Mechane = (this._normal).dotProduct(V);
-        if (Mechane == 0)
-            return point3DS;
-        double t = ((this._normal).dotProduct(v))/(Mechane);
-        if (t >= 0)
-        {
-            point3DS.add(P0.add(V.scale(t)));
-
-            Vector Normal = this.getNormal();
-            Vector tmpVector = this.getQ().subtract(P0.add(V.scale(t)));
-            double tmp = Normal.dotProduct(tmpVector);
-
-        }
-        return point3DS;
-*/
     }
 }

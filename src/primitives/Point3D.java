@@ -75,13 +75,6 @@ public class Point3D extends Point2D {
      * RETURN VALUE
      * double - The distance between two points.
      **************************************************/
-/*
-    public double distance(Point3D point3D) {
-        return    Math.sqrt(Math.pow(usubtract(super.getX().getCoordinate(), point3D.getX().getCoordinate()), 2)
-                + Math.pow(usubtract(super.getY().getCoordinate(), point3D.getY().getCoordinate()), 2)
-                + Math.pow(usubtract(this.getZ().getCoordinate(), point3D.getZ().getCoordinate()), 2));
-    }
-*/
     public double distance(Point3D point3D) {
         return Math.sqrt(Math.pow(super.getX().subtract(point3D.getX()).getCoordinate(), 2)
                 + Math.pow(super.getY().subtract(point3D.getY()).getCoordinate(), 2) + Math.pow(this._z.subtract(point3D._z).getCoordinate(), 2));
@@ -98,25 +91,6 @@ public class Point3D extends Point2D {
     public double distance() {
         return Math.sqrt(Math.pow(super.getX().getCoordinate(), 2) + Math.pow(super.getY().getCoordinate(), 2) + Math.pow(this._z.getCoordinate(), 2));
     }
-/*
-    */
-/************************************************
-         * FUNCTION
-         * add
-         * PARAMETERS
-         * Vector
-         * MEANING
-         * Adds a vector to the current point.
-         * SEE ALSO
-         * add method in Coordinate class.
-    **************************************************//*
-
-     public void add(Vector vector) {
-         this._x.add(vector.getHead().getX());
-         this._y.add(vector.getHead().getY());
-         this._z.add(vector.getHead().getZ());
-     }
-*/
 
     /*************************************************
      * FUNCTION
@@ -136,25 +110,7 @@ public class Point3D extends Point2D {
                 this.getY().add(vector.getHead().getY()),
                 this.getZ().add(vector.getHead().getZ()));
     }
-/*
-    */
-/*************************************************
-     * FUNCTION
-     * subtract
-     * PARAMETERS
-     * Vector to subtract the point.
-     * MEANING
-     * subtracts a vector to the current point.
-     * SEE ALSO
-     * subtract method in Coordinate class.
-     **************************************************//*
 
-    public void subtract(Vector vector){
-        this._x.subtract(vector.getHead().getX());
-        this._y.subtract(vector.getHead().getY());
-        this._z.subtract(vector.getHead().getZ());
-    }
-*/
     /*************************************************
      * FUNCTION
      * subtract

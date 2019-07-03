@@ -18,10 +18,8 @@ public class SpotLight extends PointLight{
         Color LightColor = super.getIntensity();
         double d = point.distance(_position);
         Vector l = super.getL(point).normalize();
-        //double coefficient = 1 / (_Kc + _Kl * d + _Kq * Math.pow(d,2));
 
             /*Calculation of attenuation coefficients*/
-//        double k = Math.abs(_direction.dotProduct(l))/(_Kc * _Kl * d * _Kq * Math.pow(d,2));
         double k = Math.abs(_direction.normalize().dotProduct(l))/(_Kc + _Kl * d + _Kq * Math.pow(d,2));
 
         if(k > 1) {k = 1;}
@@ -30,15 +28,6 @@ public class SpotLight extends PointLight{
                 (int)(LightColor.getGreen()*k),
                 (int)(LightColor.getBlue()*k));
 
-
-
-//        double d = point.distance(_position);
-//        double coefficient = this._direction.dotProduct(new Vector(this._position, point))/(_Kc + _Kl * d + _Kq * Math.pow(d,2));
-//        if(coefficient > 1) { coefficient = 1; }
-//        Color I0 = this.getIntensity();
-//        return new Color((int)(I0.getRed()*coefficient),
-//                (int)(I0.getGreen()*coefficient),
-//                (int)(I0.getBlue()*coefficient));
 
     }
 

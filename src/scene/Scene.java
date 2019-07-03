@@ -64,9 +64,6 @@ public class Scene {
         setCamera(camera);
         setScreenDistance(screenDistance);
         this._geometries = new ArrayList<Geometry>();
-        /*todo:
-        חסר איתחול לרשימת האורות
-         */
     }
     // ***************** Getters/Setters ********************** //
     public Color getBackground(){
