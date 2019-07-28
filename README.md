@@ -1,6 +1,6 @@
 # project_2019
 
-Academic Mini-Project in Software Engineering.
+Academic Mini-Project, Introduction to Software Engineering.
 
 designing and modeling a virtual 3-dimensional graphical scene, 
 with all the physics involved (light source, rays, reflections, 
